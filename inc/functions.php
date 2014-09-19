@@ -6,7 +6,7 @@ function authenticated($name, $password) {
 	$sql = "SELECT passwd_hash FROM users WHERE username=$name";
 	$result = mysqli_query($con, $sql);
 	$row = mysqli_fetch_array($result);
-	if(sha1($password.$SALT) == $row['passwd_hash']){
+	if(sha1($password . $SALT) == $row['passwd_hash']){
 		return true;
 	}
 	else {

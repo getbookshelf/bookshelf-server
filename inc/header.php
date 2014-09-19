@@ -2,5 +2,5 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Bookshelf - Easy Ebook Admin</title>
+		<title>Bookshelf - eBook Administration Interface</title>
 	</head>
