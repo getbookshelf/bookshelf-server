@@ -1,4 +1,5 @@
 <?php
+echo $_SESSION['name'];
 if(!isset($_SESSION['name'])) {
     if(!isset($_POST['password'])) {
         session_destroy();
@@ -9,12 +10,11 @@ if(!isset($_SESSION['name'])) {
     else {
         require_once(__DIR__ . '/functions.php');
         require_once(__DIR__ . '/mysql.php');
-        if(authenticated($POST_['name'], $_POST['password'])) {
+        if(authenticated($_POST['name'], $_POST['password'])) {
             $_SESSION['name'] = $_POST['name'];
-            $_SESSION['password'] = $_POST['password'];
         }
         else {
-            header("Location: index.php");
+            header('Location: index.php');
         }
     }
 }
