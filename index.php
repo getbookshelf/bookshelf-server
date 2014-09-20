@@ -16,6 +16,14 @@ include( __DIR__ . '/inc/header.php');
         </form>
     </p>
 
+    <p>
+        <h2>Upload eBook</h2>
+        <form enctype="multipart/form-data" action="readfile.php" method="POST">
+            <input name="file" type="file" /><br>
+            <input type="submit" value="Upload" />
+        </form>
+    </p>
+
     <a href="index.php">Reload page</a><br>
     <a href="logout.php">Logout</a>
 </div>

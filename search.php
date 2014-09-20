@@ -1,4 +1,6 @@
 <?php
+// NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
+
 session_start();
 include(__DIR__ . '/inc/auth.php');
 
@@ -20,11 +22,15 @@ $json_string = curl_exec($ch);
 curl_close($ch);
 
 $data_array = json_decode($json_string, true);
-?>
-<a href="index.php">back</a><br>
-<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>
-<?php
+
+echo '<a href="index.php">back</a><br>';
+
+echo '<br>request: ' . htmlspecialchars($request) . '<br>'; // nope, that is not proper sanitization
+
 $max_rows = count($data_array['items']) < 3 ? count($data_array['items']) : 3;
+if($max_rows == 0) { echo 'No results.'; exit(); }
+
+echo '<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>';
 
 for($i = 0; $i < $max_rows; $i++) {
     echo '<tr>
