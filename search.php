@@ -16,7 +16,8 @@ curl_close($ch);
 
 $data_array = json_decode($json_string, true);
 ?>
-<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>ISBN-13</td></thead>
+<a href="index.php">back</a><br>
+<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>
 <?php
 $max_rows = count($data_array['items']) < 3 ? count($data_array['items']) : 3;
 
