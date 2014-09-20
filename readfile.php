@@ -22,8 +22,8 @@ else {
 }
 
 $query_string = pathinfo($filename, PATHINFO_FILENAME); // filename without extension
-$query_string = str_replace('-', ' ', $query_string);
-$query_string = str_replace('_', ' ', $query_string);
+$strings_to_replace = array('-', '_', '.', ',', ';', ':', '/', '|', '+');
+$query_string = str_replace($strings_to_replace, ' ', $query_string);
 
 echo '<br>query string: ' . $query_string;
 
