@@ -1,5 +1,4 @@
 <?php
-echo $_SESSION['name'];
 if(!isset($_SESSION['name'])) {
     if(!isset($_POST['password'])) {
         session_destroy();
