@@ -1,4 +1,9 @@
 <?php
+session_start();
+include(__DIR__ . '/inc/auth.php');
+
+include(__DIR__ . '/inc/header.php');
+
 if(!isset($_POST['request'])) {
     echo 'Error: No request.';
     header('Location: index.php');
@@ -16,15 +21,21 @@ curl_close($ch);
 
 $data_array = json_decode($json_string, true);
 ?>
-<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>ISBN-13</td></thead>
+<a href="index.php">back</a><br>
+<table><thead><td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>
 <?php
 $max_rows = count($data_array['items']) < 3 ? count($data_array['items']) : 3;
 
 for($i = 0; $i < $max_rows; $i++) {
     echo '<tr>
-<td><img src="' . $data_array['items'][$i]['volumeInfo']['imageLinks']['smallThumbnail'] .'"></td>
-<td>' . $data_array['items'][$i]['volumeInfo']['title'] . '</td>
-<td>' . implode(', ', $data_array['items'][$i]['volumeInfo']['authors']) . '</td>
+<td><img src="data:image/jpeg;base64,' . base64_encode(file_get_contents($data_array['items'][$i]['volumeInfo']['imageLinks']['smallThumbnail'])) .'"></td>';
+if($data_array['items'][$i]['volumeInfo']['subtitle']) {
+    echo '<td > ' . $data_array['items'][$i]['volumeInfo']['title'] . ' - ' . $data_array['items'][$i]['volumeInfo']['subtitle'] . ' </td >';
+}
+else {
+    echo '<td > ' . $data_array['items'][$i]['volumeInfo']['title'] . ' </td >';
+}
+echo '<td>' . implode(', ', $data_array['items'][$i]['volumeInfo']['authors']) . '</td>
 <td>' . $data_array['items'][$i]['volumeInfo']['description'] . '</td>
 <td>' . $data_array['items'][$i]['volumeInfo']['language'] . '</td>
 <td>' . $data_array['items'][$i]['volumeInfo']['industryIdentifiers'][1]['identifier'] . '</td>
