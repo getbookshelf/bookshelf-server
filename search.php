@@ -7,7 +7,7 @@ include(__DIR__ . '/inc/auth.php');
 include(__DIR__ . '/inc/header.php');
 
 if(!isset($_POST['request'])) {
-    echo 'Error: No request.';
+    //Error: No request.
     header('Location: index.php');
     exit();
 }
