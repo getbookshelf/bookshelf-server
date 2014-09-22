@@ -15,7 +15,7 @@ if(!isset($_POST['request'])) {
 $request = $_POST['request'];
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/books/v1/volumes?q=' . urlencode($request));
+curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/books/v1/volumes?q=' . urlencode($request). '&prettyPrint=true');
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $json_string = curl_exec($ch);

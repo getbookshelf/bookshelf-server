@@ -1,8 +1,10 @@
 <?php
+require __DIR__ . '/lib/vendor/autoload.php';
 session_start();
 include(__DIR__ . '/inc/auth.php');
 
 include( __DIR__ . '/inc/header.php');
+
 ?>
 <body>
 <div id="wrapper">
