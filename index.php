@@ -6,8 +6,6 @@ include(__DIR__ . '/inc/auth.php');
 include( __DIR__ . '/inc/header.php');
 
 ?>
-<body>
-<div id="wrapper">
     <h1>Bookshelf</h1>
 
     <p>

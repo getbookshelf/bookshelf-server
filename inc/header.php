@@ -5,3 +5,5 @@
 		<meta charset="utf-8">
 		<title>Bookshelf - eBook Administration Interface</title>
 	</head>
+    <body>
+    <div id="wrapper">
