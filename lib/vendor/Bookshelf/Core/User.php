@@ -9,7 +9,7 @@ class User {
     // TODO: Implement proper OO User class, currently I am just using the old functions as statics
     public static function is_authenticated($name, $password) {
         $databaseConnection = new DatabaseConnection();
-        require Constants::$ROOT_DIR . 'config.php';
+        require Constants::ROOT_DIR . 'config.php';
 
         $row = $databaseConnection->execute_query("SELECT passwd_hash FROM users WHERE username='$name'");
 

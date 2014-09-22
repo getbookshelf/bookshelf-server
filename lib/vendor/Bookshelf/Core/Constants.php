@@ -2,16 +2,16 @@
 
 namespace Bookshelf\Core;
 
+// PHP doesn't allow you to use expressions in the definition of const, therefore we have to use this
+// see: http://stackoverflow.com/a/2787565
+
+define('rootdir', __DIR__ . '/../../../../');
+define('libdir', Constants::ROOT_DIR . 'lib');
 
 class Constants {
-    public static $ROOT_DIR;
-    public static $LIB_DIR;
+    const ROOT_DIR = rootdir;
+    const LIB_DIR = libdir;
 
-    public static $VERSION-TEXT = '0.0.1a'; // TODO: decide on a proper versioning scheme
-    public static $VERSION-CODE = 1;
+    const VERSION_TEXT = '0.0.1a'; // TODO: decide on a proper versioning scheme
+    const VERSION_CODE = 1;
 }
-
-// PHP doesn't allow you to initialize static variables with expressions in the class itself, so we are doing that here
-
-Constants::$ROOT_DIR = __DIR__ . '/../../../../';
-Constants::$LIB_DIR = Constants::$ROOT_DIR . 'lib';

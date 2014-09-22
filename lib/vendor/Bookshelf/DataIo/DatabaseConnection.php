@@ -8,7 +8,7 @@ class DatabaseConnection {
     private $con;
 
     function __construct() {
-        require Constants::$ROOT_DIR . 'config.php';
+        require Constants::ROOT_DIR . 'config.php';
 
         $this->con = mysqli_connect($DB_HOST, $DB_USER, $DB_PW, $DB_NAME);
 
