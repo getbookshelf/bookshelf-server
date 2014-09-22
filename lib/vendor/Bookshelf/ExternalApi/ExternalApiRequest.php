@@ -4,7 +4,7 @@ namespace Bookshelf\ExternalApi;
 
 
 abstract class ExternalApiRequest {
-    protected  $results = array();
+    protected  $results = ExternalApiResult();
     protected  $request;
 
     public function __construct() {
