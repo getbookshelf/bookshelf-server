@@ -2,10 +2,10 @@
 
 namespace Bookshelf\ExternalApi;
 
-// implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
+use Bookshelf\DataType;
 use Bookshelf\DataType\BookMetadata;
-use Bookshelf\DataType\ExternalApiResult
 
+// implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
 class GoogleBooksApiRequest extends ExternalApiRequest {
     public function request($request) {
         $this->volume_search($request);
@@ -24,7 +24,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
         $data_array = json_decode($json_string, true);
 
         if(count($data_array['items']) <= 0) {
-            $this->results = ExternalApiResult();
+            $this->results = new DataType\ExternalApiResult();
             return;
         }
 

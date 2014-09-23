@@ -2,13 +2,14 @@
 
 namespace Bookshelf\ExternalApi;
 
+use Bookshelf\DataType;
 
 abstract class ExternalApiRequest {
-    protected  $results = ExternalApiResult();
-    protected  $request;
+    protected $results;
+    protected $request;
 
     public function __construct() {
-
+        $this->results = new DataType\ExternalApiResult();
     }
 
     // Request is the default fallback method. Child class will implement request functions specific to the API but still implement this as a default fallback.
