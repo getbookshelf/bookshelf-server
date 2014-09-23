@@ -1,6 +1,6 @@
 <?php
 
-namespace Bookshelf\Core;
+namespace Bookshelf\Utility;
 
 use Bookshelf\DataIo\DatabaseConnection;
 

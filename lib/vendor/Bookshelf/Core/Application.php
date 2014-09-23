@@ -6,9 +6,9 @@ namespace Bookshelf\Core;
 // see: http://stackoverflow.com/a/2787565
 
 define('rootdir', __DIR__ . '/../../../../');
-define('libdir', Constants::ROOT_DIR . 'lib');
+define('libdir', Application::ROOT_DIR . 'lib');
 
-class Constants {
+class Application {
     const ROOT_DIR = rootdir;
     const LIB_DIR = libdir;
 
