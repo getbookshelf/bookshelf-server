@@ -23,4 +23,11 @@ class DatabaseConnection {
 
         return mysqli_fetch_array($result);
     }
+    
+    function insertLibraryData($args) {
+        $columns = join(', ', array_keys($args));
+        $values = join(', ', $args);
+        $sql = "INSERT INTO library ($columns) VALUES ($values)";
+        mysqli_query($sql);
+    }
 }
