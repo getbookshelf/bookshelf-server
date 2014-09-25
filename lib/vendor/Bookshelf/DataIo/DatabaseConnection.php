@@ -18,7 +18,7 @@ class DatabaseConnection {
     }
 
     // TODO: Implement proper methods for certain database actions; ideally we don't want to directly run SQL queries at all
-    function execute_query($query) {
+    function executeQuery($query) {
         $result = $this->mysqli->query($query);
 
         return $result->fetch_array();

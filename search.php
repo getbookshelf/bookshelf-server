@@ -13,8 +13,8 @@ if(!isset($_POST['request'])) {
 $request = $_POST['request'];
 
 $gb_request = new \Bookshelf\ExternalApi\GoogleBooksApiRequest();
-$gb_request->volume_search($request, 3);
+$gb_request->volumeSearch($request, 3);
 
-echo '<h1>Results for \'' . htmlspecialchars($gb_request->get_request_string()) . '\'</h1>';
+echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . '\'</h1>';
 echo '<a href="index.php">back</a><br>';
 print_r($gb_request->results());

@@ -7,15 +7,16 @@ use Bookshelf\DataIo\DatabaseConnection;
 use Bookshelf\DataIo;
 
 class LibraryManager {
-    require Application::ROOT_DIR . 'config.php';
-    
     private $database_connection;
     
     function __construct() {
-        $database_connection = new DatabaseConnection();
+        $this->database_connection = new DatabaseConnection();
     }
-    
+
+    // TODO: Expression is not allowed as parameter default value
     function addBook($filename, $metadata = new BookMetadata()){
+        require Application::LIB_DIR . 'config.php';
+
         $file_hash = DataIo\FileManager::hash($LIBRARY_DIR . '/' . $filename);
         $args = array('file_name' => "'" . $filename . "'",
                       'file_hash' => "'" . $file_hash . "'");
@@ -25,6 +26,6 @@ class LibraryManager {
             $args[$key] = "'" . $value . "'";
         }
         
-        $database_connection->insertLibraryData($args)
+        $this->database_connection->insertLibraryData($args);
     }
 }

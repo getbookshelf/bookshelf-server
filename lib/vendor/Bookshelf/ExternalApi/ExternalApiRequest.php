@@ -21,7 +21,7 @@ abstract class ExternalApiRequest {
         return $this->results;
     }
 
-    public function get_request_string() {
+    public function getRequestString() {
         return $this->request;
     }
 }
