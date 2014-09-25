@@ -51,6 +51,7 @@ class DatabaseConnection {
             $condition_count++;
         }
         if($condition_count == 0) $query .= ' 1';
-        return $this->msqli->query($query);
+        $result = $this->msqli->query($query);
+        return $result->fetch_assoc($result);
     }
 }
