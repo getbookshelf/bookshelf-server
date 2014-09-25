@@ -18,7 +18,7 @@ class DatabaseConnection {
     }
 
     // TODO: Implement proper methods for certain database actions; ideally we don't want to directly run SQL queries at all
-    function execute_query($query) {
+    function executeQuery($query) {
         $result = $this->mysqli->query($query);
 
         return $result->fetch_array();
@@ -31,7 +31,10 @@ class DatabaseConnection {
         $this->mysqli->query($query);
     }
     
-    function selectLibraryData($conditions=array(), $fields=array()){
+    function selectLibraryData($conditions=null, $fields=null){
+        if($conditions===null) $conditions=array();
+        if($fields===null) $fields=array();
+        
         $fields_query = (empty($fields) ? '*' : join(', ', $fields));
         $query = "FROM library SELECT $fields_query WHERE";
         $condition_count = 0;

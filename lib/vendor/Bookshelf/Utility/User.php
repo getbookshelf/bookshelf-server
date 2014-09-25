@@ -8,11 +8,11 @@ use Bookshelf\DataIo\DatabaseConnection;
 class User {
 
     // TODO: Implement proper OO User class, currently I am just using the old functions as statics
-    public static function is_authenticated($name, $password) {
-        $databaseConnection = new DatabaseConnection();
+    public static function isAuthenticated($name, $password) {
+        $database_connection = new DatabaseConnection();
         require Application::ROOT_DIR . 'config.php';
 
-        $row = $databaseConnection->execute_query("SELECT passwd_hash FROM users WHERE username='$name'");
+        $row = $database_connection->executeQuery("SELECT passwd_hash FROM users WHERE username='$name'");
 
 //        echo hash('sha256', $password . $SALT) . '<br>';
 //        echo $DB_PW;
@@ -27,7 +27,7 @@ class User {
         }
     }
 
-    public static function show_login_form() {
+    public static function showLoginForm() {
         print '<div class="wrapper">
             <form action="#" method="post">
                 <h2>Login</h2>

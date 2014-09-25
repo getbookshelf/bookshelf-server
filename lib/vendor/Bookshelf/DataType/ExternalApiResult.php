@@ -14,7 +14,7 @@ class ExternalApiResult {
     
     public function __toString() {
         $return_string = '';
-        foreach ( $this->result_collection as $metadata ) {
+        foreach($this->result_collection as $metadata) {
             $return_string .= $metadata->title; // TODO: More advanced printout.
         }
 
