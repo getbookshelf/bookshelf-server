@@ -28,6 +28,6 @@ class DatabaseConnection {
         $columns = join(', ', array_keys($args));
         $values = join(', ', $args);
         $sql = "INSERT INTO library ($columns) VALUES ($values)";
-        mysqli_query($sql);
+        mysqli_query($this->con, $sql);
     }
 }

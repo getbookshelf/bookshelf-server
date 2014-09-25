@@ -2,6 +2,7 @@
 
 namespace Bookshelf\Utility;
 
+use Bookshelf\Core\Application;
 use Bookshelf\DataIo\DatabaseConnection;
 
 class User {
