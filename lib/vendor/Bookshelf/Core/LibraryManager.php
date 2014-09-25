@@ -12,12 +12,12 @@ class LibraryManager {
     private $database_connection;
     
     function __construct() {
-        $database_connection = new DatabaseConnection();
+        $this->database_connection = new DatabaseConnection();
     }
     
-    function addBook($filename, $metadata = new BookMetadata()){
+    function addBook($file_name, $metadata = new BookMetadata()){
         $file_hash = DataIo\FileManager::hash($LIBRARY_DIR . '/' . $filename);
-        $args = array('file_name' => "'" . $filename . "'",
+        $args = array('file_name' => "'" . $file_name . "'",
                       'file_hash' => "'" . $file_hash . "'");
         
         $args .= $metadata->getArray();
@@ -25,6 +25,17 @@ class LibraryManager {
             $args[$key] = "'" . $value . "'";
         }
         
-        $database_connection->insertLibraryData($args)
+        $this->database_connection->insertLibraryData($args)
+    }
+    
+    function getBook($file_name, $file_hash) {
+        $result = $this->database_connection->selectLibraryData(array('file_name' => $file_name, 
+                                                                      'file_hash' => $file_hash));
+        return (empty($result[0]) ? -1 : $result[0]);
+    }
+    
+    function listBooks() {
+        $result = $this->database_connection->selectLibraryData(NULL, array('file_name', 'file_hash', 'title'));
+        return (empty($result[0]) ? -1 : $result[0]);
     }
 }
