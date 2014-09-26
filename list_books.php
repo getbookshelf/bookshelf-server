@@ -8,4 +8,4 @@ include( __DIR__ . '/inc/header.php');
 $library_manager = new \Bookshelf\Core\LibraryManager();
 $book_list = $library_manager->listBooks();
 
-printf($book_list);
+print_r($book_list);

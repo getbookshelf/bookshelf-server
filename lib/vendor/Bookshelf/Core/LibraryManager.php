@@ -39,6 +39,6 @@ class LibraryManager {
     
     function listBooks() {
         $result = $this->database_connection->selectLibraryData(null, array('file_name', 'file_hash', 'title'));
-        return (empty($result[0]) ? -1 : $result[0]);
+        return (empty($result) ? -1 : $result);
     }
 }

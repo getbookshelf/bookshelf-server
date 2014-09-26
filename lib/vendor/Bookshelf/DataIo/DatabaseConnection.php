@@ -31,12 +31,12 @@ class DatabaseConnection {
         $this->mysqli->query($query);
     }
     
-    function selectLibraryData($conditions = null, $fields = null){
-        if($conditions === null) $conditions=array();
-        if($fields === null) $fields=array();
+    function selectLibraryData($conditions = null, $fields = null) {
+        if($conditions === null) $conditions = array();
+        if($fields === null) $fields = array();
         
         $fields_query = (empty($fields) ? '*' : join(', ', $fields));
-        $query = "FROM library SELECT {$fields_query} WHERE";
+        $query = "SELECT {$fields_query} FROM library WHERE";
         $condition_count = 0;
         if(isset($conditions['id'])) {
             $query .= ' id = ' . "'" . $conditions['id'] . "'";
@@ -51,7 +51,15 @@ class DatabaseConnection {
             $condition_count++;
         }
         if($condition_count == 0) $query .= ' 1';
-        $result = $this->msqli->query($query);
-        return $result->fetch_assoc();
+
+        $result = $this->mysqli->query($query);
+
+        if($result) {
+            return $result->fetch_assoc();
+        }
+        else {
+            // TODO: Throw error
+            return false;
+        }
     }
 }
