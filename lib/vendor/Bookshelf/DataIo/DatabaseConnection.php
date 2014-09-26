@@ -3,6 +3,8 @@
 namespace Bookshelf\DataIo;
 
 use Bookshelf\Core\Application;
+use Bookshelf\Utility\ErrorHandler;
+use Bookshelf\Utility\ErrorLevel;
 
 class DatabaseConnection {
     private $mysqli;
@@ -13,7 +15,7 @@ class DatabaseConnection {
         $this->mysqli = new \mysqli($DB_HOST, $DB_USER, $DB_PW, $DB_NAME);
 
         if($this->mysqli->connect_errno) {
-            echo 'Could not connect to database.';
+            ErrorHandler::throwError('Could not connect to database.', ErrorLevel::CRITICAL);
         }
     }
 
@@ -54,12 +56,6 @@ class DatabaseConnection {
 
         $result = $this->mysqli->query($query);
 
-        if($result) {
-            return $result->fetch_assoc();
-        }
-        else {
-            // TODO: Throw error
-            return false;
-        }
+        return $result->fetch_assoc();
     }
 }

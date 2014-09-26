@@ -14,11 +14,6 @@ class User {
 
         $row = $database_connection->executeQuery("SELECT passwd_hash FROM users WHERE username='$name'");
 
-//        echo hash('sha256', $password . $SALT) . '<br>';
-//        echo $DB_PW;
-//        echo $row['passwd_hash'];
-//        exit;
-
         if(hash('sha256', $password . $SALT) == $row['passwd_hash']){
             return true;
         }

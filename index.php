@@ -4,7 +4,6 @@ session_start();
 include(__DIR__ . '/inc/auth.php');
 
 include( __DIR__ . '/inc/header.php');
-
 ?>
     <h1>Bookshelf</h1>
 

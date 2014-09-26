@@ -6,7 +6,7 @@ include(__DIR__ . '/inc/auth.php');
 include( __DIR__ . '/inc/header.php');
 
 if(!isset($_POST['request'])) {
-    //Error: No request.
+    \Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
     header('Location: index.php');
     exit();
 }
