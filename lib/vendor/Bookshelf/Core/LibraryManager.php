@@ -13,24 +13,22 @@ class LibraryManager {
         $this->database_connection = new DatabaseConnection();
     }
 
-    function addBook($filename, $metadata = null) {
+    function addBook($file_name, $metadata = null) {
         // unfortunately, there is no other way to set a parameter default value to an expression: http://stackoverflow.com/a/5859401
-        if($metadata === null) {
-            $metadata = new BookMetadata();
-        }
+        if($metadata === null) $metadata = new BookMetadata();
 
         require Application::LIB_DIR . 'config.php';
 
-        $file_hash = DataIo\FileManager::hash($LIBRARY_DIR . '/' . $filename);
-        $args = array('file_name' => "'" . $file_name . "'",
-                      'file_hash' => "'" . $file_hash . "'");
+        $file_hash = DataIo\FileManager::hash($LIBRARY_DIR . '/' . $file_name);
+        $args = array('file_name' => $file_name,
+                      'file_hash' => $file_hash);
         
         $args .= $metadata->getArray();
         foreach($args as $key => $value) {
             $args[$key] = "'" . $value . "'";
         }
         
-        $this->database_connection->insertLibraryData($args)
+        $this->database_connection->insertLibraryData($args);
     }
     
     function getBook($file_name, $file_hash) {
@@ -40,7 +38,7 @@ class LibraryManager {
     }
     
     function listBooks() {
-        $result = $this->database_connection->selectLibraryData(NULL, array('file_name', 'file_hash', 'title'));
+        $result = $this->database_connection->selectLibraryData(null, array('file_name', 'file_hash', 'title'));
         return (empty($result[0]) ? -1 : $result[0]);
     }
 }

@@ -29,9 +29,9 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
         }
 
         // If limit == 0: set row limit to the number of returned rows, else set row limit to $limit
-        $max_rows = $limit == 0 ? count($data_array['items']) : $limit;
+        $max_rows = ($limit == 0 ? count($data_array['items']) : $limit);
         // If row limit is larger than number of returned rows: set row limit to number of rows returned
-        $max_rows = $max_rows > count($data_array['items']) ? count($data_array['items']) : $max_rows;
+        $max_rows = ($max_rows > count($data_array['items']) ? count($data_array['items']) : $max_rows);
 
         for($i = 0; $i < $max_rows; $i++) {
             $current_book_metadata = new BookMetadata();

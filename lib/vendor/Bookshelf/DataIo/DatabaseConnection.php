@@ -27,18 +27,18 @@ class DatabaseConnection {
     function insertLibraryData($args) {
         $columns = join(', ', array_keys($args));
         $values = join(', ', $args);
-        $query = "INSERT INTO library ($columns) VALUES ($values)";
+        $query = "INSERT INTO library ({$columns}) VALUES ({$values})";
         $this->mysqli->query($query);
     }
     
-    function selectLibraryData($conditions=null, $fields=null){
-        if($conditions===null) $conditions=array();
-        if($fields===null) $fields=array();
+    function selectLibraryData($conditions = null, $fields = null){
+        if($conditions === null) $conditions=array();
+        if($fields === null) $fields=array();
         
         $fields_query = (empty($fields) ? '*' : join(', ', $fields));
-        $query = "FROM library SELECT $fields_query WHERE";
+        $query = "FROM library SELECT {$fields_query} WHERE";
         $condition_count = 0;
-        if(isset($conditions[id])) {
+        if(isset($conditions['id'])) {
             $query .= ' id = ' . "'" . $conditions['id'] . "'";
             $condition_count++;
         } 
@@ -47,11 +47,11 @@ class DatabaseConnection {
             $condition_count++;
         }
         if (isset($condtions['file_hash'])) {
-            $query .= ($condition_count > 0 ? ' AND ' : ' ') . "'" . $conditions['file_hash'] : "'";
+            $query .= ($condition_count > 0 ? ' AND ' : ' ') . "'" . $conditions['file_hash'] . "'";
             $condition_count++;
         }
         if($condition_count == 0) $query .= ' 1';
         $result = $this->msqli->query($query);
-        return $result->fetch_assoc($result);
+        return $result->fetch_assoc();
     }
 }

@@ -17,6 +17,11 @@ include( __DIR__ . '/inc/header.php');
     </p>
 
     <p>
+        <h2>Show the library</h2>
+        <p><a href="list_books.php">List Books</a></p>
+    </p>
+
+    <p>
         <h2>Upload eBook</h2>
         <form enctype="multipart/form-data" action="readfile.php" method="POST">
             <input name="file" type="file" /><br>
