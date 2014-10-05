@@ -72,3 +72,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Files custom to the specific environment
+config.php
