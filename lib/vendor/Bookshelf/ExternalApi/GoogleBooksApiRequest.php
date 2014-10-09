@@ -7,11 +7,11 @@ use Bookshelf\DataType\BookMetadata;
 
 // implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
 class GoogleBooksApiRequest extends ExternalApiRequest {
-    public static function request($request) {
+    public function request($request) {
         $this->volumeSearch($request);
     }
 
-    public static function volumeSearch($q, $limit = 0) {
+    public function volumeSearch($q, $limit = 0) {
         $this->request = $q;
 
         $ch = curl_init();

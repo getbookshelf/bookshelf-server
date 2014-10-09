@@ -13,7 +13,7 @@ class LibraryManager {
         $this->database_connection = new DatabaseConnection();
     }
 
-    public static function addBook($file_name, $metadata = null) {
+    public function addBook($file_name, $metadata = null) {
         // unfortunately, there is no other way to set a parameter default value to an expression: http://stackoverflow.com/a/5859401
         if($metadata === null) $metadata = new BookMetadata();
 

@@ -26,7 +26,7 @@ class DatabaseConnection {
         return $result->fetch_array();
     }
     
-    public static function insertLibraryData($args) {
+    public function insertLibraryData($args) {
         $columns = join(', ', array_keys($args));
         $values = join(', ', $args);
         $query = "INSERT INTO library ({$columns}) VALUES ({$values})";
