@@ -18,4 +18,6 @@ $gb_request->volumeSearch($request, 3);
 echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . '\'</h1>';
 echo '<h2>Choose the metadata fitting your book the best.</h2>';
 echo '<a href="index.php">back</a><br>';
-$gb_request->results();
+echo '<form action="" method="get">';
+echo $gb_request->results()->toHtmlTable(true, 2);
+echo '<input type="submit" value="Submit"></form>';

@@ -17,4 +17,4 @@ $gb_request->volumeSearch($request, 3);
 
 echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . '\'</h1>';
 echo '<a href="index.php">back</a><br>';
-print_r($gb_request->results());
+echo $gb_request->results()->toHtmlTable();
