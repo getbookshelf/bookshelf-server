@@ -9,11 +9,11 @@ use Bookshelf\DataIo;
 class LibraryManager {
     private $database_connection;
     
-    function __construct() {
+    public function __construct() {
         $this->database_connection = new DatabaseConnection();
     }
 
-    function addBook($file_name, $metadata = null) {
+    public static function addBook($file_name, $metadata = null) {
         // unfortunately, there is no other way to set a parameter default value to an expression: http://stackoverflow.com/a/5859401
         if($metadata === null) $metadata = new BookMetadata();
 
@@ -31,13 +31,13 @@ class LibraryManager {
         $this->database_connection->insertLibraryData($args);
     }
     
-    function getBook($file_name, $file_hash) {
+    public function getBook($file_name, $file_hash) {
         $result = $this->database_connection->selectLibraryData(array('file_name' => $file_name, 
                                                                       'file_hash' => $file_hash));
         return (empty($result[0]) ? -1 : $result[0]);
     }
     
-    function listBooks() {
+    public function listBooks() {
         $result = $this->database_connection->selectLibraryData(null, array('file_name', 'file_hash', 'title'));
         return (empty($result) ? -1 : $result);
     }

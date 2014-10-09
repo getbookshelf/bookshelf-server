@@ -9,7 +9,7 @@ use Bookshelf\Utility\ErrorLevel;
 class DatabaseConnection {
     private $mysqli;
 
-    function __construct() {
+    public function __construct() {
         require Application::ROOT_DIR . 'config.php';
 
         $this->mysqli = new \mysqli($DB_HOST, $DB_USER, $DB_PW, $DB_NAME);
@@ -20,20 +20,20 @@ class DatabaseConnection {
     }
 
     // TODO: Implement proper methods for certain database actions; ideally we don't want to directly run SQL queries at all
-    function executeQuery($query) {
+    public function executeQuery($query) {
         $result = $this->mysqli->query($query);
 
         return $result->fetch_array();
     }
     
-    function insertLibraryData($args) {
+    public static function insertLibraryData($args) {
         $columns = join(', ', array_keys($args));
         $values = join(', ', $args);
         $query = "INSERT INTO library ({$columns}) VALUES ({$values})";
         $this->mysqli->query($query);
     }
     
-    function selectLibraryData($conditions = null, $fields = null) {
+    public function selectLibraryData($conditions = null, $fields = null) {
         if($conditions === null) $conditions = array();
         if($fields === null) $fields = array();
         

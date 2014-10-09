@@ -33,3 +33,4 @@ class BookMetadata {
         return $result;
     }
 }
+
