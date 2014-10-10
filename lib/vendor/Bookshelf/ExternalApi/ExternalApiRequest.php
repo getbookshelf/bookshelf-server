@@ -7,6 +7,7 @@ use Bookshelf\DataType;
 abstract class ExternalApiRequest {
     protected $results;
     protected $request;
+    public $identifier = 'Generic';
 
     public function __construct() {
         $this->results = new DataType\ExternalApiResult();

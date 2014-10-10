@@ -7,6 +7,12 @@ use Bookshelf\DataType\BookMetadata;
 
 // implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
 class GoogleBooksApiRequest extends ExternalApiRequest {
+    const GB_ID = 'GoogleBooks';
+
+    public function __construct(){
+        $this->identifier = GB_ID;
+    }
+
     public function request($request) {
         $this->volumeSearch($request);
     }
