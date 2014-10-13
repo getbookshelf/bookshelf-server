@@ -5,6 +5,8 @@ namespace Bookshelf\ExternalApi;
 use Bookshelf\DataType;
 use Bookshelf\DataType\BookMetadata;
 use Bookshelf\DataIo;
+use Bookshelf\Utility\ErrorHandler;
+use Bookshelf\Utility\ErrorLevel;
 
 // implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
 class GoogleBooksApiRequest extends ExternalApiRequest {
@@ -27,6 +29,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
 
         if(count($data_array['items']) <= 0) {
             $this->results = new DataType\ExternalApiResult();
+            ErrorHandler::throwError('Invalid request. API did not return any results.', ErrorLevel::ERROR);
             return;
         }
 
@@ -62,6 +65,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
 
         if($data_array['error']) {
             $this->results = new DataType\ExternalApiResult();
+            ErrorHandler::throwError('Invalid request. API did not return any results.', ErrorLevel::ERROR);
             return;
         }
 
