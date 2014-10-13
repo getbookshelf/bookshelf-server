@@ -53,7 +53,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
                 $current_book_metadata->title = $data_array['items'][$i]['volumeInfo']['title'];
             }
 
-            $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$i}");
+            $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['items'][$i]['volumeInfo']['id']}");
         }
     }
 
@@ -83,6 +83,6 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             $current_book_metadata->title = $data_array['volumeInfo']['title'];
         }
 
-        $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$identifier}");
+        $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['volumeInfo']['id']}");
     }
 }
