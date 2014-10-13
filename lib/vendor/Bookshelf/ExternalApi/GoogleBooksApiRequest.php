@@ -4,13 +4,15 @@ namespace Bookshelf\ExternalApi;
 
 use Bookshelf\DataType;
 use Bookshelf\DataType\BookMetadata;
+use Bookshelf\DataIo;
 
 // implemented according to https://developers.google.com/books/docs/v1/using#PerformingSearch
 class GoogleBooksApiRequest extends ExternalApiRequest {
     const GB_ID = 'GoogleBooks';
 
     public function __construct(){
-        $this->identifier = GB_ID;
+        $this->identifier = self::GB_ID;
+        parent::__construct();
     }
 
     public function request($request) {
@@ -20,13 +22,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
     public function volumeSearch($q, $limit = 0) {
         $this->request = $q;
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/books/v1/volumes?q=' . urlencode($q). '&prettyPrint=true');
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $json_string = curl_exec($ch);
-        curl_close($ch);
-
+        $json_string = DataIo\NetworkConnection::curlRequest('https://www.googleapis.com/books/v1/volumes?q=' . urlencode($q). '&prettyPrint=true');
         $data_array = json_decode($json_string, true);
 
         if(count($data_array['items']) <= 0) {
@@ -56,5 +52,11 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
 
             $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$i}");
         }
+    }
+
+    public function getBookFromIdentifier($identifier) {
+        $book_metadata = new BookMetadata();
+
+        return $book_metadata;
     }
 }

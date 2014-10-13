@@ -17,6 +17,8 @@ abstract class ExternalApiRequest {
     // No limit on the number of results.
     abstract public function request($request);
 
+    abstract public function getBookFromIdentifier($identifier);
+
     // returns an array of \Bookshelf\DataType\BookMetadata for the different results or an empty array for no results
     public function results(){
         return $this->results;
