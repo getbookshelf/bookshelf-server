@@ -16,6 +16,7 @@ class DatabaseConnection {
 
         if($this->mysqli->connect_errno) {
             ErrorHandler::throwError('Could not connect to database.', ErrorLevel::CRITICAL);
+            return;
         }
     }
 
@@ -25,7 +26,8 @@ class DatabaseConnection {
 
         return $result->fetch_array();
     }
-    
+
+    // should not be called directly, only use from LibraryManager::addBook($file_name, $metadata)
     public function insertLibraryData($args) {
         $columns = join(', ', array_keys($args));
         $values = join(', ', $args);
