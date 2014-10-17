@@ -12,12 +12,12 @@ class BookMetadata {
     
     function toArray() {
         $result = array();
-        if (!empty($cover_image)) $result['cover_image'] = $cover_image;
-        if (!empty($title)) $result['title'] = $title;
-        if (!empty($author))$result['author'] = $author;
-        if (!empty($description)) $result['description'] = $description;
-        if (!empty($language)) $result['language'] = $language;
-        if (!empty($identifier)) $result['identifier'] = $identifier;
+        if(!empty($cover_image)) $result['cover_image'] = $cover_image;
+        if(!empty($title)) $result['title'] = $title;
+        if(!empty($author))$result['author'] = $author;
+        if(!empty($description)) $result['description'] = $description;
+        if(!empty($language)) $result['language'] = $language;
+        if(!empty($identifier)) $result['identifier'] = $identifier;
         return $result;
     }
 
