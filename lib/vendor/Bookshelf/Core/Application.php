@@ -12,6 +12,6 @@ class Application {
     const ROOT_DIR = rootdir;
     const LIB_DIR = libdir;
 
-    const VERSION_TEXT = '0.0.1a'; // TODO: decide on a proper versioning scheme
+    const VERSION_TEXT = '0.0.1a';
     const VERSION_CODE = 1;
 }

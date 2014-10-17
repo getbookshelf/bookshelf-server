@@ -69,12 +69,16 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             return;
         }
 
+        foreach($data_array['volumeInfo']['industryIdentifiers'] as $identify) { //TODO: Check array structure
+            if($identify['type']=='ISBN_13') $identifier = $identify['identifier'];
+        }
+
         $current_book_metadata = new BookMetadata();
 
         $current_book_metadata->author = implode(', ', $data_array['volumeInfo']['authors']);
         $current_book_metadata->cover_image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($data_array['volumeInfo']['imageLinks']['smallThumbnail']));
         $current_book_metadata->description = $data_array['volumeInfo']['description'];
-        $current_book_metadata->identifier = $data_array['volumeInfo']['industryIdentifiers'][1]['identifier']; // TODO: see ExternalApiRequest
+        $current_book_metadata->identifier = $identifier;
         $current_book_metadata->language = $data_array['volumeInfo']['language'];
         if($data_array['volumeInfo']['subtitle']) {
             $current_book_metadata->title = $data_array['volumeInfo']['title'] . ' - ' . $data_array['volumeInfo']['subtitle'];
