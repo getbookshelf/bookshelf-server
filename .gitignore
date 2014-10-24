@@ -74,6 +74,7 @@ Temporary Items
 
 # Files custom to the specific environment
 config.php
+config.ini
 
 # Testing files for development
 tmp.php
