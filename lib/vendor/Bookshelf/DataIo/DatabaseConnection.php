@@ -20,6 +20,12 @@ class DatabaseConnection {
         }
     }
 
+    public function readConfigValue($property) {
+        if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
+            return $result->fetch_array(MYSQL_ASSOC)['value'];
+        }
+    }
+
     // TODO: Implement proper methods for certain database actions; ideally we don't want to directly run SQL queries at all
     public function executeQuery($query) {
         $result = $this->mysqli->query($query);

@@ -4,7 +4,6 @@ namespace Bookshelf\Core;
 
 // PHP doesn't allow you to use expressions in the definition of const, therefore we have to use this
 // see: http://stackoverflow.com/a/2787565
-
 define('rootdir', __DIR__ . '/../../../../');
 define('libdir', Application::ROOT_DIR . 'lib');
 
