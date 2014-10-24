@@ -1,5 +1,6 @@
 <?php
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
+use \Bookshelf\DataIo\FileManager;
 
 session_start();
 include(__DIR__ . '/inc/auth.php');
@@ -7,28 +8,16 @@ include(__DIR__ . '/inc/auth.php');
 include(__DIR__ . '/inc/header.php');
 echo '<a href="index.php">back</a><br>';
 
-// TODO: make sure we don't override existing files
-$filename = '/var/www/bookshelf/library/' . basename($_FILES['file']['name']);
+if(isset($_FILES)) {
+    $file_manager = new FileManager();
+    $uploaded_book = $file_manager->uploadBook($_FILES);
 
-if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
-    echo 'upload successful.';
-}
-else {
-    echo 'could not upload to ' . $filename;
-    echo '<pre>';
-    print_r($_FILES);
-    echo '</pre>';
-    exit();
-}
+    $query_string = $uploaded_book->getQueryString();
 
-$query_string = pathinfo($filename, PATHINFO_FILENAME); // filename without extension
-$strings_to_replace = array('-', '_', '.', ',', ';', ':', '/', '|', '+');
-$query_string = str_replace($strings_to_replace, ' ', $query_string);
+    echo '<br>query string: ' . $query_string;
 
-echo '<br>query string: ' . $query_string;
-
-// source: http://stackoverflow.com/a/133997
-echo '<script>
+    // source: http://stackoverflow.com/a/133997
+    echo '<script>
 function post(path, params, method) {
     method = method || "post"; // Set method to post by default if not specified.
 
@@ -53,4 +42,8 @@ function post(path, params, method) {
     form.submit();
 }
 </script>';
-echo '<br><a href="#" onclick="post(\'search.php\', {request: \'' . $query_string . '\'})">send to search.php</a>';
+    echo '<br><a href="#" onclick="post(\'search.php\', {request: \'' . $query_string . '\'})">send to search.php</a>';
+}
+else {
+    \Bookshelf\Utility\ErrorHandler::throwError("No file to upload!", \Bookshelf\Utility\ErrorLevel::WARNING);
+}
