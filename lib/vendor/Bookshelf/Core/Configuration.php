@@ -8,9 +8,9 @@ class Configuration {
     private $ini_data;
     private $db_connection;
 
-    public function __construct() {
+    public function __construct($enable_db = true) {
         $this->ini_data = parse_ini_file(Application::ROOT_DIR . 'config.ini');
-        $this->db_connection = new DatabaseConnection();
+        if($enable_db) $this->db_connection = new DatabaseConnection();
     }
 
     public function getLibraryDir() {
