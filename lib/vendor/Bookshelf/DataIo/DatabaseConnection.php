@@ -3,6 +3,7 @@
 namespace Bookshelf\DataIo;
 
 use Bookshelf\Core\Application;
+use Bookshelf\Core\Configuration;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
@@ -10,9 +11,9 @@ class DatabaseConnection {
     private $mysqli;
 
     public function __construct() {
-        require Application::ROOT_DIR . 'config.php';
+        $config = new Configuration(false);
 
-        $this->mysqli = new \mysqli($DB_HOST, $DB_USER, $DB_PW, $DB_NAME);
+        $this->mysqli = new \mysqli($config->getDatabaseHost(), $config->getDatabaseUser(), $config->getDatabasePassword(), $config->getDatabaseName());
 
         if($this->mysqli->connect_errno) {
             ErrorHandler::throwError('Could not connect to database.', ErrorLevel::CRITICAL);

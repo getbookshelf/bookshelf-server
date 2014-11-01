@@ -2,7 +2,7 @@
 
 namespace Bookshelf\Utility;
 
-use Bookshelf\Core\Application;
+use Bookshelf\Core\Configuration;
 use Bookshelf\DataIo\DatabaseConnection;
 
 class User {
@@ -10,11 +10,11 @@ class User {
     // TODO: Implement proper OO User class, currently I am just using the old functions as statics
     public static function isAuthenticated($name, $password) {
         $database_connection = new DatabaseConnection();
-        require Application::ROOT_DIR . 'config.php';
+        $config = new Configuration(false);
 
         $row = $database_connection->executeQuery("SELECT passwd_hash FROM users WHERE username='$name'");
 
-        if(hash('sha256', $password . $SALT) == $row['passwd_hash']){
+        if(hash('sha256', $password . $config->getSalt()) == $row['passwd_hash']){
             return true;
         }
         else {
