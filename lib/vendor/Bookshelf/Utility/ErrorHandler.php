@@ -3,6 +3,8 @@
 namespace Bookshelf\Utility;
 
 // Unfortunately, PHP doesn't support enums. This (http://php.net/manual/en/class.splenum.php) would work but it requires installing on the target system and I would rather not add additional dependencies
+use Bookshelf\Core\Configuration;
+
 class ErrorLevel {
     // see https://tools.ietf.org/html/rfc5424#section-6.2.1 for log levels
     const EMERGENCY = 0;
@@ -49,9 +51,11 @@ class ErrorHandler {
                 elseif($key['error_level'] == ErrorLevel::INFORMATIONAL) {
                     echo '<div class="error informational">INFORMATIONAL: ' . $key['message'] . '</div>';
                 }
-                // TODO: Only show debug message if debugging is enabled in config.php
                 elseif($key['error_level'] == ErrorLevel::DEBUG) {
-                    echo '<div class="error debug">DEBUG: ' . $key['message'] . '</div>';
+                    $config = new Configuration();
+                    if($config->getDebuggingEnabled()) {
+                        echo '<div class="error debug">DEBUG: ' . $key['message'] . '</div>';
+                    }
                 }
             }
 

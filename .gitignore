@@ -73,7 +73,6 @@ Temporary Items
 .apdisk
 
 # Files custom to the specific environment
-config.php
 config.ini
 
 # Testing files for development

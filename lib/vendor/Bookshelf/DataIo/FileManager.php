@@ -3,6 +3,7 @@
 namespace Bookshelf\DataIo;
 
 use Bookshelf\Core\Application;
+use Bookshelf\Core\Configuration;
 use Bookshelf\DataType\Book;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
@@ -10,12 +11,12 @@ use Bookshelf\Utility\ErrorLevel;
 class FileManager {
 
     public function uploadBook($files_array) {
-        require Application::ROOT_DIR . 'config.php';
+        $config = new Configuration();
 
         $result = new Book();
         $uuid = $this->generateUuid();
 
-        $file = $LIBRARY_DIR . $uuid . pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION);
+        $file = $config->getLibraryDir() . $uuid . pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION);
 
         if(!move_uploaded_file($files_array['file']['tmp_name'], $file)) {
             ErrorHandler::throwError('Could not upload file.', ErrorLevel::ERROR);

@@ -17,6 +17,10 @@ class Configuration {
         return $this->db_connection->readConfigValue('library_dir');
     }
 
+    public function getDebuggingEnabled() {
+        return $this->db_connection->readConfigValue('enable_debugging');
+    }
+
     public function getDatabaseHost() {
         return $this->ini_data['db_host'];
     }
