@@ -16,20 +16,8 @@ class LibraryManager {
         $this->config = new Configuration();
     }
 
-    public function addBook($file_name, $metadata = null) {
-        // unfortunately, there is no other way to set a parameter default value to an expression: http://stackoverflow.com/a/5859401
-        if($metadata === null) $metadata = new BookMetadata();
-
-        $file_hash = DataIo\FileManager::hash($this->config->getLibraryDir() . '/' . $file_name);
-        $args = array('file_name' => $file_name,
-                      'file_hash' => $file_hash);
-        
-        $args .= $metadata->getArray();
-        foreach($args as $key => $value) {
-            $args[$key] = "'" . $value . "'";
-        }
-        
-        $this->database_connection->insertLibraryData($args);
+    public function addBook($book) {
+        $this->database_connection->insertLibraryData($book);
     }
     
     public function getBook($file_name, $file_hash) {

@@ -2,8 +2,8 @@
 
 namespace Bookshelf\DataIo;
 
-use Bookshelf\Core\Application;
 use Bookshelf\Core\Configuration;
+use Bookshelf\DataType\Book;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
@@ -34,11 +34,18 @@ class DatabaseConnection {
         return $result->fetch_array();
     }
 
-    // should not be called directly, only use from LibraryManager::addBook($file_name, $metadata)
-    public function insertLibraryData($args) {
-        $columns = join(', ', array_keys($args));
-        $values = join(', ', $args);
-        $query = "INSERT INTO library ({$columns}) VALUES ({$values})";
+    // should not be called directly, only use from LibraryManager::addBook
+    public function insertLibraryData($book) {
+        $file_name = $book->original_name . $book->original_extension;
+        $uuid = $book->uuid;
+        $cover_image = $book->metadata->cover_image;
+        $title = $book->metadata->title;
+        $author = $book->metadata->author;
+        $description = $book->metadata->description;
+        $language = $book->metadata->language;
+        $identifier = $book->metadata->identifier;
+
+        $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$file_name}', '{$uuid}', '{$cover_image}', '{$title}', '{$author}', '{$description}', '{$language}', '{$identifier}')";
         $this->mysqli->query($query);
     }
     
