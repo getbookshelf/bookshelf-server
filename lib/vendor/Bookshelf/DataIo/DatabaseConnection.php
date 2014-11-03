@@ -67,8 +67,7 @@ class DatabaseConnection {
 
         $query .= " WHERE id = {$id}";
 
-        echo '<script>alert("' . $query . '")</script>';
-        //$this->mysqli->query($query);
+        $this->mysqli->query($query);
     }
     
     public function selectLibraryData($conditions = null, $fields = null) {
