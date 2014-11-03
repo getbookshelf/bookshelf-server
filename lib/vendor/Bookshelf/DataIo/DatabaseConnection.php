@@ -3,7 +3,6 @@
 namespace Bookshelf\DataIo;
 
 use Bookshelf\Core\Configuration;
-use Bookshelf\DataType\Book;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
@@ -47,9 +46,33 @@ class DatabaseConnection {
 
         $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$file_name}', '{$uuid}', '{$cover_image}', '{$title}', '{$author}', '{$description}', '{$language}', '{$identifier}')";
         $this->mysqli->query($query);
+
+        return $this->mysqli->insert_id;
+    }
+
+    // $to_update = array('property' => 'value');
+    // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
+    public function updateLibraryData($id, $to_update) {
+        $query = 'UPDATE library SET';
+
+        foreach($to_update as $property => $value) {
+            // First item does not need a comma
+            if($value === reset($to_update)) {
+                $query .= " {$property} = '{$value}'";
+            }
+            else {
+                $query .= ", {$property} = '{$value}'";
+            }
+        }
+
+        $query .= " WHERE id = {$id}";
+
+        echo '<script>alert("' . $query . '")</script>';
+        //$this->mysqli->query($query);
     }
     
     public function selectLibraryData($conditions = null, $fields = null) {
+        // TODO: Doesn't work anymore
         if($conditions === null) $conditions = array();
         if($fields === null) $fields = array();
         

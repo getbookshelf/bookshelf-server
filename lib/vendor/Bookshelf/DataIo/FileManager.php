@@ -13,7 +13,6 @@ class FileManager {
     public function uploadBook($files_array) {
         $config = new Configuration();
 
-        $result = new Book();
         $uuid = $this->generateUuid();
 
         // path (including filename) where the uploaded book will be stored on the server
@@ -21,16 +20,13 @@ class FileManager {
 
         if(!move_uploaded_file($files_array['file']['tmp_name'], $file)) {
             ErrorHandler::throwError('Could not upload file.', ErrorLevel::ERROR);
-            return;
+            return false;
         }
 
-        $result->uuid = $uuid;
-        $result->original_name = pathinfo(basename($files_array['file']['name']), PATHINFO_FILENAME);
-        $result->original_extension = pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION);
+        $result = new Book($uuid, pathinfo(basename($files_array['file']['name']), PATHINFO_FILENAME), pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION));
 
         $library_manager = new LibraryManager();
-        $library_manager->addBook($result);
-        // TODO: Return book ID
+        return $library_manager->addBook($result);
     }
 
     private function generateUuid(){
