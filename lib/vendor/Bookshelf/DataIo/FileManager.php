@@ -29,6 +29,8 @@ class FileManager {
         return $library_manager->addBook($result);
     }
 
+    // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
+    // TODO: Check if UUID already exists in filesystem, if so generate new one
     private function generateUuid(){
         // see http://rogerstringer.com/2013/11/15/generate-uuids-php/
         return sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',

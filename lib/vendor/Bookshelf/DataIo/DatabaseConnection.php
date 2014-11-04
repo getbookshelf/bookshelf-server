@@ -3,6 +3,8 @@
 namespace Bookshelf\DataIo;
 
 use Bookshelf\Core\Configuration;
+use Bookshelf\DataType\Book;
+use Bookshelf\DataType\BookMetadata;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
@@ -35,7 +37,7 @@ class DatabaseConnection {
 
     // should not be called directly, only use from LibraryManager::addBook
     public function insertLibraryData($book) {
-        $file_name = $book->original_name . $book->original_extension;
+        $file_name = $book->original_name . '.' . $book->original_extension;
         $uuid = $book->uuid;
         $cover_image = $book->metadata->cover_image;
         $title = $book->metadata->title;
@@ -68,6 +70,24 @@ class DatabaseConnection {
         $query .= " WHERE id = {$id}";
 
         $this->mysqli->query($query);
+    }
+
+    public function getBookById($id) {
+        if($result = $this->mysqli->query("SELECT * FROM library WHERE id = {$id}")) {
+            $data = $result->fetch_array(MYSQL_ASSOC);
+            $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
+            $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
+
+            $metadata = new BookMetadata();
+            $metadata->cover_image = $data['cover_image'];
+            $metadata->title = $data['title'];
+            $metadata->author = $data['author'];
+            $metadata->description = $data['description'];
+            $metadata->language = $data['language'];
+            $metadata->identifier = $data['identifier'];
+
+            return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        }
     }
     
     public function selectLibraryData($conditions = null, $fields = null) {

@@ -10,11 +10,9 @@ echo '<a href="index.php">back</a><br>';
 
 if(isset($_FILES)) {
     $file_manager = new FileManager();
-    $uploaded_book = $file_manager->uploadBook($_FILES);
+    $uploaded_book_id = $file_manager->uploadBook($_FILES);
 
-    $query_string = $uploaded_book->getQueryString();
-
-    echo '<br>query string: ' . $query_string;
+    echo '<br>Upload successful. ID of the new book: ' . $uploaded_book_id;
 
     // source: http://stackoverflow.com/a/133997
     echo '<script>
@@ -42,8 +40,8 @@ function post(path, params, method) {
     form.submit();
 }
 </script>';
-    echo '<br><a href="#" onclick="post(\'search.php\', {request: \'' . $query_string . '\'})">send to search.php</a>';
+    echo '<br><a href="#" onclick="post(\'search.php\', {request: \'' . $query_string . '\'})">Set metadata</a>';
 }
 else {
-    \Bookshelf\Utility\ErrorHandler::throwError("No file to upload!", \Bookshelf\Utility\ErrorLevel::WARNING);
+    \Bookshelf\Utility\ErrorHandler::throwError('No file to upload.', \Bookshelf\Utility\ErrorLevel::ERROR);
 }
