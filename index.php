@@ -22,7 +22,7 @@ include( __DIR__ . '/inc/header.php');
 
     <p>
         <h2>Upload eBook</h2>
-        <form enctype="multipart/form-data" action="readfile.php" method="POST">
+        <form enctype="multipart/form-data" action="upload_book.php" method="POST">
             <input name="file" type="file" /><br>
             <input type="submit" value="Upload" />
         </form>
