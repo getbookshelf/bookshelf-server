@@ -116,4 +116,8 @@ class DatabaseConnection {
 
         return $result->fetch_assoc();
     }
+
+    public function escape($string) {
+        return $this->mysqli->real_escape_string($string);
+    }
 }

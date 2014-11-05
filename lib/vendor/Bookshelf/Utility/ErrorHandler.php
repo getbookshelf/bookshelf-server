@@ -18,6 +18,7 @@ class ErrorLevel {
 }
 
 class ErrorHandler {
+    // TODO: Handle different error levels differently, e.g.: for levels 3 (error) and above, automatically set header('Location: index.php'); and exit();
     public static function throwError($message, $error_level) {
         if(!$_SESSION['errors']) {
             $_SESSION['errors'] = array();
@@ -26,6 +27,7 @@ class ErrorHandler {
         array_push($_SESSION['errors'], array('message' => $message, 'error_level' => $error_level));
     }
 
+    // TODO: Optimize displaying of errors. Currently, they are only displayed on a new request. Possible option: Run displayErrors() at the bottom of each page (instead of at the top) and display errors either as JS alert or as error box (=> CSS to make it appear on top of content)
     public static function displayErrors() {
         if(!empty($_SESSION['errors'])) {
             foreach($_SESSION['errors'] as $error => $key) {

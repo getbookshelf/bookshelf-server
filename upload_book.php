@@ -40,7 +40,7 @@ function post(path, params, method) {
     form.submit();
 }
 </script>';
-    echo '<br><a href="#" onclick="post(\'search.php\', {request: \'' . $query_string . '\'})">Set metadata</a>';
+    echo '<br><a href="#" onclick="post(\'search.php\', {id: \'' . $uploaded_book_id . '\'})">Set metadata</a>';
 }
 else {
     \Bookshelf\Utility\ErrorHandler::throwError('No file to upload.', \Bookshelf\Utility\ErrorLevel::ERROR);
