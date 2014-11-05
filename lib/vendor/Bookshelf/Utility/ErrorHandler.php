@@ -3,6 +3,8 @@
 namespace Bookshelf\Utility;
 
 // Unfortunately, PHP doesn't support enums. This (http://php.net/manual/en/class.splenum.php) would work but it requires installing on the target system and I would rather not add additional dependencies
+use Bookshelf\Core\Configuration;
+
 class ErrorLevel {
     // see https://tools.ietf.org/html/rfc5424#section-6.2.1 for log levels
     const EMERGENCY = 0;
@@ -16,6 +18,7 @@ class ErrorLevel {
 }
 
 class ErrorHandler {
+    // TODO: Handle different error levels differently, e.g.: for levels 3 (error) and above, automatically set header('Location: index.php'); and exit();
     public static function throwError($message, $error_level) {
         if(!$_SESSION['errors']) {
             $_SESSION['errors'] = array();
@@ -24,6 +27,7 @@ class ErrorHandler {
         array_push($_SESSION['errors'], array('message' => $message, 'error_level' => $error_level));
     }
 
+    // TODO: Optimize displaying of errors. Currently, they are only displayed on a new request. Possible option: Run displayErrors() at the bottom of each page (instead of at the top) and display errors either as JS alert or as error box (=> CSS to make it appear on top of content)
     public static function displayErrors() {
         if(!empty($_SESSION['errors'])) {
             foreach($_SESSION['errors'] as $error => $key) {
@@ -49,9 +53,11 @@ class ErrorHandler {
                 elseif($key['error_level'] == ErrorLevel::INFORMATIONAL) {
                     echo '<div class="error informational">INFORMATIONAL: ' . $key['message'] . '</div>';
                 }
-                // TODO: Only show debug message if debugging is enabled in config.php
                 elseif($key['error_level'] == ErrorLevel::DEBUG) {
-                    echo '<div class="error debug">DEBUG: ' . $key['message'] . '</div>';
+                    $config = new Configuration();
+                    if($config->getDebuggingEnabled()) {
+                        echo '<div class="error debug">DEBUG: ' . $key['message'] . '</div>';
+                    }
                 }
             }
 

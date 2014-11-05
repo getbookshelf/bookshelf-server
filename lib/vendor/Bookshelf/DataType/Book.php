@@ -6,12 +6,17 @@ namespace Bookshelf\DataType;
 
 class Book {
     public $metadata;
-    public $uuid = "";
-    public $original_name = "";
-    public $original_extension = "";
+    public $uuid = '';
+    public $original_name = '';
+    public $original_extension = '';
 
-    public function __construct() {
-        $this->metadata = new BookMetadata();
+    // every instance of Book MUST have UUID, original name and extension set
+    public function __construct($uuid, $original_name, $original_extension, $metadata = null) {
+        $this->uuid = $uuid;
+        $this->original_name = $original_name;
+        $this->original_extension = $original_extension;
+
+        $this->metadata = $metadata ? $metadata : new BookMetadata();
     }
 
     public function getQueryString() {
@@ -22,5 +27,4 @@ class Book {
 
         return $query_string;
     }
-
 } 

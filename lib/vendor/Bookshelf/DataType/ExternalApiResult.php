@@ -4,15 +4,13 @@ namespace Bookshelf\DataType;
 
 class ExternalApiResult {
     private $result_collection = array();
-    
-    /* 
-        @param metadata BookMetadata metadata to add to the result
-    */
+
     public function addMetadata($metadata, $api_identifier) {
         $result = array('metadata' => $metadata, 'api_identifier' => $api_identifier);
         array_push($this->result_collection, $result);
     }
-    
+
+    // TODO: Do we need that anywhere?
     public function __toString() {
         $return_string = '';
         foreach($this->result_collection as $metadata) {
@@ -32,5 +30,9 @@ class ExternalApiResult {
 
         $result .= '</table>';
         return $result;
+    }
+
+    public function getResults() {
+        return $this->result_collection;
     }
 }

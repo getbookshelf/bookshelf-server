@@ -53,11 +53,11 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
                 $current_book_metadata->title = $data_array['items'][$i]['volumeInfo']['title'];
             }
 
-            $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['items'][$i]['volumeInfo']['id']}");
+            $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['items'][$i]['id']}");
         }
     }
 
-    public function getBookFromIdentifier($identifier) {
+    public function getBookByIdentifier($identifier) {
         $this->request = $identifier;
 
         $json_string = DataIo\NetworkConnection::curlRequest('https://www.googleapis.com/books/v1/volumes/' . urlencode($identifier));
@@ -69,8 +69,8 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             return;
         }
 
-        foreach($data_array['volumeInfo']['industryIdentifiers'] as $identify) { //TODO: Check array structure
-            if($identify['type']=='ISBN_13') $identifier = $identify['identifier'];
+        foreach($data_array['volumeInfo']['industryIdentifiers'] as $identify) { // TODO: Check array structure
+            if($identify['type'] == 'ISBN_13') $identifier = $identify['identifier'];
         }
 
         $current_book_metadata = new BookMetadata();
@@ -87,6 +87,6 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             $current_book_metadata->title = $data_array['volumeInfo']['title'];
         }
 
-        $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['volumeInfo']['id']}");
+        $this->results->addMetadata($current_book_metadata, "GoogleBooks.{$data_array['id']}");
     }
 }
