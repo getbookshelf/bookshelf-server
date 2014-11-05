@@ -5,10 +5,10 @@ include(__DIR__ . '/inc/auth.php');
 
 include(__DIR__ . '/inc/header.php');
 
-if(!isset($_POST['id']) OR !isset($_POST['api_identifier'])) {
-    //\Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
-    //header('Location: index.php');
-    //exit();
+if(!isset($_POST['id']) OR !isset($_POST['chosen_book'])) {
+    \Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
+    header('Location: index.php');
+    exit();
 }
 
 $db_con = new \Bookshelf\DataIo\DatabaseConnection();
@@ -19,7 +19,7 @@ $api_id = explode('.', $_POST['chosen_book'], 2)[1];
 switch($used_api) {
     case 'GoogleBooks':
         $api_request = new \Bookshelf\ExternalApi\GoogleBooksApiRequest();
-        $api_request->getBookFromIdentifier($api_id);
+        $api_request->getBookByIdentifier($api_id);
         $result = $api_request->results()->getResults()[0]['metadata'];
 
         $cover_image = $db_con->escape($result->cover_image);
@@ -30,8 +30,8 @@ switch($used_api) {
         $identifier = $db_con->escape($result->identifier);
 
         $to_update = array('cover_image' => $cover_image, 'title' => $title, 'author' => $author, 'description' => $description, 'language' => $language, 'identifier' => $identifier);
-        
-        $db_con->updateLibraryData($id, $to_update);
+
+        $db_con->updateBook($id, $to_update);
         echo 'Update successful.';
         echo '<br><a href="index.php">go back</a>';
 

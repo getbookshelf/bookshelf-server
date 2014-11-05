@@ -57,7 +57,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
         }
     }
 
-    public function getBookFromIdentifier($identifier) {
+    public function getBookByIdentifier($identifier) {
         $this->request = $identifier;
 
         $json_string = DataIo\NetworkConnection::curlRequest('https://www.googleapis.com/books/v1/volumes/' . urlencode($identifier));

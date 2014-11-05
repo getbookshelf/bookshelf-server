@@ -36,7 +36,7 @@ class DatabaseConnection {
     }
 
     // should not be called directly, only use from LibraryManager::addBook
-    public function insertLibraryData($book) {
+    public function insertBook($book) {
         $file_name = $book->original_name . '.' . $book->original_extension;
         $uuid = $book->uuid;
         $cover_image = $book->metadata->cover_image;
@@ -54,7 +54,7 @@ class DatabaseConnection {
 
     // $to_update = array('property' => 'value');
     // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
-    public function updateLibraryData($id, $to_update) {
+    public function updateBook($id, $to_update) {
         $query = 'UPDATE library SET';
 
         foreach($to_update as $property => $value) {
@@ -90,7 +90,7 @@ class DatabaseConnection {
         }
     }
     
-    public function selectLibraryData($conditions = null, $fields = null) {
+    public function getBook($conditions = null, $fields = null) {
         // TODO: Doesn't work anymore
         if($conditions === null) $conditions = array();
         if($fields === null) $fields = array();
