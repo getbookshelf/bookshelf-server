@@ -10,11 +10,12 @@ use Bookshelf\Utility\ErrorLevel;
 
 class DatabaseConnection {
     private $mysqli;
+    private $config;
 
     public function __construct() {
-        $config = new Configuration(false);
+        $this->config = new Configuration(false);
 
-        $this->mysqli = new \mysqli($config->getDatabaseHost(), $config->getDatabaseUser(), $config->getDatabasePassword(), $config->getDatabaseName());
+        $this->mysqli = new \mysqli($this->config->getDatabaseHost(), $this->config->getDatabaseUser(), $this->config->getDatabasePassword(), $this->config->getDatabaseName());
 
         if($this->mysqli->connect_errno) {
             ErrorHandler::throwError('Could not connect to database.', ErrorLevel::CRITICAL);
@@ -28,11 +29,10 @@ class DatabaseConnection {
         }
     }
 
-    // TODO: Implement proper methods for certain database actions; ideally we don't want to directly run SQL queries at all
-    public function executeQuery($query) {
-        $result = $this->mysqli->query($query);
+    public function validateUser($username, $password) {
+        $row = $this->mysqli->query("SELECT passwd_hash FROM users WHERE username='$username'")->fetch_array();
 
-        return $result->fetch_array();
+        return hash('sha256', $password . $this->config->getSalt()) == $row['passwd_hash'];
     }
 
     // should not be called directly, only use from LibraryManager::addBook
@@ -89,32 +89,10 @@ class DatabaseConnection {
             return new Book($data['uuid'], $original_name, $original_extension, $metadata);
         }
     }
-    
-    public function getBook($conditions = null, $fields = null) {
-        // TODO: Doesn't work anymore
-        if($conditions === null) $conditions = array();
-        if($fields === null) $fields = array();
-        
-        $fields_query = (empty($fields) ? '*' : join(', ', $fields));
-        $query = "SELECT {$fields_query} FROM library WHERE";
-        $condition_count = 0;
-        if(isset($conditions['id'])) {
-            $query .= ' id = ' . "'" . $conditions['id'] . "'";
-            $condition_count++;
-        } 
-        if (isset($condtions['file_name'])) {
-            $query .= ($condition_count > 0 ? ' AND ' : ' ') . "'" . $conditions['file_name'] . "'";
-            $condition_count++;
-        }
-        if (isset($condtions['file_hash'])) {
-            $query .= ($condition_count > 0 ? ' AND ' : ' ') . "'" . $conditions['file_hash'] . "'";
-            $condition_count++;
-        }
-        if($condition_count == 0) $query .= ' 1';
 
-        $result = $this->mysqli->query($query);
+    // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
+    public function getBook() {
 
-        return $result->fetch_assoc();
     }
 
     public function escape($string) {
