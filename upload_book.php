@@ -45,3 +45,5 @@ function post(path, params, method) {
 else {
     \Bookshelf\Utility\ErrorHandler::throwError('No file to upload.', \Bookshelf\Utility\ErrorLevel::ERROR);
 }
+
+include( __DIR__ . '/inc/footer.php');

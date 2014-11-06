@@ -16,6 +16,7 @@ class User {
         print '<div class="wrapper">
             <form action="#" method="post">
                 <h2>Login</h2>
+                <p>This can only be accessed by authorized users.</p>
                 <input type="text" name="name" placeholder="Name" required="" autofocus="" />
                 <input type="password" name="password" placeholder="Password" required=""/>
                 <button type="submit">Login</button>
@@ -23,4 +24,4 @@ class User {
         </div>';
     }
 
-} 
+}

@@ -1,6 +1,6 @@
 <?php
-    require_once __DIR__ . '/../lib/vendor/autoload.php';
-    header('Content-type: text/html; charset=utf-8');
+require_once __DIR__ . '/../lib/vendor/autoload.php';
+header('Content-type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,5 +10,5 @@
 	</head>
     <body>
     <div id="wrapper">
-    <?php
-        \Bookshelf\Utility\ErrorHandler::displayErrors();
+<?php
+\Bookshelf\Utility\ErrorHandler::displayErrors();
