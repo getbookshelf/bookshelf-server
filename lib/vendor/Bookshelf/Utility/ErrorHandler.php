@@ -64,4 +64,4 @@ class ErrorHandler {
             $_SESSION['errors'] = array();
         }
     }
-} 
+}

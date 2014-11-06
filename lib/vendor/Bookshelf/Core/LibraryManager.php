@@ -9,7 +9,7 @@ use Bookshelf\DataIo;
 class LibraryManager {
     private $database_connection;
     private $config;
-    
+
     public function __construct() {
         $this->database_connection = new DatabaseConnection();
         // TODO: We should probably allow to pass an existing DB connection to the Configuration constructor as we have one here already
@@ -20,13 +20,13 @@ class LibraryManager {
     public function addBook($book) {
         return $this->database_connection->insertBook($book);
     }
-    
-    public function getBook($file_name, $file_hash) {
+
+    public function getBook() {
         // TODO: Doesn't work anymore
         //$result = $this->database_connection->getBook(array('file_name' => $file_name, 'file_hash' => $file_hash));
         //return (empty($result[0]) ? -1 : $result[0]);
     }
-    
+
     public function listBooks() {
         // TODO: Doesn't work anymore
         //$result = $this->database_connection->getBook(null, array('file_name', 'file_hash', 'title'));

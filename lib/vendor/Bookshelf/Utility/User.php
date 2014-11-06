@@ -23,4 +23,4 @@ class User {
         </div>';
     }
 
-} 
+}

@@ -21,10 +21,10 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
         $this->volumeSearch($request);
     }
 
-    public function volumeSearch($q, $limit = 0) {
-        $this->request = $q;
+    public function volumeSearch($query, $limit = 0) {
+        $this->request = $query;
 
-        $json_string = DataIo\NetworkConnection::curlRequest('https://www.googleapis.com/books/v1/volumes?q=' . urlencode($q) . '&prettyPrint=true');
+        $json_string = DataIo\NetworkConnection::curlRequest('https://www.googleapis.com/books/v1/volumes?q=' . urlencode($query) . '&prettyPrint=true');
         $data_array = json_decode($json_string, true);
 
         if(count($data_array['items']) <= 0) {
@@ -69,7 +69,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             return;
         }
 
-        foreach($data_array['volumeInfo']['industryIdentifiers'] as $identify) { // TODO: Check array structure
+        foreach($data_array['volumeInfo']['industryIdentifiers'] as $identify) {
             if($identify['type'] == 'ISBN_13') $identifier = $identify['identifier'];
         }
 
