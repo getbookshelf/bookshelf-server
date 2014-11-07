@@ -31,3 +31,5 @@ echo '<input type="hidden" name="id" value="' . $id . '">';
 echo $gb_request->results()->toHtmlTable(true);
 echo '<input type="submit" value="Update metadata">';
 echo '</form>';
+
+include( __DIR__ . '/inc/footer.php');

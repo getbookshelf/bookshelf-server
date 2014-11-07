@@ -39,3 +39,5 @@ switch($used_api) {
     default:
         \Bookshelf\Utility\ErrorHandler::throwError('Did not recognize API result.', \Bookshelf\Utility\ErrorLevel::WARNING);
 }
+
+include( __DIR__ . '/inc/footer.php');

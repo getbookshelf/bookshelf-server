@@ -9,3 +9,5 @@ $library_manager = new \Bookshelf\Core\LibraryManager();
 $book_list = $library_manager->listBooks();
 
 print_r($book_list);
+
+include( __DIR__ . '/inc/footer.php');

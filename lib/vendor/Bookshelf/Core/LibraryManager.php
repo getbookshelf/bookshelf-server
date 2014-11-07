@@ -12,14 +12,14 @@ class LibraryManager {
 
     public function __construct() {
         $this->database_connection = new DatabaseConnection();
-        // TODO: We should probably allow to pass an existing DB connection to the Configuration constructor as we have one here already
-        $this->config = new Configuration();
+        $this->config = new Configuration(true, $this->database_connection);
     }
 
     // TODO: Are these methods needed in here? They just forward to the DB con methods...
     public function addBook($book) {
         return $this->database_connection->insertBook($book);
     }
+
 
     public function getBook() {
         // TODO: Doesn't work anymore
