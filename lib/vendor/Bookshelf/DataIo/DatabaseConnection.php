@@ -58,7 +58,7 @@ class DatabaseConnection {
             return $this->mysqli->insert_id;
         }
         else {
-            ErrorHandler::throwError('Inserting book failed.', ErrorLevel::DEBUG);
+            ErrorHandler::throwError('Inserting book ' . $file_name . ' failed.', ErrorLevel::DEBUG);
         }
     }
 
@@ -79,10 +79,7 @@ class DatabaseConnection {
 
         $query .= " WHERE id = {$id}";
 
-        if($this->mysqli->query($query)) {
-
-        }
-        else {
+        if(!$this->mysqli->query($query)) {
             ErrorHandler::throwError('Updating ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
     }
