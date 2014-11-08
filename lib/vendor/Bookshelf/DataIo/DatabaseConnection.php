@@ -38,7 +38,7 @@ class DatabaseConnection {
             return hash('sha256', $password . $this->config->getSalt()) == $row['passwd_hash'];
         }
         else {
-            ErrorHandler::throwError('Validating user ' . $user . ' failed.', ErrorLevel::DEBUG);
+            ErrorHandler::throwError('Validating user ' . $username . ' failed.', ErrorLevel::DEBUG);
         }
     }
 
