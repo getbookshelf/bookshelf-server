@@ -27,4 +27,4 @@ class Book {
 
         return $query_string;
     }
-} 
+}

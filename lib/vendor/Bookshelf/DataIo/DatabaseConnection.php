@@ -27,12 +27,19 @@ class DatabaseConnection {
         if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
             return $result->fetch_array(MYSQL_ASSOC)['value'];
         }
+        else {
+            ErrorHandler::throwError('Reading config value for property ' . $property . ' failed.', ErrorLevel::DEBUG);
+        }
     }
 
     public function validateUser($username, $password) {
-        $row = $this->mysqli->query("SELECT passwd_hash FROM users WHERE username='$username'")->fetch_array();
-
-        return hash('sha256', $password . $this->config->getSalt()) == $row['passwd_hash'];
+        if($result = $this->mysqli->query("SELECT passwd_hash FROM users WHERE username='$username'")) {
+           $row = $result->fetch_array();
+            return hash('sha256', $password . $this->config->getSalt()) == $row['passwd_hash'];
+        }
+        else {
+            ErrorHandler::throwError('Validating user ' . $username . ' failed.', ErrorLevel::DEBUG);
+        }
     }
 
     // should not be called directly, only use from LibraryManager::addBook
@@ -47,9 +54,12 @@ class DatabaseConnection {
         $identifier = $book->metadata->identifier;
 
         $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$file_name}', '{$uuid}', '{$cover_image}', '{$title}', '{$author}', '{$description}', '{$language}', '{$identifier}')";
-        $this->mysqli->query($query);
-
-        return $this->mysqli->insert_id;
+        if($this->mysqli->query($query)) {
+            return $this->mysqli->insert_id;
+        }
+        else {
+            ErrorHandler::throwError('Inserting book ' . $file_name . ' failed.', ErrorLevel::DEBUG);
+        }
     }
 
     // $to_update = array('property' => 'value');
@@ -69,7 +79,9 @@ class DatabaseConnection {
 
         $query .= " WHERE id = {$id}";
 
-        $this->mysqli->query($query);
+        if(!$this->mysqli->query($query)) {
+            ErrorHandler::throwError('Updating ' . $id . ' failed.', ErrorLevel::DEBUG);
+        }
     }
 
     public function getBookById($id) {
@@ -87,6 +99,9 @@ class DatabaseConnection {
             $metadata->identifier = $data['identifier'];
 
             return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        }
+        else {
+            ErrorHandler::throwError('Getting book with ID ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
     }
 
