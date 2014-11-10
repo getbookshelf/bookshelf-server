@@ -33,5 +33,6 @@ include( __DIR__ . '/inc/header.php');
 </div>
 </body>
 </html>
+
 <?php
 include( __DIR__ . '/inc/footer.php');

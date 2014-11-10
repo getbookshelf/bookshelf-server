@@ -27,8 +27,8 @@ class ErrorHandler {
         array_push($_SESSION['errors'], array('message' => $message, 'error_level' => $error_level));
     }
 
-    // TODO: Optimize displaying of errors. Currently, they are only displayed on a new request. Possible option: Run displayErrors() at the bottom of each page (instead of at the top) and display errors either as JS alert or as error box (=> CSS to make it appear on top of content)
-    public static function displayErrors() {
+    // If displayErrors() is called at the bottom of a page, we don't want to output anything as straight HTML as there might be a redirect that would cause the user not to see the message
+    public static function displayErrors($bottom = false) {
         if(!empty($_SESSION['errors'])) {
             foreach($_SESSION['errors'] as $error) {
                 if($error['error_level'] == ErrorLevel::EMERGENCY) {
@@ -52,23 +52,34 @@ class ErrorHandler {
                     echo '<script>window.alert("WARNING: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::NOTICE) {
-                    echo '<div class="error notice">NOTICE: ' . $error['message'] . '</div>';
+                    if(!$bottom) {
+                        echo '<div class="error notice">NOTICE: ' . $error['message'] . '</div>';
+                    }
                     //echo '<script>window.alert("NOTICE: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::INFORMATIONAL) {
-                    echo '<div class="error informational">INFORMATIONAL: ' . $error['message'] . '</div>';
+                    if(!$bottom) {
+                        echo '<div class="error informational">INFORMATIONAL: ' . $error['message'] . '</div>';
+                    }
                     //echo '<script>window.alert("INFORMATIONAL: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::DEBUG) {
                     $config = new Configuration();
                     if($config->getDebuggingEnabled()) {
-                        echo '<div class="error debug">DEBUG: ' . $error['message'] . '</div>';
+                        if(!bottom) {
+                            echo '<div class="error debug">DEBUG: ' . $error['message'] . '</div>';
+                        }
                         //echo '<script>window.alert("DEBUG: ' . $error['message'] . '");</script>';
                     }
                 }
-            }
 
-            $_SESSION['errors'] = array();
+                if(!$bottom) {
+                    // remove item from array, see http://stackoverflow.com/a/2449093
+                    if(($key = array_search($error, $_SESSION['errors'])) !== false) {
+                        unset($_SESSION['errors'][$key]);
+                    }
+                }
+            }
         }
     }
 }

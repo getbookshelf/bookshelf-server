@@ -9,8 +9,8 @@ class BookMetadata {
     public $description;
     public $language; // TODO: Define proper format (i.e. find appropriate ISO guideline)
     public $identifier;
-    
-    function toArray() {
+
+    public function toArray() {
         $result = array();
         if(!empty($cover_image)) $result['cover_image'] = $cover_image;
         if(!empty($title)) $result['title'] = $title;
@@ -21,7 +21,7 @@ class BookMetadata {
         return $result;
     }
 
-    function toHtmlTableRow($add_radio = false, $api_identifier = '') {
+    public function toHtmlTableRow($add_radio = false, $api_identifier = '') {
         $result = '<tr>' . ($add_radio ? '<td><input type="radio" name="chosen_book" value="'. $api_identifier .'">' : '');
         $result .= '<td><img src="' . $this->cover_image . '"></td>';
         $result .= '<td>' . $this->title . ' </td >
@@ -33,4 +33,3 @@ class BookMetadata {
         return $result;
     }
 }
-

@@ -32,5 +32,4 @@ echo $gb_request->results()->toHtmlTable(true);
 echo '<input type="submit" value="Update metadata">';
 echo '</form>';
 
-<?php
 include( __DIR__ . '/inc/footer.php');
