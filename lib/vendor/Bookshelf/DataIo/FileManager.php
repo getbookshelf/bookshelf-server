@@ -32,7 +32,6 @@ class FileManager {
     }
 
     // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
-    // TODO: Check if UUID already exists in filesystem, if so generate new one
     private function generateUuid(){
         // see http://rogerstringer.com/2013/11/15/generate-uuids-php/
         $uuid = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
@@ -43,11 +42,7 @@ class FileManager {
         );
 
         $possible_duplicate = glob($this->config->getLibraryDir() . $uuid . '.*');
-        if(count($possible_duplicate) > 0) {
-            return $this->generateUuid();
-        }
-        else {
-            return $uuid;
-        }
+
+        return count($possible_duplicate) > 0 ? $this->generateUuid() : $uuid;
     }
 }

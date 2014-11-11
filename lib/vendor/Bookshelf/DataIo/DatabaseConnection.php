@@ -60,6 +60,8 @@ class DatabaseConnection {
         else {
             ErrorHandler::throwError('Inserting book ' . $file_name . ' failed.', ErrorLevel::DEBUG);
         }
+
+        return false;
     }
 
     // $to_update = array('property' => 'value');
