@@ -32,44 +32,36 @@ class ErrorHandler {
         if(!empty($_SESSION['errors'])) {
             foreach($_SESSION['errors'] as $error) {
                 if($error['error_level'] == ErrorLevel::EMERGENCY) {
-                    //echo '<div class="emergency">EMERGENCY: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("EMERGENCY: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::ALERT) {
-                    //echo '<div class="alert">ALERT: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("ALERT: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::CRITICAL) {
-                    //echo '<div class="error critical">CRITICAL: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("CRITICAL: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::ERROR) {
-                    //echo '<div class="error error">ERROR: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("ERROR: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::WARNING) {
-                    //echo '<div class="error warning">WARNING: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("WARNING: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::NOTICE) {
                     if(!$bottom) {
                         echo '<div class="error notice">NOTICE: ' . $error['message'] . '</div>';
                     }
-                    //echo '<script>window.alert("NOTICE: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::INFORMATIONAL) {
                     if(!$bottom) {
                         echo '<div class="error informational">INFORMATIONAL: ' . $error['message'] . '</div>';
                     }
-                    //echo '<script>window.alert("INFORMATIONAL: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::DEBUG) {
                     $config = new Configuration();
                     if($config->getDebuggingEnabled()) {
-                        if(!bottom) {
+                        if(!$bottom) {
                             echo '<div class="error debug">DEBUG: ' . $error['message'] . '</div>';
                         }
-                        //echo '<script>window.alert("DEBUG: ' . $error['message'] . '");</script>';
                     }
                 }
 

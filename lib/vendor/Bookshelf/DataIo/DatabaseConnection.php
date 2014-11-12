@@ -19,7 +19,7 @@ class DatabaseConnection {
 
         if($this->mysqli->connect_errno) {
             ErrorHandler::throwError('Could not connect to database.', ErrorLevel::CRITICAL);
-            return;
+            return false;
         }
     }
 
@@ -30,6 +30,7 @@ class DatabaseConnection {
         else {
             ErrorHandler::throwError('Reading config value for property ' . $property . ' failed.', ErrorLevel::DEBUG);
         }
+        return false;
     }
 
     public function validateUser($username, $password) {
@@ -40,6 +41,7 @@ class DatabaseConnection {
         else {
             ErrorHandler::throwError('Validating user ' . $username . ' failed.', ErrorLevel::DEBUG);
         }
+        return false;
     }
 
     // should not be called directly, only use from LibraryManager::addBook
@@ -82,7 +84,7 @@ class DatabaseConnection {
         $query .= " WHERE id = {$id}";
 
         if(!$this->mysqli->query($query)) {
-            ErrorHandler::throwError('Updating ' . $id . ' failed.', ErrorLevel::DEBUG);
+            ErrorHandler::throwError('Updating book ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
     }
 
@@ -105,6 +107,7 @@ class DatabaseConnection {
         else {
             ErrorHandler::throwError('Getting book with ID ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
+        return false;
     }
 
     // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
