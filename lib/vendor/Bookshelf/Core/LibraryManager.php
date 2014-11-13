@@ -2,6 +2,7 @@
 
 namespace Bookshelf\Core;
 
+use Bookshelf\DataType\Book;
 use Bookshelf\DataType\BookMetadata;
 use Bookshelf\DataIo\DatabaseConnection;
 use Bookshelf\DataIo;
@@ -20,16 +21,43 @@ class LibraryManager {
         return $this->database_connection->insertBook($book);
     }
 
+    public function getBookById($id){
+        $data = $this->database_connection->getBookById($id);
+        $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
+        $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
 
-    public function getBook() {
-        // TODO: Doesn't work anymore
-        //$result = $this->database_connection->getBook(array('file_name' => $file_name, 'file_hash' => $file_hash));
-        //return (empty($result[0]) ? -1 : $result[0]);
+        $metadata = new BookMetadata();
+        $metadata->cover_image = $data['cover_image'];
+        $metadata->title = $data['title'];
+        $metadata->author = $data['author'];
+        $metadata->description = $data['description'];
+        $metadata->language = $data['language'];
+        $metadata->identifier = $data['identifier'];
+
+        return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+    }
+
+
+    public function getBook($field, $contains) {
+        return $this->database_connection->getBook($field, $contains);
     }
 
     public function listBooks() {
         // TODO: Doesn't work anymore
-        //$result = $this->database_connection->getBook(null, array('file_name', 'file_hash', 'title'));
-        //return (empty($result) ? -1 : $result);
+        $data_array = $this->database_connection->dumpLibraryData();
+        foreach($data_array as $data) {
+            $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
+            $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
+
+            $metadata = new BookMetadata();
+            $metadata->cover_image = $data['cover_image'];
+            $metadata->title = $data['title'];
+            $metadata->author = $data['author'];
+            $metadata->description = $data['description'];
+            $metadata->language = $data['language'];
+            $metadata->identifier = $data['identifier'];
+            $result[] = new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        }
+        return $result;
     }
 }

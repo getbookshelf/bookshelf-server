@@ -74,25 +74,18 @@ class DatabaseConnection {
 
     public function getBookById($id) {
         if($result = $this->mysqli->query("SELECT * FROM library WHERE id = {$id}")) {
-            $data = $result->fetch_array(MYSQL_ASSOC);
-            $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
-            $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
-
-            $metadata = new BookMetadata();
-            $metadata->cover_image = $data['cover_image'];
-            $metadata->title = $data['title'];
-            $metadata->author = $data['author'];
-            $metadata->description = $data['description'];
-            $metadata->language = $data['language'];
-            $metadata->identifier = $data['identifier'];
-
-            return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+            return $result->fetch_array(MYSQL_ASSOC);
         }
     }
 
     // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
-    public function getBook() {
+    public function getBook($field, $contains) {
+        if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$contains}%'")) return $result;
+        return -1;
+    }
 
+    public function dumpLibraryData() {
+        if($result = $this->mysqli->query("SELECT * FROM library")) return $result->fetch_assoc();
     }
 
     public function escape($string) {
