@@ -20,7 +20,6 @@ class LibraryManager {
         return $this->database_connection->insertBook($book);
     }
 
-
     public function getBook() {
         // TODO: Doesn't work anymore
         //$result = $this->database_connection->getBook(array('file_name' => $file_name, 'file_hash' => $file_hash));

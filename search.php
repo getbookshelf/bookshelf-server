@@ -16,7 +16,7 @@ $id = $_POST['id'];
 $db_con = new \Bookshelf\DataIo\DatabaseConnection();
 $book = $db_con->getBookById($id);
 if($book === null) {
-    \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist', \Bookshelf\Utility\ErrorLevel::ERROR);
+    \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist.', \Bookshelf\Utility\ErrorLevel::ERROR);
     header('Location: index.php');
     exit();
 }
