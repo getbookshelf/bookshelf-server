@@ -17,8 +17,17 @@ class LibraryManager {
     }
 
     // TODO: Are these methods needed in here? They just forward to the DB con methods...
+    // Yes, they indeed are! A DatabaseConnection is only there to forward data, not processing it. This is why we got this class.
     public function addBook($book) {
-        return $this->database_connection->insertBook($book);
+        $data['file_name'] = $book->original_name . '.' . $book->original_extension;
+        $data['uuid'] = $book->uuid;
+        $data['cover_image'] = $book->metadata->cover_image;
+        $data['title'] = $book->metadata->title;
+        $data['author'] = $book->metadata->author;
+        $data['description'] = $book->metadata->description;
+        $data['language'] = $book->metadata->language;
+        $data['identifier'] = $book->metadata->identifier;
+        return $this->database_connection->insertBook($data);
     }
 
     public function getBookById($id){

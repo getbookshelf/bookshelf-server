@@ -14,7 +14,7 @@ if(!isset($_POST['id'])) {
 
 $id = $_POST['id'];
 $library_mgr = new \Bookshelf\Core\LibraryManager();
-$library_mgr->getBookById($id);
+$book = $library_mgr->getBookById($id);
 if($book === null) {
     \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist.', \Bookshelf\Utility\ErrorLevel::ERROR);
     header('Location: index.php');
