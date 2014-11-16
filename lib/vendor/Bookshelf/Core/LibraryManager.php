@@ -30,6 +30,12 @@ class LibraryManager {
         return $this->database_connection->insertBook($data);
     }
 
+    public function deleteBook($uuid) {
+        $id = $this->database_connection->getIdByUuid($uuid);
+        $this->database_connection->deleteBook($id);
+        DataIo\FileManager::deleteBook($uuid);
+    }
+
     public function getBookById($id){
         $data = $this->database_connection->getBookById($id);
         $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);

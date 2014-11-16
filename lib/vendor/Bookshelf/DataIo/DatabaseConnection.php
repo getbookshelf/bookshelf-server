@@ -43,6 +43,11 @@ class DatabaseConnection {
         return $this->mysqli->insert_id;
     }
 
+    public function deleteBook($id) {
+        $query = "DELETE FROM library WHERE id={$id}";
+        $this->mysqli->query($query);
+    }
+
     // $to_update = array('property' => 'value');
     // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
     public function updateBook($id, $to_update) {
@@ -72,9 +77,14 @@ class DatabaseConnection {
         return false;
     }
 
+    public function getIdByUuid($uuid) {
+        if($result = $this->mysqli->query("SELECT id FROM library WHERE uuid LIKE '{$uuid}'")) return $result->fetch_array(MYSQL_ASSOC)['id'];
+        return -1;
+    }
+
     // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
     public function getBook($field, $contains) {
-        if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$contains}%'")) return $result;
+        if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$contains}%'")) return $result->fetch_array(MYSQL_ASSOC);
         return -1;
     }
 
@@ -86,7 +96,7 @@ class DatabaseConnection {
         return $this->mysqli->real_escape_string($string);
     }
 
-    private function fetch_all($result){
+    private function fetch_all($result) {
         $all = array();
         while($row = $result->fetch_array(MYSQL_ASSOC)){
             $all[] = $row;
