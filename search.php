@@ -28,7 +28,7 @@ echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . 
 echo '<a href="index.php">back</a><br>';
 echo '<form method="post" action="update_book.php">';
 echo '<input type="hidden" name="id" value="' . $id . '">';
-echo $gb_request->results()->toHtmlTable(true);
+echo $gb_request->results()->toHtmlTable('radio');
 echo '<input type="submit" value="Update metadata">';
 echo '</form>';
 

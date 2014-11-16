@@ -20,12 +20,12 @@ class ExternalApiResult {
         return $return_string;
     }
 
-    public function toHtmlTable($add_radio = false, $max_rows = 3) {
-        $result = '<table><thead>' . ($add_radio ? '<td></td>' : '') . '<td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>';
+    public function toHtmlTable($add_button = '', $max_rows = 3) {
+        $result = '<table><thead>' . ($add_button ? '<td></td>' : '') . '<td>Cover</td><td>Title</td><td>Author</td><td>Description</td><td>Language</td><td>Identifier</td></thead>';
         $max_rows = ($max_rows > count($this->result_collection) ? count($this->result_collection) : $max_rows);
 
         for($i = 0; $i < $max_rows; $i++) {
-            $result .= $this->result_collection[$i]['metadata']->toHtmlTableRow($add_radio, $this->result_collection[$i]['api_identifier']);
+            $result .= $this->result_collection[$i]['metadata']->toHtmlTableRow($add_button, $this->result_collection[$i]['api_identifier']);
         }
 
         $result .= '</table>';

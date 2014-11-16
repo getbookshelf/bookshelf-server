@@ -30,10 +30,10 @@ class LibraryManager {
         return $this->database_connection->insertBook($data);
     }
 
-    public function deleteBook($uuid) {
-        $id = $this->database_connection->getIdByUuid($uuid);
+    public function deleteBook($book) {
+        $id = $this->database_connection->getBook('uuid', $book->uuid, true);
         $this->database_connection->deleteBook($id);
-        DataIo\FileManager::deleteBook($uuid);
+        DataIo\FileManager::deleteBook($book);
     }
 
     public function getBookById($id){
@@ -53,12 +53,11 @@ class LibraryManager {
     }
 
 
-    public function getBook($field, $contains) {
-        return $this->database_connection->getBook($field, $contains);
+    public function getBook($field, $query, $exact=false) {
+        return $this->database_connection->getBook($field, $query, $exact);
     }
 
     public function listBooks() {
-        // TODO: Doesn't work anymore
         $data_array = $this->database_connection->dumpLibraryData();
         foreach($data_array as $data) {
             $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);

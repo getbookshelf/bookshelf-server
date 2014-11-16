@@ -1,6 +1,5 @@
 <?php
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
-use \Bookshelf\DataIo\FileManager;
 
 session_start();
 include(__DIR__ . '/inc/auth.php');
@@ -11,7 +10,9 @@ echo '<a href="index.php">back</a><br>';
 if(isset($_POST['chosen_book'])) {
     $library_manager = new \Bookshelf\Core\LibraryManager();
     foreach($_POST['chosen_book'] as $uuid) {
-        $library_manager->deleteBook($uuid);
+        $book_id = $library_manager->getBook('uuid', $uuid, true);
+        $book = $library_manager->getBookById($book_id);
+        $library_manager->deleteBook($book);
     }
 
     echo '<br>Delete successful.';
