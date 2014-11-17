@@ -21,8 +21,8 @@ class BookMetadata {
         return $result;
     }
 
-    public function toHtmlTableRow($add_radio = false, $api_identifier = '') {
-        $result = '<tr>' . ($add_radio ? '<td><input type="radio" name="chosen_book" value="'. $api_identifier .'">' : '');
+    public function toHtmlTableRow($add_button = '', $api_identifier = '') {
+        $result = '<tr>' . ($add_button != '' ? '<td><input type="' . $add_button . '" name="chosen_book[]" value="'. $api_identifier .'">' : '');
         $result .= '<td><img src="' . $this->cover_image . '"></td>';
         $result .= '<td>' . $this->title . ' </td >
         <td>' . $this->author . '</td>

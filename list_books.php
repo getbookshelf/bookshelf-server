@@ -8,6 +8,10 @@ include( __DIR__ . '/inc/header.php');
 $library_manager = new \Bookshelf\Core\LibraryManager();
 $book_list = $library_manager->listBooks();
 
-print_r($book_list);
+echo '<form action="delete_book.php" method="post"><table>';
+foreach($book_list as $book) {
+    echo $book->metadata->toHtmlTableRow('checkbox', $book->uuid);
+}
+echo '</table><input type="submit" value="Delete"></form>';
 
 include( __DIR__ . '/inc/footer.php');

@@ -13,8 +13,8 @@ if(!isset($_POST['id']) || !isset($_POST['chosen_book'])) {
 
 $db_con = new \Bookshelf\DataIo\DatabaseConnection();
 $id = $_POST['id'];
-$used_api = explode('.', $_POST['chosen_book'], 2)[0];
-$api_id = explode('.', $_POST['chosen_book'], 2)[1];
+$used_api = explode('.', $_POST['chosen_book'][0], 2)[0];
+$api_id = explode('.', $_POST['chosen_book'][0], 2)[1];
 
 switch($used_api) {
     case 'GoogleBooks':

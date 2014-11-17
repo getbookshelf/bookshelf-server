@@ -29,6 +29,11 @@ class FileManager {
         return $library_manager->addBook($result);
     }
 
+    public static function deleteBook($book) {
+        $config = new Configuration();
+        unlink(realpath($config->getLibraryDir()) . '/' . $book->uuid . $book->original_extension);
+    }
+
     // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
     // TODO: Check if UUID already exists in filesystem, if so generate new one
     private function generateUuid(){

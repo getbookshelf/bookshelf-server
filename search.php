@@ -13,10 +13,10 @@ if(!isset($_POST['id'])) {
 }
 
 $id = $_POST['id'];
-$db_con = new \Bookshelf\DataIo\DatabaseConnection();
-$book = $db_con->getBookById($id);
+$library_mgr = new \Bookshelf\Core\LibraryManager();
+$book = $library_mgr->getBookById($id);
 if($book === null) {
-    \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist', \Bookshelf\Utility\ErrorLevel::ERROR);
+    \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist.', \Bookshelf\Utility\ErrorLevel::ERROR);
     header('Location: index.php');
     exit();
 }
@@ -28,7 +28,7 @@ echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . 
 echo '<a href="index.php">back</a><br>';
 echo '<form method="post" action="update_book.php">';
 echo '<input type="hidden" name="id" value="' . $id . '">';
-echo $gb_request->results()->toHtmlTable(true);
+echo $gb_request->results()->toHtmlTable('radio');
 echo '<input type="submit" value="Update metadata">';
 echo '</form>';
 

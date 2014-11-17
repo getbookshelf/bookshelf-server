@@ -2,6 +2,7 @@
 
 namespace Bookshelf\Core;
 
+use Bookshelf\DataType\Book;
 use Bookshelf\DataType\BookMetadata;
 use Bookshelf\DataIo\DatabaseConnection;
 use Bookshelf\DataIo;
@@ -16,20 +17,61 @@ class LibraryManager {
     }
 
     // TODO: Are these methods needed in here? They just forward to the DB con methods...
+    // Yes, they indeed are! A DatabaseConnection is only there to forward data, not processing it. This is why we got this class.
     public function addBook($book) {
-        return $this->database_connection->insertBook($book);
+        $data['file_name'] = $book->original_name . '.' . $book->original_extension;
+        $data['uuid'] = $book->uuid;
+        $data['cover_image'] = $book->metadata->cover_image;
+        $data['title'] = $book->metadata->title;
+        $data['author'] = $book->metadata->author;
+        $data['description'] = $book->metadata->description;
+        $data['language'] = $book->metadata->language;
+        $data['identifier'] = $book->metadata->identifier;
+        return $this->database_connection->insertBook($data);
+    }
+
+    public function deleteBook($book) {
+        $id = $this->database_connection->getBook('uuid', $book->uuid, true);
+        $this->database_connection->deleteBook($id);
+        DataIo\FileManager::deleteBook($book);
+    }
+
+    public function getBookById($id){
+        $data = $this->database_connection->getBookById($id);
+        $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
+        $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
+
+        $metadata = new BookMetadata();
+        $metadata->cover_image = $data['cover_image'];
+        $metadata->title = $data['title'];
+        $metadata->author = $data['author'];
+        $metadata->description = $data['description'];
+        $metadata->language = $data['language'];
+        $metadata->identifier = $data['identifier'];
+
+        return new Book($data['uuid'], $original_name, $original_extension, $metadata);
     }
 
 
-    public function getBook() {
-        // TODO: Doesn't work anymore
-        //$result = $this->database_connection->getBook(array('file_name' => $file_name, 'file_hash' => $file_hash));
-        //return (empty($result[0]) ? -1 : $result[0]);
+    public function getBook($field, $query, $exact=false) {
+        return $this->database_connection->getBook($field, $query, $exact);
     }
 
     public function listBooks() {
-        // TODO: Doesn't work anymore
-        //$result = $this->database_connection->getBook(null, array('file_name', 'file_hash', 'title'));
-        //return (empty($result) ? -1 : $result);
+        $data_array = $this->database_connection->dumpLibraryData();
+        foreach($data_array as $data) {
+            $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
+            $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
+
+            $metadata = new BookMetadata();
+            $metadata->cover_image = $data['cover_image'];
+            $metadata->title = $data['title'];
+            $metadata->author = $data['author'];
+            $metadata->description = $data['description'];
+            $metadata->language = $data['language'];
+            $metadata->identifier = $data['identifier'];
+            $result[] = new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        }
+        return $result;
     }
 }
