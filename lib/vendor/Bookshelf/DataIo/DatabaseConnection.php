@@ -74,7 +74,7 @@ class DatabaseConnection {
         } else {
             ErrorHandler::throwError('Getting book with ID ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
-        return false;
+        return -1;
     }
 
     // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
