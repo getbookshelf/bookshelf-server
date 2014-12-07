@@ -16,8 +16,6 @@ class LibraryManager {
         $this->config = new Configuration(true, $this->database_connection);
     }
 
-    // TODO: Are these methods needed in here? They just forward to the DB con methods...
-    // Yes, they indeed are! A DatabaseConnection is only there to forward data, not processing it. This is why we got this class.
     public function addBook($book) {
         $data['file_name'] = $book->original_name . '.' . $book->original_extension;
         $data['uuid'] = $book->uuid;
@@ -30,10 +28,9 @@ class LibraryManager {
         return $this->database_connection->insertBook($data);
     }
 
-    public function deleteBook($book) {
-        $id = $this->database_connection->getBook('uuid', $book->uuid, true);
+    public function deleteBook($id) {
         $this->database_connection->deleteBook($id);
-        DataIo\FileManager::deleteBook($book);
+        DataIo\FileManager::deleteBook($id);
     }
 
     public function getBookById($id){

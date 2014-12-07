@@ -1,14 +1,19 @@
 <?php
 
-namespace Bookshelf\DataType;
+namespace Bookshelf\DataIo;
 
+use Bookshelf\DataType\BookMetadata;
 
 class ApiRequest {
-    public $action = '';
+    public $action;
+    public $id;
+    public $book_meta = null;
 
     // $post is the PHP $_POST
     public function __construct($post) {
         $this->action = strtolower($post['action']);
+        $this->id = $post['id'];
+
         $this->book_meta = new BookMetadata();
         $this->book_meta->author = $post['meta_author'];
         $this->book_meta->cover_image = $post['meta_cover_image'];
@@ -16,6 +21,5 @@ class ApiRequest {
         $this->book_meta->identifier = $post['meta_identifier'];
         $this->book_meta->language = $post['meta_language'];
         $this->book_meta->title = $post['meta_title'];
-
     }
-} 
+}

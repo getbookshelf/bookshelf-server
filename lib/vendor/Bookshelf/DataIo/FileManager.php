@@ -29,12 +29,14 @@ class FileManager {
         return $library_manager->addBook($result);
     }
 
-    public static function deleteBook($book) {
+    public static function deleteBook($id) {
         $config = new Configuration();
-        unlink(realpath($coneig->getLibraryDir()) . '/' . $book->uuid . $book->original_extension);
+        $db_con = new DatabaseConnection();
+
+        $book = $db_con->getBookById($id);
+        unlink(realpath($config->getLibraryDir()) . '/' . $book['uuid'] . pathinfo($book['file_name'], PATHINFO_EXTENSION));
     }
 
-    // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
     // TODO: Check if UUID already exists in filesystem, if so generate new one
     private function generateUuid(){
         // see http://rogerstringer.com/2013/11/15/generate-uuids-php/
