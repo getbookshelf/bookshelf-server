@@ -53,7 +53,7 @@ class LibraryManager {
     }
 
 
-    public function getBook($field, $query, $exact=false) {
+    public function getBook($field, $query, $exact = false) {
         return $this->database_connection->getBook($field, $query, $exact);
     }
 

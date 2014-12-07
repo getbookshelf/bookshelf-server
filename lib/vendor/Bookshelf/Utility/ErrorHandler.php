@@ -27,48 +27,51 @@ class ErrorHandler {
         array_push($_SESSION['errors'], array('message' => $message, 'error_level' => $error_level));
     }
 
-    // TODO: Optimize displaying of errors. Currently, they are only displayed on a new request. Possible option: Run displayErrors() at the bottom of each page (instead of at the top) and display errors either as JS alert or as error box (=> CSS to make it appear on top of content)
-    public static function displayErrors() {
+    // If displayErrors() is called at the bottom of a page, we don't want to output anything as straight HTML as there might be a redirect that would cause the user not to see the message
+    public static function displayErrors($bottom = false) {
         if(!empty($_SESSION['errors'])) {
             foreach($_SESSION['errors'] as $error) {
                 if($error['error_level'] == ErrorLevel::EMERGENCY) {
-                    //echo '<div class="emergency">EMERGENCY: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("EMERGENCY: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::ALERT) {
-                    //echo '<div class="alert">ALERT: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("ALERT: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::CRITICAL) {
-                    //echo '<div class="error critical">CRITICAL: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("CRITICAL: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::ERROR) {
-                    //echo '<div class="error error">ERROR: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("ERROR: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::WARNING) {
-                    //echo '<div class="error warning">WARNING: ' . $error['message'] . '</div>';
                     echo '<script>window.alert("WARNING: ' . $error['message'] . '");</script>';
                 }
                 elseif($error['error_level'] == ErrorLevel::NOTICE) {
-                    echo '<div class="error notice">NOTICE: ' . $error['message'] . '</div>';
-                    //echo '<script>window.alert("NOTICE: ' . $error['message'] . '");</script>';
+                    if(!$bottom) {
+                        echo '<div class="error notice">NOTICE: ' . $error['message'] . '</div>';
+                    }
                 }
                 elseif($error['error_level'] == ErrorLevel::INFORMATIONAL) {
-                    echo '<div class="error informational">INFORMATIONAL: ' . $error['message'] . '</div>';
-                    //echo '<script>window.alert("INFORMATIONAL: ' . $error['message'] . '");</script>';
+                    if(!$bottom) {
+                        echo '<div class="error informational">INFORMATIONAL: ' . $error['message'] . '</div>';
+                    }
                 }
                 elseif($error['error_level'] == ErrorLevel::DEBUG) {
                     $config = new Configuration();
                     if($config->getDebuggingEnabled()) {
-                        echo '<div class="error debug">DEBUG: ' . $error['message'] . '</div>';
-                        //echo '<script>window.alert("DEBUG: ' . $error['message'] . '");</script>';
+                        if(!$bottom) {
+                            echo '<div class="error debug">DEBUG: ' . $error['message'] . '</div>';
+                        }
+                    }
+                }
+
+                if(!$bottom) {
+                    // remove item from array, see http://stackoverflow.com/a/2449093
+                    if(($key = array_search($error, $_SESSION['errors'])) !== false) {
+                        unset($_SESSION['errors'][$key]);
                     }
                 }
             }
-
-            $_SESSION['errors'] = array();
         }
     }
 }

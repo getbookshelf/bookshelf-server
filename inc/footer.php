@@ -1,2 +1,2 @@
 <?php
-\Bookshelf\Utility\ErrorHandler::displayErrors();
+\Bookshelf\Utility\ErrorHandler::displayErrors(true);
