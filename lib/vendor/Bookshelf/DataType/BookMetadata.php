@@ -21,10 +21,10 @@ class BookMetadata {
         return $result;
     }
 
-    public function toHtmlTableRow($add_button = '', $api_identifier = '') {
+    public function toHtmlTableRow($add_button = '', $api_identifier = '', $database_id = '') {
         $result = '<tr>' . ($add_button != '' ? '<td><input type="' . $add_button . '" name="chosen_book[]" value="'. $api_identifier .'">' : '');
         $result .= '<td><img src="' . $this->cover_image . '"></td>';
-        $result .= '<td>' . $this->title . ' </td >
+        $result .= '<td>' . (empty($database_id) ? $this->title : '<a href="download.php?id=' . $database_id .'">' . $this->title .'</a>')  . ' </td >
         <td>' . $this->author . '</td>
         <td>' . $this->description . '</td>
         <td>' . $this->language . '</td>
