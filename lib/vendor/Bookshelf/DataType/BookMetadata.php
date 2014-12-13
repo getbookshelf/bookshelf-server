@@ -7,17 +7,17 @@ class BookMetadata {
     public $title;
     public $author;
     public $description;
-    public $language; // TODO: Define proper format (i.e. find appropriate ISO guideline)
+    public $language;
     public $identifier;
 
     public function toArray() {
         $result = array();
-        if(!empty($cover_image)) $result['cover_image'] = $cover_image;
-        if(!empty($title)) $result['title'] = $title;
-        if(!empty($author))$result['author'] = $author;
-        if(!empty($description)) $result['description'] = $description;
-        if(!empty($language)) $result['language'] = $language;
-        if(!empty($identifier)) $result['identifier'] = $identifier;
+        if(!empty($this->cover_image)) $result['cover_image'] = $this->cover_image;
+        if(!empty($this->title)) $result['title'] = $this->title;
+        if(!empty($this->author))$result['author'] = $this->author;
+        if(!empty($this->description)) $result['description'] = $this->description;
+        if(!empty($this->language)) $result['language'] = $this->language;
+        if(!empty($this->identifier)) $result['identifier'] = $this->identifier;
         return $result;
     }
 
