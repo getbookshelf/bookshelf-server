@@ -4,6 +4,9 @@
 namespace Bookshelf\DataType;
 
 
+use Bookshelf\Core\Application;
+use Bookshelf\Core\Configuration;
+
 class Book {
     public $metadata;
     public $uuid = '';
@@ -26,5 +29,14 @@ class Book {
         $query_string = str_replace($strings_to_replace, ' ', $query_string);
 
         return $query_string;
+    }
+
+    public function download() {
+        $config = new Configuration(true);
+        $file = $config->getLibraryDir() . '/' . $this->uuid . $this->original_extension;
+
+        header('Content-Type: ' . finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file));
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
     }
 }
