@@ -3,8 +3,6 @@
 
 namespace Bookshelf\DataType;
 
-
-use Bookshelf\Core\Application;
 use Bookshelf\Core\Configuration;
 
 class Book {
@@ -36,6 +34,7 @@ class Book {
         $file = $config->getLibraryDir() . '/' . $this->uuid . $this->original_extension;
 
         header('Content-Type: ' . finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file));
+        header('Content-Disposition: attachment; filename="' . $this->original_name . '.' . $this->original_extension . '"');
         header('Content-Length: ' . filesize($file));
         readfile($file);
     }
