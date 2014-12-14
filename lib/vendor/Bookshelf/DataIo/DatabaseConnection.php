@@ -77,13 +77,12 @@ class DatabaseConnection {
         return -1;
     }
 
-    // TODO: Decide on how we want to query the db for books (search all columns, just some specific ones, specify by parameter...?)
     public function getBook($field, $query, $exact = false) {
         if(!$exact) {
-            if ($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$query}%' LIMIT 1")) return $result->fetch_array(MYSQL_ASSOC)['id'];
+            if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$query}%' LIMIT 1")) return $result->fetch_array(MYSQL_ASSOC)['id'];
         }
         else {
-            if ($result = $this->mysqli->query("SELECT id FROM library WHERE {$field}='{$query}'")) return $result->fetch_array(MYSQL_ASSOC)['id'];
+            if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field}='{$query}'")) return $result->fetch_array(MYSQL_ASSOC)['id'];
 
         }
         return -1;

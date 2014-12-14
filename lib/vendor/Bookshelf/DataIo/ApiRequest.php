@@ -7,12 +7,16 @@ use Bookshelf\DataType\BookMetadata;
 class ApiRequest {
     public $action;
     public $id;
+    public $field;
+    public $query;
     public $book_meta = null;
 
     // $post is the PHP $_POST
     public function __construct($post) {
         $this->action = strtolower($post['action']);
         $this->id = $post['id'];
+        $this->field = $post['field'];
+        $this->query = $post['query'];
 
         $this->book_meta = new BookMetadata();
         $this->book_meta->author = $post['meta_author'];

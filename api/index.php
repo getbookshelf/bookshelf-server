@@ -16,10 +16,40 @@ switch($request->action) {
             $lib_man->deleteBook($request->id);
             // TODO: How to handle successful requests?
         }
+        else {
+            // TODO: Throw error
+        }
         break;
-    case 'getbook':
+    case 'getbookmeta':
+        if(isset($request->id)) {
+            $book = $lib_man->getBookById($request->id);
+
+            $result = $book->metadata->toArray();
+        }
+        else {
+            // TODO: Throw error
+        }
+        break;
+    case 'downloadbook':
+        if(isset($request->id)) {
+            $book = $lib_man->getBookById($request->id);
+
+            $book->download();
+        }
+        else {
+            // TODO: Throw error
+        }
+        break;
+    case 'searchbook':
+        if(isset($request->field) && isset($request->query)) {
+            $result['id'] = $lib_man->getBook($request->field, $request->query);
+        }
+        else {
+            // TODO: Throw error
+        }
         break;
     case 'listbooks':
+        $result = $lib_man->listBooks();
         break;
     case 'updatebook':
         break;
