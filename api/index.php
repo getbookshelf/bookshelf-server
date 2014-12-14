@@ -56,12 +56,12 @@ switch($request->action) {
         if(isset($request->id)) {
             $to_update = array();
 
-            if(isset($request->book_meta->author)) $to_update['author'] = $request->book_meta->author;
-            if(isset($request->book_meta->cover_image)) $to_update['cover_image'] = $request->book_meta->cover_image;
-            if(isset($request->book_meta->description)) $to_update['description'] = $request->book_meta->description;
-            if(isset($request->book_meta->identifier)) $to_update['identifier'] = $request->book_meta->identifier;
-            if(isset($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
-            if(isset($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
+            if(empty($request->book_meta->author)) $to_update['author'] = $request->book_meta->author;
+            if(empty($request->book_meta->cover_image)) $to_update['cover_image'] = $request->book_meta->cover_image;
+            if(empty($request->book_meta->description)) $to_update['description'] = $request->book_meta->description;
+            if(empty($request->book_meta->identifier)) $to_update['identifier'] = $request->book_meta->identifier;
+            if(empty($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
+            if(empty($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
 
             $db_con->updateBook($request->id, $to_update);
         }
