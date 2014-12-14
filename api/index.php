@@ -4,6 +4,7 @@ require __DIR__ . '/../lib/vendor/autoload.php';
 $request = new \Bookshelf\DataIo\ApiRequest($_POST);
 $lib_man = new \Bookshelf\Core\LibraryManager();
 $file_man = new \Bookshelf\DataIo\FileManager();
+$db_con = new \Bookshelf\DataIo\DatabaseConnection();
 
 $result = array();
 
@@ -52,6 +53,21 @@ switch($request->action) {
         $result = $lib_man->listBooks();
         break;
     case 'updatebook':
+        if(isset($request->id)) {
+            $to_update = array();
+
+            if(isset($request->book_meta->author)) $to_update['author'] = $request->book_meta->author;
+            if(isset($request->book_meta->cover_image)) $to_update['cover_image'] = $request->book_meta->cover_image;
+            if(isset($request->book_meta->description)) $to_update['description'] = $request->book_meta->description;
+            if(isset($request->book_meta->identifier)) $to_update['identifier'] = $request->book_meta->identifier;
+            if(isset($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
+            if(isset($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
+
+            $db_con->updateBook($request->id, $to_update);
+        }
+        else {
+            // TODO: Throw error
+        }
         break;
     default:
         // TODO: The API currently doesn't use sessions => ErrorHandler won't work
