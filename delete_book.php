@@ -9,10 +9,10 @@ echo '<a href="index.php">back</a><br>';
 
 if(isset($_POST['chosen_book'])) {
     $library_manager = new \Bookshelf\Core\LibraryManager();
+
     foreach($_POST['chosen_book'] as $uuid) {
         $book_id = $library_manager->getBook('uuid', $uuid, true);
-        $book = $library_manager->getBookById($book_id);
-        $library_manager->deleteBook($book);
+        $library_manager->deleteBook($book_id);
     }
 
     echo '<br>Delete successful.';

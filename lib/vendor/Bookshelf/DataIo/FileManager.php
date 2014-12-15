@@ -22,7 +22,7 @@ class FileManager {
 
         if(!move_uploaded_file($files_array['file']['tmp_name'], $file)) {
             ErrorHandler::throwError('Could not upload file.', ErrorLevel::ERROR);
-            return false;
+            return -1;
         }
 
         $result = new Book($uuid, pathinfo(basename($files_array['file']['name']), PATHINFO_FILENAME), pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION));
@@ -31,9 +31,12 @@ class FileManager {
         return $library_manager->addBook($result);
     }
 
-    public static function deleteBook($book) {
+    public static function deleteBook($id) {
         $config = new Configuration();
-        unlink(realpath($config->getLibraryDir()) . '/' . $book->uuid . $book->original_extension);
+        $db_con = new DatabaseConnection();
+
+        $book = $db_con->getBookById($id);
+        unlink(realpath($config->getLibraryDir()) . '/' . $book['uuid'] . pathinfo($book['file_name'], PATHINFO_EXTENSION));
     }
 
     // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)

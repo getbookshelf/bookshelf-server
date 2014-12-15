@@ -7,24 +7,24 @@ class BookMetadata {
     public $title;
     public $author;
     public $description;
-    public $language; // TODO: Define proper format (i.e. find appropriate ISO guideline)
+    public $language;
     public $identifier;
 
     public function toArray() {
         $result = array();
-        if(!empty($cover_image)) $result['cover_image'] = $cover_image;
-        if(!empty($title)) $result['title'] = $title;
-        if(!empty($author))$result['author'] = $author;
-        if(!empty($description)) $result['description'] = $description;
-        if(!empty($language)) $result['language'] = $language;
-        if(!empty($identifier)) $result['identifier'] = $identifier;
+        if(!empty($this->cover_image)) $result['cover_image'] = $this->cover_image;
+        if(!empty($this->title)) $result['title'] = $this->title;
+        if(!empty($this->author))$result['author'] = $this->author;
+        if(!empty($this->description)) $result['description'] = $this->description;
+        if(!empty($this->language)) $result['language'] = $this->language;
+        if(!empty($this->identifier)) $result['identifier'] = $this->identifier;
         return $result;
     }
 
-    public function toHtmlTableRow($add_button = '', $api_identifier = '') {
+    public function toHtmlTableRow($add_button = '', $api_identifier = '', $database_id = '') {
         $result = '<tr>' . ($add_button != '' ? '<td><input type="' . $add_button . '" name="chosen_book[]" value="'. $api_identifier .'">' : '');
         $result .= '<td><img src="' . $this->cover_image . '"></td>';
-        $result .= '<td>' . $this->title . ' </td >
+        $result .= '<td>' . (empty($database_id) ? $this->title : '<a href="download.php?id=' . $database_id .'">' . $this->title .'</a>')  . ' </td >
         <td>' . $this->author . '</td>
         <td>' . $this->description . '</td>
         <td>' . $this->language . '</td>
