@@ -16,10 +16,11 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
         case 'deletebook':
             if(isset($request->id)) {
                 $lib_man->deleteBook($request->id);
-                // TODO: How to handle successful requests?
             }
             else {
-                // TODO: Throw error
+                http_response_code(400);
+                $result['error_code'] = 602;
+                $result['error'] = 'Missing parameters (id).';
             }
             break;
         case 'getbookmeta':
@@ -29,7 +30,9 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
                 $result = $book->metadata->toArray();
             }
             else {
-                // TODO: Throw error
+                http_response_code(400);
+                $result['error_code'] = 602;
+                $result['error'] = 'Missing parameters (id).';
             }
             break;
         case 'downloadbook':
@@ -39,7 +42,9 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
                 $book->download();
             }
             else {
-                // TODO: Throw error
+                http_response_code(400);
+                $result['error_code'] = 602;
+                $result['error'] = 'Missing parameters (id).';
             }
             break;
         case 'searchbook':
@@ -47,7 +52,9 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
                 $result['id'] = $lib_man->getBook($request->field, $request->query);
             }
             else {
-                // TODO: Throw error
+                http_response_code(400);
+                $result['error_code'] = 602;
+                $result['error'] = 'Missing parameters (field, query).';
             }
             break;
         case 'listbooks':
@@ -67,12 +74,15 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
                 $db_con->updateBook($request->id, $to_update);
             }
             else {
-                // TODO: Throw error
+                http_response_code(400);
+                $result['error_code'] = 602;
+                $result['error'] = 'Missing parameters (id).';
             }
             break;
         default:
-            // TODO: The API currently doesn't use sessions => ErrorHandler won't work
-            //\Bookshelf\Utility\ErrorHandler::throwError('Unrecognized action.', \Bookshelf\Utility\ErrorLevel::WARNING);
+            http_response_code(400);
+            $result['error_code'] = 601;
+            $result['error'] = 'Invalid action.';
     }
 }
 else {
