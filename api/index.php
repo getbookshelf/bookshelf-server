@@ -91,4 +91,5 @@ else {
     $result['error'] = 'Not authenticated.';
 }
 
+header('Content-Type: application/json');
 echo json_encode($result);
