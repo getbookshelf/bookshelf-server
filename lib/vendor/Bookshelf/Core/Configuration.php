@@ -11,12 +11,7 @@ class Configuration {
     public function __construct($enable_db = true, $db_con = null) {
         $this->ini_data = parse_ini_file(Application::ROOT_DIR . 'config.ini');
         if($enable_db) {
-            if($db_con == null) {
-                $this->db_connection = new DatabaseConnection();
-            }
-            else {
-                $this->db_connection = $db_con;
-            }
+            $this->db_connection = $db_con == null ? new DatabaseConnection() : $db_con;
         }
     }
 
@@ -25,7 +20,7 @@ class Configuration {
     }
 
     public function getDebuggingEnabled() {
-        return $this->db_connection->readConfigValue('enable_debugging');
+        return (bool)$this->db_connection->readConfigValue('enable_debugging');
     }
 
     public function getDatabaseHost() {

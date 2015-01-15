@@ -9,14 +9,16 @@ use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
 class FileManager {
+    public function __construct() {
+        $this->config = new Configuration();
+    }
+
     // $files_array is the PHP $_FILES
     public function uploadBook($files_array) {
-        $config = new Configuration();
-
         $uuid = $this->generateUuid();
 
         // path (including filename) where the uploaded book will be stored on the server
-        $file = realpath($config->getLibraryDir()) . '/' . $uuid . pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION);
+        $file = realpath($this->config->getLibraryDir()) . '/' . $uuid . pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION);
 
         if(!move_uploaded_file($files_array['file']['tmp_name'], $file)) {
             ErrorHandler::throwError('Could not upload file.', ErrorLevel::ERROR);
@@ -37,14 +39,18 @@ class FileManager {
         unlink(realpath($config->getLibraryDir()) . '/' . $book['uuid'] . pathinfo($book['file_name'], PATHINFO_EXTENSION));
     }
 
-    // TODO: Check if UUID already exists in filesystem, if so generate new one
+    // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
     private function generateUuid(){
         // see http://rogerstringer.com/2013/11/15/generate-uuids-php/
-        return sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
+        $uuid = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff),
             mt_rand(0x0fff) | 0x4000,
             mt_rand(0x3fff) | 0x8000,
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
+
+        $possible_duplicate = glob($this->config->getLibraryDir() . $uuid . '.*');
+
+        return count($possible_duplicate) > 0 ? $this->generateUuid() : $uuid;
     }
 }
