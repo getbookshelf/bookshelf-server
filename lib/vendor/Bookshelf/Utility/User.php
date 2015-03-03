@@ -13,15 +13,39 @@ class User {
     }
 
     public static function showLoginForm() {
-        print '<div class="wrapper">
-            <form action="#" method="post">
-                <h2>Login</h2>
-                <p>This can only be accessed by authorized users.</p>
-                <input type="text" name="name" placeholder="Name" required="" autofocus="" />
-                <input type="password" name="password" placeholder="Password" required=""/>
-                <button type="submit">Login</button>
-            </form>
-        </div>';
+        print '<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bookshelf</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+        <div id="wrapper" name="wrapper">
+            <header>
+                <div class="container">
+                    <span id="logo" name="logo">Bookshelf</span>
+                </div>
+            </header>
+            <div id="main" name="main">
+                <div class="container">
+                    <form id="login-form" name="login-form" action="#" method="post">
+                        <h1>Login</h1>
+                        <p>This area can only be accessed by authorized users.</p>
+                        <p><input type="text" name="name" placeholder="Name" required="" autofocus="" /><br>
+                        <input type="password" name="password" placeholder="Password" required=""/></p>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
+            <footer>
+                <div class="container">
+                    (c) ' . date('Y') . ' <a href="http://getbookshelf.org">the Bookshelf project</a>
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>';
     }
 
 }

@@ -33,6 +33,7 @@ class LibraryManager {
         DataIo\FileManager::deleteBook($id);
     }
 
+    // returns Book
     public function getBookById($id){
         $data = $this->database_connection->getBookById($id);
         $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
@@ -50,10 +51,12 @@ class LibraryManager {
     }
 
 
+    // returns "int" (book ID)
     public function getBook($field, $query, $exact = false) {
         return $this->database_connection->getBook($field, $query, $exact);
     }
 
+    // returns: array[Book]
     public function listBooks() {
         $data_array = $this->database_connection->dumpLibraryData();
         foreach($data_array as $data) {

@@ -1,0 +1,51 @@
+@import "base";
+
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+
+#wrapper {
+  font-family: 'Source-Sans-Pro', sans-serif;
+  color: $text-color;
+}
+
+h1, h2, h3 {
+  font-family: 'Source-Sans-Pro', sans-serif;
+}
+h1 {
+  font-weight: 600;
+  font-size: 1.5em;
+  padding-bottom: 15px;
+}
+h2 {
+  font-weight: normal;
+  font-size: 1.3em;
+  padding-bottom: 13px;
+}
+h3 {
+  font-weight: normal;
+  font-size: 1.1em;
+  padding-bottom: 10px;
+}
+
+p {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+a {
+  color: $base-color;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2A7BB3;
+}
+
+.clear {
+  clear: both;
+}
+
+.container {
+  width: 80%;
+  max-width: 900px;
+  margin: auto;
+}

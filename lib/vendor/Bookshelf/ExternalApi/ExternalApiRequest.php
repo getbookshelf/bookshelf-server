@@ -13,7 +13,7 @@ abstract class ExternalApiRequest {
         $this->results = new DataType\ExternalApiResult();
     }
 
-    // Request is the default fallback method. Child class will implement request functions specific to the API but still implement this as a default fallback.
+    // Request is the default fallback method. Child classes will implement request functions specific to the API but still implement this as a default fallback.
     // No limit on the number of results.
     abstract public function request($request);
 

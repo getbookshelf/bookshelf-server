@@ -4,7 +4,17 @@ session_start();
 include(__DIR__ . '/inc/auth.php');
 
 include( __DIR__ . '/inc/header.php');
-?>
+
+$lib_man = new \Bookshelf\Core\LibraryManager();
+$books = $lib_man->listBooks();
+
+foreach($books as $book) {
+    echo '<a href="book.php?id=' . $lib_man->getBook('uuid', $book->uuid, true) . '"><img class="book" src="' . $book->metadata->cover_image . '"></a>';
+}
+
+include( __DIR__ . '/inc/footer.php');
+
+/* Old code archived for now, will be deleted ASAP though
     <h1>Bookshelf</h1>
 
     <p>
@@ -33,6 +43,4 @@ include( __DIR__ . '/inc/header.php');
 </div>
 </body>
 </html>
-
-<?php
-include( __DIR__ . '/inc/footer.php');
+*/

@@ -77,3 +77,10 @@ config.ini
 
 # Testing files for development
 tmp.php
+
+# Sass and Compass
+.sass-cache
+*.css.map
+compass_app_log.txt
+compass_generated_stylesheets
+*-s[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].png

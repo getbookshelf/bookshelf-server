@@ -1,0 +1,221 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+/* line 5, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../.rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 5, ../sass/framework.scss */
+#wrapper {
+  font-family: 'Source-Sans-Pro', sans-serif;
+  color: #222222;
+}
+
+/* line 10, ../sass/framework.scss */
+h1, h2, h3 {
+  font-family: 'Source-Sans-Pro', sans-serif;
+}
+
+/* line 13, ../sass/framework.scss */
+h1 {
+  font-weight: 600;
+  font-size: 1.5em;
+  padding-bottom: 15px;
+}
+
+/* line 18, ../sass/framework.scss */
+h2 {
+  font-weight: normal;
+  font-size: 1.3em;
+  padding-bottom: 13px;
+}
+
+/* line 23, ../sass/framework.scss */
+h3 {
+  font-weight: normal;
+  font-size: 1.1em;
+  padding-bottom: 10px;
+}
+
+/* line 29, ../sass/framework.scss */
+p {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 34, ../sass/framework.scss */
+a {
+  color: #3498DB;
+  text-decoration: none;
+}
+
+/* line 39, ../sass/framework.scss */
+a:hover {
+  color: #2A7BB3;
+}
+
+/* line 43, ../sass/framework.scss */
+.clear {
+  clear: both;
+}
+
+/* line 47, ../sass/framework.scss */
+.container {
+  width: 80%;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* TODO: Remove demo-book */
+/* line 4, ../sass/style.scss */
+.demo-book {
+  height: 200px;
+  width: 133.33px;
+  margin: 15px;
+  float: left;
+  background-color: #000000;
+}
+
+/* line 12, ../sass/style.scss */
+.book {
+  height: 200px;
+  width: 133.33px;
+  margin: 15px;
+  float: left;
+  background-color: #999999;
+}
+
+/* line 20, ../sass/style.scss */
+header {
+  background: #3498DB;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+/* line 28, ../sass/style.scss */
+#logo a {
+  font-size: 1.8em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* line 34, ../sass/style.scss */
+.nav-item, .nav-item a {
+  padding: 10px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* line 39, ../sass/style.scss */
+nav {
+  padding-top: 5px;
+  float: right;
+}
+
+/* line 44, ../sass/style.scss */
+#main {
+  margin-bottom: 50px;
+}
+
+/* line 48, ../sass/style.scss */
+footer {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 50px;
+  margin-top: 150px;
+  background-color: #3498DB;
+}
+/* line 58, ../sass/style.scss */
+footer .container {
+  padding-top: 20px;
+}
+/* line 62, ../sass/style.scss */
+footer a {
+  color: #ffffff;
+}
+
+/* line 67, ../sass/style.scss */
+#login-form {
+  margin: 100px auto;
+  width: 355px;
+  padding: 20px;
+  border: 1px solid #aaaaaa;
+}
+/* line 74, ../sass/style.scss */
+#login-form input {
+  width: 100%;
+  height: 15px;
+  margin-bottom: 5px;
+}
+
+/* line 81, ../sass/style.scss */
+#book-info {
+  padding-top: 15px;
+}
+
+/* line 85, ../sass/style.scss */
+.author {
+  font-style: italic;
+}
