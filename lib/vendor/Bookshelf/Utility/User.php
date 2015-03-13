@@ -24,7 +24,7 @@ class User {
         <div id="wrapper" name="wrapper">
             <header>
                 <div class="container">
-                    <span id="logo" name="logo">Bookshelf</span>
+                    <span id="logo" name="logo"><a href="index.php">Bookshelf</a></span>
                 </div>
             </header>
             <div id="main" name="main">
