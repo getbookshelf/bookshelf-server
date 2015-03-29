@@ -1,10 +1,7 @@
 <?php
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
-require __DIR__ . '/lib/vendor/autoload.php';
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include( __DIR__ . '/inc/header.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
 if(!isset($_POST['id'])) {
     \Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
@@ -32,4 +29,4 @@ echo $gb_request->results()->toHtmlTable('radio');
 echo '<input type="submit" value="Update metadata">';
 echo '</form>';
 
-include( __DIR__ . '/inc/footer.php');
+insertFooter();

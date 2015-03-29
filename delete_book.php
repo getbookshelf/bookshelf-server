@@ -1,10 +1,8 @@
 <?php
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include(__DIR__ . '/inc/header.php');
 echo '<a href="index.php">back</a><br>';
 
 if(isset($_POST['id'])) {
@@ -20,4 +18,4 @@ if(isset($_POST['id'])) {
 else {
     \Bookshelf\Utility\ErrorHandler::throwError('No book to delete.', \Bookshelf\Utility\ErrorLevel::ERROR);
 }
-include( __DIR__ . '/inc/footer.php');
+insertFooter();

@@ -1,9 +1,6 @@
 <?php
-require __DIR__ . '/lib/vendor/autoload.php';
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include( __DIR__ . '/inc/header.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
 $library_manager = new \Bookshelf\Core\LibraryManager();
 $book_list = $library_manager->listBooks();
@@ -16,4 +13,4 @@ foreach($book_list as $book) {
 }
 echo '</table><input type="submit" value="Delete"></form>';
 
-include( __DIR__ . '/inc/footer.php');
+insertFooter();

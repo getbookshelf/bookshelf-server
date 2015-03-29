@@ -2,10 +2,8 @@
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
 use \Bookshelf\DataIo\FileManager;
 
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include(__DIR__ . '/inc/header.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 echo '<a href="index.php">back</a><br>';
 
 if(isset($_FILES)) {
@@ -45,4 +43,4 @@ function post(path, params, method) {
 else {
     \Bookshelf\Utility\ErrorHandler::throwError('No file to upload.', \Bookshelf\Utility\ErrorLevel::ERROR);
 }
-include( __DIR__ . '/inc/footer.php');
+insertFooter();

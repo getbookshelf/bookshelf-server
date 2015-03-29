@@ -1,9 +1,7 @@
 <?php
 // NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include(__DIR__ . '/inc/header.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
 if(!isset($_POST['id']) || !isset($_POST['chosen_book'])) {
     \Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
@@ -40,4 +38,4 @@ switch($used_api) {
         \Bookshelf\Utility\ErrorHandler::throwError('Did not recognize API result.', \Bookshelf\Utility\ErrorLevel::WARNING);
 }
 
-include( __DIR__ . '/inc/footer.php');
+insertFooter();

@@ -1,9 +1,6 @@
 <?php
-require __DIR__ . '/lib/vendor/autoload.php';
-session_start();
-include(__DIR__ . '/inc/auth.php');
-
-include( __DIR__ . '/inc/header.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
 $id = $_GET['id'];
 if(!empty($id)) {
@@ -27,6 +24,4 @@ else {
     exit();
 }
 
-include( __DIR__ . '/inc/footer.php');
-
-// line HEIGHT!
+insertFooter();
