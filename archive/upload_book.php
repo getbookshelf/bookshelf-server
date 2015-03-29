@@ -4,7 +4,7 @@ use \Bookshelf\DataIo\FileManager;
 
 require_once __DIR__ . '/inc/base.php';
 insertHeader();
-echo '<a href="index.php">back</a><br>';
+echo '<a href="../index.php">back</a><br>';
 
 if(isset($_FILES)) {
     $file_manager = new FileManager();

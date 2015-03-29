@@ -31,7 +31,7 @@ switch($used_api) {
 
         $db_con->updateBook($id, $to_update);
         echo 'Update successful.';
-        echo '<br><a href="index.php">go back</a>';
+        echo '<br><a href="../index.php">go back</a>';
 
         break;
     default:

@@ -22,7 +22,7 @@ $gb_request = new \Bookshelf\ExternalApi\GoogleBooksApiRequest();
 $gb_request->volumeSearch($book->getQueryString(), 3);
 
 echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . '\'</h1>';
-echo '<a href="index.php">back</a><br>';
+echo '<a href="../index.php">back</a><br>';
 echo '<form method="post" action="update_book.php">';
 echo '<input type="hidden" name="id" value="' . $id . '">';
 echo $gb_request->results()->toHtmlTable('radio');

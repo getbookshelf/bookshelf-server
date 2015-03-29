@@ -5,7 +5,7 @@ insertHeader();
 $library_manager = new \Bookshelf\Core\LibraryManager();
 $book_list = $library_manager->listBooks();
 
-echo '<a href="index.php">back</a><br>';
+echo '<a href="../index.php">back</a><br>';
 echo '<form action="delete_book.php" method="post"><table>';
 foreach($book_list as $book) {
 

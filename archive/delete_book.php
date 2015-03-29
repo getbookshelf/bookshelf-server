@@ -3,7 +3,7 @@
 require_once __DIR__ . '/inc/base.php';
 insertHeader();
 
-echo '<a href="index.php">back</a><br>';
+echo '<a href="../index.php">back</a><br>';
 
 if(isset($_POST['id'])) {
     $library_manager = new \Bookshelf\Core\LibraryManager();
