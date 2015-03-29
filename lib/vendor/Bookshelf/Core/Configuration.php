@@ -23,6 +23,10 @@ class Configuration {
         return (bool)$this->db_connection->readConfigValue('enable_debugging');
     }
 
+    public function getBaseUrl() {
+        return $this->db_connection->readConfigValue('base_url');
+    }
+
     public function getDatabaseHost() {
         return $this->ini_data['db_host'];
     }
