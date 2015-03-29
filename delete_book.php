@@ -7,10 +7,10 @@ include(__DIR__ . '/inc/auth.php');
 include(__DIR__ . '/inc/header.php');
 echo '<a href="index.php">back</a><br>';
 
-if(isset($_POST['chosen_book'])) {
+if(isset($_POST['id'])) {
     $library_manager = new \Bookshelf\Core\LibraryManager();
 
-    foreach($_POST['chosen_book'] as $uuid) {
+    foreach($_POST['id'] as $uuid) {
         $book_id = $library_manager->getBook('uuid', $uuid, true);
         $library_manager->deleteBook($book_id);
     }
@@ -18,6 +18,6 @@ if(isset($_POST['chosen_book'])) {
     echo '<br>Delete successful.';
 }
 else {
-    \Bookshelf\Utility\ErrorHandler::throwError('No books to delete.', \Bookshelf\Utility\ErrorLevel::ERROR);
+    \Bookshelf\Utility\ErrorHandler::throwError('No book to delete.', \Bookshelf\Utility\ErrorLevel::ERROR);
 }
 include( __DIR__ . '/inc/footer.php');
