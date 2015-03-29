@@ -1,20 +1,18 @@
 @import "framework";
 
-/* TODO: Remove demo-book */
-.demo-book {
-  height: 200px;
-  width: 133.33px;
-  margin: 15px;
-  float: left;
-  background-color: #000000;
-}
-
 .book {
   height: 200px;
   width: 133.33px;
   margin: 15px;
-  float: left;
+  display: inline-block;
+  vertical-align: top;
   background-color: #999999;
+}
+
+.book-detail {
+  @extend .book;
+  float: left;
+  display: block;
 }
 
 header {
@@ -80,6 +78,14 @@ footer {
 
 #book-info {
   padding-top: 15px;
+}
+
+#user-menu {
+  width: 30%;
+  padding: 15px;
+  float: right;
+  background-color: #eee;
+  word-break: normal;
 }
 
 .author {

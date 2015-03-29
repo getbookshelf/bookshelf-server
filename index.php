@@ -7,6 +7,16 @@ include( __DIR__ . '/inc/header.php');
 
 $lib_man = new \Bookshelf\Core\LibraryManager();
 $books = $lib_man->listBooks();
+?>
+    <div id="user-menu">
+        Hi there, username.
+
+        <p>
+            <a href="#">Add new book</a><br>
+            <a href="#">Settings</a>
+        </p>
+    </div>
+<?php
 
 foreach($books as $book) {
     echo '<a href="book.php?id=' . $lib_man->getBook('uuid', $book->uuid, true) . '"><img class="book" src="' . $book->metadata->cover_image . '"></a>';
