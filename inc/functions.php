@@ -1,16 +1,17 @@
 <?php
 
 function insertHeader($title = '', $additional_head_content = '') {
+    $config = new \Bookshelf\Core\Configuration(true);
+
+    $title = $title == '' ? '' : $title . ' - ';
+    $base_url = $config->getBaseUrl();
     ?>
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="utf-8">
-        <?php
-        $title = $title == '' ? '' : $title . ' - ';
-        ?>
         <title><?php echo $title; ?>Bookshelf</title>
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="<?php echo $base_url; ?>/assets/css/style.css">
         <?php echo $additional_head_content; ?>
     </head>
     <body>
@@ -34,6 +35,9 @@ function insertHeader($title = '', $additional_head_content = '') {
 }
 
 function insertFooter() {
+    $config = new \Bookshelf\Core\Configuration(true);
+    $base_url = $config->getBaseUrl();
+
     \Bookshelf\Utility\ErrorHandler::displayErrors(true);
     ?>
     </div>
@@ -44,8 +48,8 @@ function insertFooter() {
         </div>
     </footer>
     </div>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="assets/js/bookshelf.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="<?php echo $base_url; ?>/assets/js/bookshelf.js"></script>
     </body>
     </html>
     <?php

@@ -2,6 +2,7 @@
 
 namespace Bookshelf\Utility;
 
+use Bookshelf\Core\Configuration;
 use Bookshelf\DataIo\DatabaseConnection;
 
 class User {
@@ -13,12 +14,15 @@ class User {
     }
 
     public static function showLoginForm() {
+        $config = new Configuration(true);
+        $base_url = $config->getBaseUrl();
+
         print '<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <title>Bookshelf</title>
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="' . $base_url . '/assets/css/style.css">
     </head>
     <body>
         <div id="wrapper" name="wrapper">
