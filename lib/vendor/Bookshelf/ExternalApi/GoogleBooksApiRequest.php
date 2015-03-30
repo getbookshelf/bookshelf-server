@@ -42,7 +42,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             $current_book_metadata = new BookMetadata();
 
             $current_book_metadata->author = implode(', ', $data_array['items'][$i]['volumeInfo']['authors']);
-            $current_book_metadata->cover_image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($data_array['items'][$i]['volumeInfo']['imageLinks']['smallThumbnail']));
+            $current_book_metadata->cover_image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($data_array['items'][$i]['volumeInfo']['imageLinks']['thumbnail']));
             $current_book_metadata->description = $data_array['items'][$i]['volumeInfo']['description'];
             $current_book_metadata->identifier = $data_array['items'][$i]['volumeInfo']['industryIdentifiers'][1]['identifier'];
             $current_book_metadata->language = $data_array['items'][$i]['volumeInfo']['language'];
