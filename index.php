@@ -5,14 +5,6 @@ insertHeader();
 $lib_man = new \Bookshelf\Core\LibraryManager();
 $books = $lib_man->listBooks();
 ?>
-    <div id="user-menu">
-        Hi there, username.
-
-        <p>
-            <a href="#">Add new book</a><br>
-            <a href="#">Settings</a>
-        </p>
-    </div>
 <?php
 
 foreach($books as $book) {

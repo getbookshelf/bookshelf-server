@@ -30,6 +30,15 @@ function insertHeader($title = '', $additional_head_content = '') {
         </header>
         <div id="main" name="main">
             <div class="container">
+                <div id="user-menu">
+                    Hi there, <?php echo $_SESSION["name"]; ?>.
+
+                    <p>
+                        <a href="#">Add new book</a><br>
+                        <a href="#">Settings</a><br>
+                        <a href="<?php echo $base_url; ?>/logout.php">Logout</a>
+                    </p>
+                </div>
     <?php
     \Bookshelf\Utility\ErrorHandler::displayErrors();
 }
