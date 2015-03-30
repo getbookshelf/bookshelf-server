@@ -47,7 +47,7 @@ class GoogleBooksApiRequest extends ExternalApiRequest {
             $current_book_metadata->identifier = $data_array['items'][$i]['volumeInfo']['industryIdentifiers'][1]['identifier'];
             $current_book_metadata->language = $data_array['items'][$i]['volumeInfo']['language'];
             if($data_array['items'][$i]['volumeInfo']['subtitle']) {
-                $current_book_metadata->title = $data_array['items'][$i]['volumeInfo']['title'] . ' - ' . $data_array['items'][$i]['volumeInfo']['subtitle'];
+                $current_book_metadata->title = $data_array['items'][$i]['volumeInfo']['title'] . ': ' . $data_array['items'][$i]['volumeInfo']['subtitle'];
             }
             else {
                 $current_book_metadata->title = $data_array['items'][$i]['volumeInfo']['title'];

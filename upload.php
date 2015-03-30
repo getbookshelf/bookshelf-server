@@ -11,8 +11,8 @@ switch($current_step) {
         <h1>Upload eBook</h1>
         <form enctype="multipart/form-data" action="#" method="POST">
             <input name="step" type="hidden" value="search">
-            <input name="file" type="file" /><br>
-            <input type="submit" value="Upload" />
+            <input name="file" type="file"><br>
+            <input type="submit" value="Upload">
         </form>
         <?php
         break;
@@ -32,7 +32,7 @@ switch($current_step) {
             }
 
             echo '<h1>Set book metadata</h1>
-<p>Your book <span class="italic">' . $_FILES['file']['name'] . '</span> has been uploaded successfully. You can now set its metadata.</p>';
+<p>Your book <span class="italic">' . $_FILES['file']['name'] . '</span> has been uploaded successfully. You can now set its metadata. If none of the API\'s metadata matches your book, you can always <a href="' . $base_url . '/edit-book.php?id=' . $id . '">manually edit</a> the metadata.</p>';
             echo '<p>
 Query: <input id="query_string" name="query_string" type="text" value="' . $book->getQueryString() . '"> <button id="btn-search" name="btn-search">Search</button>
 </p>';

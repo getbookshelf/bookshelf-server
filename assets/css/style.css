@@ -240,15 +240,17 @@ footer a {
 
 /* line 94, ../sass/style.scss */
 #user-menu {
-  width: 30%;
+  width: 26%;
   padding: 15px;
   margin-top: 15px;
+  margin-right: 15px;
   float: right;
   background-color: #eee;
+  text-align: right;
   word-break: normal;
 }
 
-/* line 103, ../sass/style.scss */
+/* line 105, ../sass/style.scss */
 .author {
   font-style: italic;
 }

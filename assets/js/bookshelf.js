@@ -21,3 +21,4 @@ function deleteBook(base_url, id) {
         window.location = base_url;
     }
 }
+
