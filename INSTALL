@@ -1,0 +1,24 @@
+# Installing bookshelf-server
+
+This document will describe how to install bookshelf-server manually. For now, it will only contain some notes and list the requirements though.
+
+## TLS encryption
+We force all traffic to Bookshelf installations to be TLS-encrypted. This is currently implemented via a .htaccess file.
+The user has to enable mod_rewrite and have the server listen for HTTPS requests. An valid certificate is recommended but not necessary.
+
+Currently, all traffic is redirected to HTTPS. Once we implement an install script, we want to exclude that from the redirect in order to be able to show a help message to users that don't have HTTPS configured properly.
+
+## File permissions
+The following permissions have to be set in order for Bookshelf to run correctly:
+    chmod -R 777 cache          // TODO: cache directory shouldn't be public!
+    chmod -R 777 library
+
+## HTML Purifier
+For sanitizing HTML user inputs, we use HTML Purifier (http://htmlpurifier.org/). This package currently has to be in the user's path (will later be customizable through a config option). The easiest way of achieving this is by using PEAR:
+
+    pear channel-discover htmlpurifier.org
+    pear install hp/HTMLPurifier
+
+HTML Purifier can and should be updated regularly:
+
+    pear upgrade hp/HTMLPurifier

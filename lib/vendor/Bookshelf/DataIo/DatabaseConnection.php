@@ -2,9 +2,8 @@
 
 namespace Bookshelf\DataIo;
 
+use Bookshelf\Core\Application;
 use Bookshelf\Core\Configuration;
-use Bookshelf\DataType\Book;
-use Bookshelf\DataType\BookMetadata;
 use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
@@ -45,8 +44,11 @@ class DatabaseConnection {
     }
 
     // should not be called directly, only use from LibraryManager::addBook
-
     public function insertBook($data) {
+        foreach($data as $property => $value) {
+            $data[$property] = $this->purify($value);
+        }
+
         $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}')";
         if($this->mysqli->query($query)) {
             return $this->mysqli->insert_id;
@@ -68,6 +70,8 @@ class DatabaseConnection {
         $query = 'UPDATE library SET';
 
         foreach($to_update as $property => $value) {
+            $value = $this->purify($value);
+
             // First item does not need a comma
             if($value === reset($to_update)) {
                 $query .= " {$property} = '{$value}'";
@@ -111,6 +115,17 @@ class DatabaseConnection {
 
     public function escape($string) {
         return $this->mysqli->real_escape_string($string);
+    }
+
+    public function purify($string) {
+        // Purify HTML in order to avoid malicious code execution and improper HTML
+        // TODO: Make make include path configurable
+        require_once 'HTMLPurifier.auto.php';
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', Application::ROOT_DIR . 'cache/HTMLPurifier');
+        $purifier = new \HTMLPurifier($config);
+
+        return $purifier->purify($string);
     }
 
     private function fetch_all($result) {
