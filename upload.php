@@ -78,12 +78,12 @@ Query: <input id="query_string" name="query_string" type="text" value="' . $book
                 $api_request->getBookByIdentifier($api_id);
                 $result = $api_request->results()->getResults()[0]['metadata'];
 
-                $cover_image = $db_con->escape($result->cover_image);
-                $title = $db_con->escape($result->title);
-                $author = $db_con->escape($result->author);
-                $description = $db_con->escape($result->description);
-                $language = $db_con->escape($result->language);
-                $identifier = $db_con->escape($result->identifier);
+                $cover_image = $result->cover_image;
+                $title = $result->title;
+                $author = $result->author;
+                $description = $result->description;
+                $language = $result->language;
+                $identifier = $result->identifier;
 
                 $to_update = array('cover_image' => $cover_image, 'title' => $title, 'author' => $author, 'description' => $description, 'language' => $language, 'identifier' => $identifier);
 

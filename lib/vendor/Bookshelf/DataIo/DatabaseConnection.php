@@ -47,6 +47,7 @@ class DatabaseConnection {
     public function insertBook($data) {
         foreach($data as $property => $value) {
             $data[$property] = $this->purify($value);
+            $data[$property] = $this->escape($value);
         }
 
         $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}')";
@@ -71,6 +72,7 @@ class DatabaseConnection {
 
         foreach($to_update as $property => $value) {
             $value = $this->purify($value);
+            $value = $this->escape($value);
 
             // First item does not need a comma
             if($value === reset($to_update)) {
@@ -84,7 +86,7 @@ class DatabaseConnection {
         $query .= " WHERE id = {$id}";
 
         if(!$this->mysqli->query($query)) {
-            ErrorHandler::throwError('Updating book ' . $id . ' failed.', ErrorLevel::DEBUG);
+            ErrorHandler::throwError('Updating book ' . $id . ' failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
         }
     }
 
