@@ -34,7 +34,7 @@ function insertHeader($title = '', $additional_head_content = '') {
                     Hi there, <?php echo $_SESSION["name"]; ?>.
 
                     <p>
-                        <a href="#">Add new book</a><br>
+                        <a href="<?php echo $base_url; ?>/upload.php">Add new book</a><br>
                         <a href="#">Settings</a><br>
                         <a href="<?php echo $base_url; ?>/logout.php">Logout</a>
                     </p>
@@ -43,7 +43,7 @@ function insertHeader($title = '', $additional_head_content = '') {
     \Bookshelf\Utility\ErrorHandler::displayErrors();
 }
 
-function insertFooter() {
+function insertFooter($additional_scripts = '') {
     $config = new \Bookshelf\Core\Configuration(true);
     $base_url = $config->getBaseUrl();
 
@@ -59,6 +59,11 @@ function insertFooter() {
     </div>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="<?php echo $base_url; ?>/assets/js/bookshelf.js"></script>
+    <?php
+    if($additional_scripts) {
+        echo '<script>' . $additional_scripts . '</script>';
+    }
+    ?>
     </body>
     </html>
     <?php

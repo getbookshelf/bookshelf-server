@@ -8,12 +8,18 @@
   vertical-align: top;
   background-color: #999999;
 }
-
 .book-detail {
   @extend .book;
   float: left;
   display: block;
   margin-left: 0px;
+}
+.book-upload {
+  @extend .book;
+  background-color: $base-color;
+  color: $secondary-color;
+  text-align: center;
+  font-size: 110pt;
 }
 
 header {
@@ -79,11 +85,16 @@ footer {
 
 #book-info {
   padding-top: 15px;
+
+  h1 {
+    padding-bottom: 0px;
+  }
 }
 
 #user-menu {
   width: 30%;
   padding: 15px;
+  margin-top: 15px;
   float: right;
   background-color: #eee;
   word-break: normal;
