@@ -100,42 +100,98 @@ h3 {
 }
 
 /* line 32, ../sass/framework.scss */
-p {
-  margin-top: 1em;
-  margin-bottom: 1em;
+p, code, pre, kbd {
+  margin: 0em 0em 1.5em 0em;
 }
 
-/* line 37, ../sass/framework.scss */
+/* line 36, ../sass/framework.scss */
 a {
   color: #3498DB;
   text-decoration: none;
 }
 
-/* line 42, ../sass/framework.scss */
+/* line 41, ../sass/framework.scss */
 a:hover {
   color: #2A7BB3;
 }
 
-/* line 46, ../sass/framework.scss */
+/* line 45, ../sass/framework.scss */
 .clear {
   clear: both;
 }
 
-/* line 50, ../sass/framework.scss */
+/* line 49, ../sass/framework.scss */
 .container {
   width: 80%;
   max-width: 980px;
   margin: auto;
 }
 
-/* line 56, ../sass/framework.scss */
-.italic {
+/* line 55, ../sass/framework.scss */
+.italic, i, em {
   font-style: italic;
 }
 
-/* line 57, ../sass/framework.scss */
-.bold {
+/* line 56, ../sass/framework.scss */
+.bold, b, strong {
   font-weight: bold;
+}
+
+/* line 58, ../sass/framework.scss */
+pre, code, tt {
+  font: 1em/1.5em 'Andale Mono', 'Lucida Console', monospace;
+}
+
+/* line 59, ../sass/framework.scss */
+pre {
+  margin: 1.5em 0;
+  white-space: pre;
+}
+
+/* line 64, ../sass/framework.scss */
+li ul, li ol {
+  margin: 0em 1.5em;
+}
+
+/* line 65, ../sass/framework.scss */
+ul, ol {
+  margin: 0em 1.5em 1.5em 1.5em;
+}
+
+/* line 66, ../sass/framework.scss */
+ul {
+  list-style-type: disc;
+}
+
+/* line 67, ../sass/framework.scss */
+ol {
+  list-style-type: decimal;
+}
+
+/* line 68, ../sass/framework.scss */
+ol ol {
+  list-style: upper-alpha;
+}
+
+/* line 70, ../sass/framework.scss */
+table {
+  margin-bottom: 1.4em;
+  width: 100%;
+}
+
+/* line 74, ../sass/framework.scss */
+th {
+  font-weight: bold;
+}
+
+/* line 75, ../sass/framework.scss */
+th, td, caption {
+  padding: 4px 10px 4px 5px;
+}
+
+/* line 76, ../sass/framework.scss */
+tfoot {
+  font-style: italic;
 }
 
 /* line 3, ../sass/style.scss */
