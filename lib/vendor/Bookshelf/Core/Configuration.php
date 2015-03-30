@@ -3,6 +3,8 @@
 namespace Bookshelf\Core;
 
 use Bookshelf\DataIo\DatabaseConnection;
+use Bookshelf\Utility\ErrorHandler;
+use Bookshelf\Utility\ErrorLevel;
 
 class Configuration {
     private $ini_data;
@@ -16,15 +18,15 @@ class Configuration {
     }
 
     public function getLibraryDir() {
-        return $this->db_connection->readConfigValue('library_dir');
+        return $this->getDatabaseValue('library_dir');
     }
 
     public function getDebuggingEnabled() {
-        return (bool)$this->db_connection->readConfigValue('enable_debugging');
+        return (bool)$this->getDatabaseValue('enable_debugging');
     }
 
     public function getBaseUrl() {
-        return $this->db_connection->readConfigValue('base_url');
+        return $this->getDatabaseValue('base_url');
     }
 
     public function getDatabaseHost() {
@@ -45,5 +47,13 @@ class Configuration {
 
     public function getSalt() {
         return $this->ini_data['salt'];
+    }
+
+    private function getDatabaseValue($property) {
+        if($this->db_connection == null) {
+            ErrorHandler::throwError('Trying to read configuration from database with uninitialized DatabaseConnection.', ErrorLevel::DEBUG);
+        }
+
+        return $this->db_connection->readConfigValue($property);
     }
 }
