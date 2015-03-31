@@ -76,7 +76,7 @@ class LibraryManager {
             $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
 
             $metadata = new BookMetadata();
-            //$metadata->cover_image = $data['cover_image'];
+            $metadata->cover_image = $data['cover_image'];
             $metadata->title = $data['title'];
             $metadata->author = $data['author'];
             $metadata->description = $data['description'];
