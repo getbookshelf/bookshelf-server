@@ -9,7 +9,7 @@ if(!empty($id)) {
     $book = $lib_man->getBookById($id);
     $base_url = $config->getBaseUrl();
 
-    if($book == new \Bookshelf\DataType\Book('','','')) {
+    if($book == new \Bookshelf\DataType\Book($id, '', '', '')) {
         \Bookshelf\Utility\ErrorHandler::throwError('Book not found.', \Bookshelf\Utility\ErrorLevel::ERROR);
         header('Location: index.php');
         exit();

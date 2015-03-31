@@ -59,7 +59,7 @@ class LibraryManager {
         $tags = str_replace(', ', ',', $data['tags']);
         $metadata->tags = $tags == '' ? array() : explode(',', $tags);
 
-        return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        return new Book($id, $data['uuid'], $original_name, $original_extension, $metadata);
     }
 
 
@@ -87,7 +87,7 @@ class LibraryManager {
             $tags = str_replace(', ', ',', $data['tags']);
             $metadata->tags = $tags == '' ? array() : explode(',', $tags);
 
-            $result[] = new Book($data['uuid'], $original_name, $original_extension, $metadata);
+            $result[] = new Book($data['id'], $data['uuid'], $original_name, $original_extension, $metadata);
         }
         return $result;
     }

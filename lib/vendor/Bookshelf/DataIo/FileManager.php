@@ -25,7 +25,7 @@ class FileManager {
             return -1;
         }
 
-        $result = new Book($uuid, pathinfo(basename($files_array['file']['name']), PATHINFO_FILENAME), pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION));
+        $result = new Book(-1, $uuid, pathinfo(basename($files_array['file']['name']), PATHINFO_FILENAME), pathinfo(basename($files_array['file']['name']), PATHINFO_EXTENSION));
 
         $library_manager = new LibraryManager();
         return $library_manager->addBook($result);
