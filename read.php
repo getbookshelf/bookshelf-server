@@ -18,7 +18,10 @@ $mime_type = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $file);
 
 switch($mime_type) {
     case 'application/epub+zip':
-        include __DIR__ . '/inc/reader-epub/reader.php';
+    include __DIR__ . '/inc/reader-epub/reader.php';
+    break;
+    case 'application/pdf':
+        include __DIR__ . '/inc/reader-pdf/web/viewer.php';
         break;
     default:
         insertHeader();

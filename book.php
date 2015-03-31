@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/inc/base.php';
-insertHeader();
+insertHeader(null, '<style>#user-menu { margin-left: 5px; }</style>');
 
 $id = $_GET['id'];
 if(!empty($id)) {

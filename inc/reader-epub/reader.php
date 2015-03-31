@@ -15,7 +15,7 @@ $base_url = $config->getBaseUrl();
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Bookshelf ePUB Reader</title>
+        <title>Bookshelf EPUB Reader</title>
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/normalize.css">
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/main.css">
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/popup.css">
