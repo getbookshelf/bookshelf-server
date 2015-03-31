@@ -67,7 +67,7 @@ Query: <input id="query_string" name="query_string" type="text" value="' . $book
             exit();
         }
 
-        $db_con = new \Bookshelf\DataIo\DatabaseConnection();
+        $lib_man = new \Bookshelf\Core\LibraryManager();
         $id = $_POST['id'];
         $used_api = explode('.', $_POST['chosen_book'][0], 2)[0];
         $api_id = explode('.', $_POST['chosen_book'][0], 2)[1];
@@ -87,7 +87,7 @@ Query: <input id="query_string" name="query_string" type="text" value="' . $book
 
                 $to_update = array('cover_image' => $cover_image, 'title' => $title, 'author' => $author, 'description' => $description, 'language' => $language, 'identifier' => $identifier);
 
-                $db_con->updateBook($id, $to_update);
+                $lib_man->updateBook($id, $to_update);
                 header('Location: index.php');
                 exit();
 

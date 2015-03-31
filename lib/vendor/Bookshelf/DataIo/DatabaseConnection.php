@@ -22,6 +22,8 @@ class DatabaseConnection {
         }
     }
 
+    // Generally, these functions should not be accessed directly but rather be proxied by a more specific class.
+
     public function readConfigValue($property) {
         if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
             return $result->fetch_array(MYSQL_ASSOC)['value'];
@@ -65,8 +67,6 @@ class DatabaseConnection {
         $this->mysqli->query($query);
     }
 
-    // $to_update = array('property' => 'value');
-    // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
     public function updateBook($id, $to_update) {
         $query = 'UPDATE library SET';
 

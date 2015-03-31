@@ -6,7 +6,6 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']) 
     $request = new \Bookshelf\DataIo\ApiRequest($_POST);
     $lib_man = new \Bookshelf\Core\LibraryManager();
     $file_man = new \Bookshelf\DataIo\FileManager();
-    $db_con = new \Bookshelf\DataIo\DatabaseConnection();
 
     $result = array();
 
@@ -72,7 +71,7 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']) 
                 if(!empty($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
                 if(!empty($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
 
-                $db_con->updateBook($request->id, $to_update);
+                $lib_man->updateBook($request->id, $to_update);
             }
             else {
                 http_response_code(400);

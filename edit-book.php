@@ -7,7 +7,7 @@ $additional_scripts = '';
 
 switch($current_step) {
     case 'update':
-        $db_con = new \Bookshelf\DataIo\DatabaseConnection();
+        $lib_man = new \Bookshelf\Core\LibraryManager();
 
         $id = $_POST['id'];
         $cover_image = $_POST['cover_image'];
@@ -19,7 +19,7 @@ switch($current_step) {
 
         $to_update = array('cover_image' => $cover_image, 'title' => $title, 'author' => $author, 'description' => $description, 'language' => $language, 'identifier' => $identifier);
 
-        $db_con->updateBook($id, $to_update);
+        $lib_man->updateBook($id, $to_update);
         header('Location: book.php?id=' . $id);
         exit();
         break;

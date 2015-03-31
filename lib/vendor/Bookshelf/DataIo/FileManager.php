@@ -39,7 +39,6 @@ class FileManager {
         unlink(realpath($config->getLibraryDir()) . '/' . $book['uuid'] . pathinfo($book['file_name'], PATHINFO_EXTENSION));
     }
 
-    // TODO: Find a better UUID generation method as this one doesn't really appear to be working (generates PHP warnings, generated UUIDs are not the same length)
     private function generateUuid(){
         // see http://rogerstringer.com/2013/11/15/generate-uuids-php/
         $uuid = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',

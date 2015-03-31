@@ -28,6 +28,12 @@ class LibraryManager {
         return $this->database_connection->insertBook($data);
     }
 
+    // $to_update = array('property' => 'value');
+    // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
+    public function updateBook($id, $to_update) {
+        $this->database_connection->updateBook($id, $to_update);
+    }
+
     public function deleteBook($id) {
         $this->database_connection->deleteBook($id);
         DataIo\FileManager::deleteBook($id);
