@@ -1,14 +1,11 @@
 <?php
 require __DIR__ . '/../lib/vendor/autoload.php';
 
-// only for debugging purposes (the notices are annoying)
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
 header("Content-Type: text/json");
 
 $api_reply = array(
-    'error_code' => 201,
-    'error' => 'Success.'
+    'status_code' => 200,
+    'status' => 'OK.'
 );
 http_response_code(200);
 $result = array();
@@ -29,8 +26,8 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
             }
             else {
                 http_response_code(400);
-                $api_reply['error_code'] = 602;
-                $api_reply['error'] = 'Missing parameters (id).';
+                $api_reply['status_code'] = 602;
+                $api_reply['status'] = 'Missing parameters (id).';
             }
             break;
         case 'getbookmeta':
@@ -41,8 +38,8 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
             }
             else {
                 http_response_code(400);
-                $api_reply['error_code'] = 602;
-                $api_reply['error'] = 'Missing parameters (id).';
+                $api_reply['status_code'] = 602;
+                $api_reply['status'] = 'Missing parameters (id).';
             }
             break;
         case 'downloadbook':
@@ -53,8 +50,8 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
             }
             else {
                 http_response_code(400);
-                $api_reply['error_code'] = 602;
-                $api_reply['error'] = 'Missing parameters (id).';
+                $api_reply['status_code'] = 602;
+                $api_reply['status'] = 'Missing parameters (id).';
             }
             break;
         case 'searchbook':
@@ -63,8 +60,8 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
             }
             else {
                 http_response_code(400);
-                $api_reply['error_code'] = 602;
-                $api_reply['error'] = 'Missing parameters (field, query).';
+                $api_reply['status_code'] = 602;
+                $api_reply['status'] = 'Missing parameters (field, query).';
             }
             break;
         case 'listbooks':
@@ -85,20 +82,20 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
             }
             else {
                 http_response_code(400);
-                $api_reply['error_code'] = 602;
-                $api_reply['error'] = 'Missing parameters (id).';
+                $api_reply['status_code'] = 602;
+                $api_reply['status'] = 'Missing parameters (id).';
             }
             break;
         default:
             http_response_code(400);
-            $api_reply['error_code'] = 601;
-            $api_reply['error'] = 'Invalid action.';
+            $api_reply['status_code'] = 601;
+            $api_reply['status'] = 'Invalid action.';
     }
 }
 else {
     http_response_code(401);
-    $api_reply['error_code'] = 401;
-    $api_reply['error'] = 'Not authenticated.';
+    $api_reply['status_code'] = 401;
+    $api_reply['status'] = 'Not authenticated.';
 }
 
 $api_reply['result'] = $result;
