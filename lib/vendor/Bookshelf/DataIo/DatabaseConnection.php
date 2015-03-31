@@ -24,6 +24,7 @@ class DatabaseConnection {
 
     // Generally, these functions should not be accessed directly but rather be proxied by a more specific class.
 
+    // returns string
     public function readConfigValue($property) {
         if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
             return $result->fetch_array(MYSQL_ASSOC)['value'];
@@ -34,6 +35,7 @@ class DatabaseConnection {
         return false;
     }
 
+    // returns bool
     public function validateUser($username, $password) {
         if($result = $this->mysqli->query("SELECT passwd_hash FROM users WHERE username='$username'")) {
            $row = $result->fetch_array();
@@ -46,13 +48,15 @@ class DatabaseConnection {
     }
 
     // should not be called directly, only use from LibraryManager::addBook
+    // returns int (ID)
     public function insertBook($data) {
         foreach($data as $property => $value) {
             $data[$property] = $this->purify($value);
             $data[$property] = $this->escape($value);
         }
 
-        $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier) VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}')";
+        $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier, tags)
+VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}', '{$data['tags']}')";
         if($this->mysqli->query($query)) {
             return $this->mysqli->insert_id;
         }
@@ -62,11 +66,13 @@ class DatabaseConnection {
         return false;
     }
 
+    // void
     public function deleteBook($id) {
         $query = "DELETE FROM library WHERE id={$id}";
         $this->mysqli->query($query);
     }
 
+    // void
     public function updateBook($id, $to_update) {
         $query = 'UPDATE library SET';
 
@@ -90,8 +96,14 @@ class DatabaseConnection {
         }
     }
 
+    // returns array('property' => 'value')
     public function getBookById($id) {
-        if($result = $this->mysqli->query("SELECT * FROM library WHERE id = {$id}")) {
+        $query = "SELECT library.*, GROUP_CONCAT(categories.name) AS categories FROM library
+LEFT JOIN category_relationships ON category_relationships.book = library.id
+LEFT JOIN categories ON category_relationships.category = categories.id
+WHERE library.id = {$id}";
+
+        if($result = $this->mysqli->query($query)) {
             return $result->fetch_array(MYSQL_ASSOC);
         }
         else {
@@ -100,6 +112,7 @@ class DatabaseConnection {
         return -1;
     }
 
+    // returns int (ID)
     public function getBook($field, $query, $exact = false) {
         if(!$exact) {
             if($result = $this->mysqli->query("SELECT id FROM library WHERE {$field} LIKE '%{$query}%' LIMIT 1")) return $result->fetch_array(MYSQL_ASSOC)['id'];
@@ -111,14 +124,22 @@ class DatabaseConnection {
         return -1;
     }
 
+    // returns array(array('property' => 'value'))
     public function dumpLibraryData() {
-        if($result = $this->mysqli->query("SELECT * FROM library")) return $this->fetch_all($result);
+        $query = 'SELECT library.*, GROUP_CONCAT(categories.name) AS categories FROM library
+LEFT JOIN category_relationships ON category_relationships.book = library.id
+LEFT JOIN categories ON category_relationships.category = categories.id
+GROUP BY library.id';
+
+        if($result = $this->mysqli->query($query)) return $this->fetch_all($result);
     }
 
+    // returns string
     public function escape($string) {
         return $this->mysqli->real_escape_string($string);
     }
 
+    // returns string
     public function purify($string) {
         // Purify HTML in order to avoid malicious code execution and improper HTML
         // TODO: Make make include path configurable
@@ -130,6 +151,7 @@ class DatabaseConnection {
         return $purifier->purify($string);
     }
 
+    // returns array
     private function fetch_all($result) {
         $all = array();
         while($row = $result->fetch_array(MYSQL_ASSOC)){

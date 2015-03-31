@@ -70,6 +70,7 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']) 
                 if(!empty($request->book_meta->identifier)) $to_update['identifier'] = $request->book_meta->identifier;
                 if(!empty($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
                 if(!empty($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
+                if(!empty($request->book_meta->tags)) $to_update['tags'] = $request->book_meta->tags;
 
                 $lib_man->updateBook($request->id, $to_update);
             }

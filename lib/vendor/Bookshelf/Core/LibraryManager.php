@@ -25,6 +25,8 @@ class LibraryManager {
         $data['description'] = $book->metadata->description;
         $data['language'] = $book->metadata->language;
         $data['identifier'] = $book->metadata->identifier;
+        $data['tags'] = implode(',', $book->metadata->tags);
+
         return $this->database_connection->insertBook($data);
     }
 
@@ -52,6 +54,10 @@ class LibraryManager {
         $metadata->description = $data['description'];
         $metadata->language = $data['language'];
         $metadata->identifier = $data['identifier'];
+        $metadata->categories = $data['categories'] == '' ? array() : explode(',', $data['categories']);
+
+        $tags = str_replace(', ', ',', $data['tags']);
+        $metadata->tags = $tags == '' ? array() : explode(',', $tags);
 
         return new Book($data['uuid'], $original_name, $original_extension, $metadata);
     }
@@ -70,12 +76,17 @@ class LibraryManager {
             $original_extension = pathinfo($data['file_name'], PATHINFO_EXTENSION);
 
             $metadata = new BookMetadata();
-            $metadata->cover_image = $data['cover_image'];
+            //$metadata->cover_image = $data['cover_image'];
             $metadata->title = $data['title'];
             $metadata->author = $data['author'];
             $metadata->description = $data['description'];
             $metadata->language = $data['language'];
             $metadata->identifier = $data['identifier'];
+            $metadata->categories = $data['categories'] == '' ? array() : explode(',', $data['categories']);
+
+            $tags = str_replace(', ', ',', $data['tags']);
+            $metadata->tags = $tags == '' ? array() : explode(',', $tags);
+
             $result[] = new Book($data['uuid'], $original_name, $original_extension, $metadata);
         }
         return $result;
