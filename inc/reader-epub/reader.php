@@ -15,7 +15,7 @@ $base_url = $config->getBaseUrl();
 <html>
     <head>
         <meta charset="utf-8">
-        <title><?php echo $title; ?> — Bookshelf ePUB Reader</title>
+        <title>Bookshelf ePUB Reader</title>
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/normalize.css">
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/main.css">
         <link rel="stylesheet" href="<?php echo $base_url . '/inc/reader-epub'; ?>/css/popup.css">
@@ -47,9 +47,9 @@ $base_url = $config->getBaseUrl();
         <div id="panels">
             <input id="searchBox" placeholder="search" type="search">
 
-            <a id="show-Search" class="show_view icon-search" data-view="Search">Search</a>
-            <a id="show-Toc" class="show_view icon-list-1 active" data-view="Toc">TOC</a>
-            <a id="show-Bookmarks" class="show_view icon-bookmark" data-view="Bookmarks">Bookmarks</a>
+            <a id="show-Search" class="show_view icon-search" data-view="Search" title="Search">Search</a>
+            <a id="show-Toc" class="show_view icon-list-1 active" data-view="Toc" title="Table of contents">TOC</a>
+            <a id="show-Bookmarks" class="show_view icon-bookmark" data-view="Bookmarks" title="Bookmarks">Bookmarks</a>
             <a id="show-Notes" class="show_view icon-edit" data-view="Notes">Notes</a>
 
         </div>
@@ -81,9 +81,13 @@ $base_url = $config->getBaseUrl();
                 <span id="chapter-title"></span>
             </div>
             <div id="title-controls">
-                <a id="bookmark" class="icon-bookmark-empty">Bookmark</a>
-                <a id="setting" class="icon-cog">Settings</a>
-                <a id="fullscreen" class="icon-resize-full">Fullscreen</a>
+                <a id="bookmark" class="icon-bookmark-empty" title="Bookmark">Bookmark</a>
+                <a id="setting" class="icon-cog" title="Settings">Settings</a>
+                <a id="fullscreen" class="icon-resize-full" title="Fullscreen">Fullscreen</a>
+            </div>
+            <div id="bookshelf-controls">
+                <a id="home" class="icon-home" href="<?php echo $base_url; ?>" title="Back to Bookshelf">Home</a>
+                <a id="detail-page" class="icon-back" href="<?php echo $base_url; ?>/book.php?id=<?php echo $id; ?>" title="Back to the book detail page">Detail page</a>
             </div>
         </div>
 
