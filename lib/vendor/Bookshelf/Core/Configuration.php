@@ -11,14 +11,15 @@ class Configuration {
     private $db_connection;
 
     public function __construct($enable_db = true, $db_con = null) {
-        $this->ini_data = parse_ini_file(Application::ROOT_DIR . 'config.ini');
+        $this->ini_data = parse_ini_file(Application::ROOT_DIR . '/config.ini');
         if($enable_db) {
             $this->db_connection = $db_con == null ? new DatabaseConnection() : $db_con;
         }
     }
 
     public function getLibraryDir() {
-        return $this->getDatabaseValue('library_dir');
+        $lib_dir = $this->getDatabaseValue('library_dir');
+        return rtrim($lib_dir, '/');
     }
 
     public function getDebuggingEnabled() {
@@ -26,7 +27,8 @@ class Configuration {
     }
 
     public function getBaseUrl() {
-        return $this->getDatabaseValue('base_url');
+        $base_url = $this->getDatabaseValue('base_url');
+        return rtrim($base_url, '/');
     }
 
     public function getDatabaseHost() {

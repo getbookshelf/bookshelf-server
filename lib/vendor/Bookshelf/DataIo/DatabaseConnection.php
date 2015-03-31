@@ -124,7 +124,7 @@ class DatabaseConnection {
         // TODO: Make make include path configurable
         require_once 'HTMLPurifier.auto.php';
         $config = \HTMLPurifier_Config::createDefault();
-        $config->set('Cache.SerializerPath', Application::ROOT_DIR . 'cache/HTMLPurifier');
+        $config->set('Cache.SerializerPath', Application::ROOT_DIR . '/cache/HTMLPurifier');
         $purifier = new \HTMLPurifier($config);
 
         return $purifier->purify($string);
