@@ -303,8 +303,8 @@ input:-moz-placeholder {
     width: 25%;
     height: 100%;
     visibility: hidden;
-    -webkit-transition: visibility 0 ease .5s;
-    -moz-transition: visibility 0 ease .5s;
+    /*-webkit-transition: visibility 0 ease .5s;*/
+    /*-moz-transition: visibility 0 ease .5s;*/
 }
 
 
@@ -313,8 +313,8 @@ input:-moz-placeholder {
 #sidebar.open #bookmarksView {
     overflow-y: auto;
     visibility: visible;
-    -webkit-transition: visibility 0 ease 0;
-    -moz-transition: visibility 0 ease 0;
+    /*-webkit-transition: visibility 0 ease 0;*/
+    /*-moz-transition: visibility 0 ease 0;*/
 }
 
 #sidebar.open #tocView {
@@ -720,7 +720,7 @@ input:-moz-placeholder {
 
     #tocView > ul{
         padding-left: 10px;
-        webkit-padding-start:;
+        /*webkit-padding-start:;*/
     }
 }
 
@@ -762,7 +762,7 @@ input:-moz-placeholder {
     font-family: "fontello";
     font-style: normal;
     font-weight: normal;
-    speak: none;
+    /*speak: none;*/
 
     display: inline-block;
     text-decoration: inherit;
