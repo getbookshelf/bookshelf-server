@@ -102,11 +102,13 @@ COMMIT;";
                 $value = $this->escape($value);
 
                 // First item does not need a comma
-                if ($value === reset($to_update)) { // TODO: This might not work
+                if ($value === reset($to_update)) {
                     $query .= " {$property} = '{$value}'";
                 } else {
                     $query .= ", {$property} = '{$value}'";
                 }
+            } else {
+                unset($to_update[$property]);
             }
         }
 
