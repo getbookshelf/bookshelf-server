@@ -18,13 +18,13 @@ function insertHeader($title = '', $additional_head_content = '') {
     <div id="wrapper" name="wrapper">
         <header>
             <div class="container">
-                <span id="logo" name="logo"><a href="index.php">Bookshelf</a></span>
+                <span id="logo" name="logo"><a href="<?php echo $base_url; ?>/index.php">Bookshelf</a></span>
                 <nav>
-                    <span class="nav-item"><a href="#">All</a></span>
+                    <span class="nav-item"><a href="<?php echo $base_url; ?>/index.php">All</a></span>
                     <span class="nav-item"><a href="#">Authors</a></span>
                     <span class="nav-item"><a href="#">Languages</a></span>
                     <span class="nav-item"><a href="#">Something Else</a></span>
-                    <input name="search-bar" type="text" placeholder="Search...">
+                    <input id="search-bar" name="search-bar" type="text" placeholder="Search...">
                 </nav>
             </div>
         </header>

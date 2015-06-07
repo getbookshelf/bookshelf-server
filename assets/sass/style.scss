@@ -46,6 +46,10 @@ nav {
   float: right;
 }
 
+#search-bar {
+  width: 175px;
+}
+
 #main {
   margin-bottom: 50px;
 }
@@ -78,7 +82,6 @@ footer {
 
   input {
     width: 100%;
-    height: 15px;
     margin-bottom: 5px;
   }
 }
