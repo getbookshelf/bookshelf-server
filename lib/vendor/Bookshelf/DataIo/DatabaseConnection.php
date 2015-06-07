@@ -102,12 +102,14 @@ COMMIT;";
                 $value = $this->escape($value);
 
                 // First item does not need a comma
-                if ($value === reset($to_update)) {
+                if($value === reset($to_update)) {
                     $query .= " {$property} = '{$value}'";
-                } else {
+                }
+                else {
                     $query .= ", {$property} = '{$value}'";
                 }
-            } else {
+            }
+            else {
                 unset($to_update[$property]);
             }
         }
@@ -173,7 +175,41 @@ WHERE library.id = {$id}";
     }
 
     public function search($query_array) {
+        if(array_key_exists('*', $query_array)) {
+            $query_string = $query_array['*'];
+            $query_string = $this->purify($query_string);
+            $query_string = $this->escape($query_string);
 
+            $query = "SELECT id FROM library WHERE file_name LIKE '%{$query_string}%' OR title LIKE '%{$query_string}%' OR author LIKE '%{$query_string}%' OR description LIKE '%{$query_string}%' OR tags LIKE '%{$query_string}%' OR identifier LIKE '%{$query_string}%'";
+
+        }
+        else {
+            $query = 'SELECT id FROM library WHERE';
+
+            foreach($query_array as $property => $value) {
+                if(in_array($property, DatabaseConnection::$ALLOWED_BOOK_PROPERTIES, true)) {
+                    $value = $this->purify($value);
+                    $value = $this->escape($value);
+
+                    // First item does not need an OR
+                    if ($value === reset($query_array)) {
+                        $query .= " {$property} LIKE '%{$value}%'";
+                    } else {
+                        $query .= " OR {$property} LIKE '%{$value}%'";
+                    }
+                }
+                else {
+                    unset($query_array[$property]);
+                }
+            }
+        }
+
+        if(!$result = $this->mysqli->query($query)) {
+            ErrorHandler::throwError('Searching book failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
+        }
+        else {
+            return $this->fetch_all($result);
+        }
     }
 
     // returns array(array('property' => 'value'))

@@ -73,7 +73,7 @@ class LibraryManager {
         return $this->database_connection->getBook($field, $query, $exact);
     }
 
-    // returns: array[Book]
+    // returns: array<Book>
     public function listBooks() {
         $data_array = $this->database_connection->dumpLibraryData();
         foreach($data_array as $data) {
@@ -98,11 +98,34 @@ class LibraryManager {
     }
 
     // $query: either 'homemade german plätzchen' or 'author:gabriele altpeter desc:plätzchen'
-    // returns array[Book]
+    // returns array<Book]>
     public function search($query) {
-        $query = preg_replace('/(author|desc|isbn|lang|tags):/i', '&$1=', $query);
-        parse_str($query, $search);
+        $query = preg_replace('/(author|desc|isbn|lang|tags):/i', '&$1=', $query, -1, $count);
+        if($count > 0) {
+            parse_str($query, $query_array);
 
+            $renames = array('desc' => 'description', 'isbn' => 'identifier', 'lang' => 'language');
+            foreach($query_array as $key => $value) {
+                $query_array[$key] = trim($value);
 
+                if(array_key_exists($key, $renames)) {
+                    $query_array[$renames[$key]] = $value;
+                    unset($query_array[$key]);
+                }
+            }
+
+            $result_ids = $this->database_connection->search($query_array);
+        }
+        else {
+            $result_ids = $this->database_connection->search(array('*' => $query));
+        }
+
+        $result = array();
+        foreach($result_ids as $info) {
+            $book = $this->getBookById($info['id']);
+            array_push($result, $book);
+        }
+
+        return $result;
     }
 }
