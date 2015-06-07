@@ -257,12 +257,17 @@ nav {
   width: 175px;
 }
 
-/* line 53, ../sass/style.scss */
+/* line 52, ../sass/style.scss */
+#search-form {
+  display: inline;
+}
+
+/* line 56, ../sass/style.scss */
 #main {
   margin-bottom: 50px;
 }
 
-/* line 57, ../sass/style.scss */
+/* line 60, ../sass/style.scss */
 footer {
   position: fixed;
   left: 0px;
@@ -272,38 +277,38 @@ footer {
   margin-top: 150px;
   background-color: #3498DB;
 }
-/* line 67, ../sass/style.scss */
+/* line 70, ../sass/style.scss */
 footer .container {
   padding-top: 20px;
 }
-/* line 71, ../sass/style.scss */
+/* line 74, ../sass/style.scss */
 footer a {
   color: #ffffff;
 }
 
-/* line 76, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
 #login-form {
   margin: 100px auto;
   width: 355px;
   padding: 20px;
   border: 1px solid #aaaaaa;
 }
-/* line 83, ../sass/style.scss */
+/* line 86, ../sass/style.scss */
 #login-form input {
   width: 100%;
   margin-bottom: 5px;
 }
 
-/* line 89, ../sass/style.scss */
+/* line 92, ../sass/style.scss */
 #book-info {
   padding-top: 15px;
 }
-/* line 92, ../sass/style.scss */
+/* line 95, ../sass/style.scss */
 #book-info h1 {
   padding-bottom: 0px;
 }
 
-/* line 97, ../sass/style.scss */
+/* line 100, ../sass/style.scss */
 #user-menu {
   width: 26%;
   padding: 15px;
@@ -315,7 +320,7 @@ footer a {
   word-break: normal;
 }
 
-/* line 108, ../sass/style.scss */
+/* line 111, ../sass/style.scss */
 .author {
   font-style: italic;
 }

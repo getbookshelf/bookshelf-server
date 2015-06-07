@@ -52,7 +52,7 @@ class Configuration {
     }
 
     private function getDatabaseValue($property) {
-        if($this->db_connection == null) {
+        if($this->db_connection === null) {
             ErrorHandler::throwError('Trying to read configuration from database with uninitialized DatabaseConnection.', ErrorLevel::DEBUG);
         }
 

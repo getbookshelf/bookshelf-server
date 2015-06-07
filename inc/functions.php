@@ -15,20 +15,20 @@ function insertHeader($title = '', $additional_head_content = '') {
         <?php echo $additional_head_content; ?>
     </head>
     <body>
-    <div id="wrapper" name="wrapper">
+    <div id="wrapper">
         <header>
             <div class="container">
-                <span id="logo" name="logo"><a href="<?php echo $base_url; ?>/index.php">Bookshelf</a></span>
+                <span id="logo"><a href="<?php echo $base_url; ?>/index.php">Bookshelf</a></span>
                 <nav>
                     <span class="nav-item"><a href="<?php echo $base_url; ?>/index.php">All</a></span>
                     <span class="nav-item"><a href="#">Authors</a></span>
                     <span class="nav-item"><a href="#">Languages</a></span>
                     <span class="nav-item"><a href="#">Something Else</a></span>
-                    <input id="search-bar" name="search-bar" type="text" placeholder="Search...">
+                    <form id="search-form" method="get" action="<?php echo $base_url; ?>/search.php"><input id="search-bar" name="query" type="text" placeholder="Search..."></form>
                 </nav>
             </div>
         </header>
-        <div id="main" name="main">
+        <div id="main">
             <div class="container">
                 <div id="user-menu">
                     Hi there, <?php echo $_SESSION["name"]; ?>.

@@ -7,6 +7,7 @@ $config = new \Bookshelf\Core\Configuration(true);
 $books = $lib_man->listBooks();
 $base_url = $config->getBaseUrl();
 ?>
+<h1>Library</h1>
 <?php
 
 foreach($books as $book) {
