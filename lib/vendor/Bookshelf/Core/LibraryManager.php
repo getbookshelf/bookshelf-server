@@ -27,12 +27,17 @@ class LibraryManager {
         $data['identifier'] = $book->metadata->identifier;
         $data['tags'] = implode(',', $book->metadata->tags);
 
-        return $this->database_connection->insertBook($data);
+        return $this->database_connection->insertBook($data, $book->categories);
     }
 
     // $to_update = array('property' => 'value');
     // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
     public function updateBook($id, $to_update) {
+        if($to_update['categories']) {
+            $categories = preg_split('/,/', $to_update['categories']);
+            unset($to_update['categories']);
+            $this->database_connection->updateBookCategories($id, $categories);
+        }
         $this->database_connection->updateBook($id, $to_update);
     }
 

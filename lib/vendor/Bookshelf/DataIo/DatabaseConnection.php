@@ -8,6 +8,8 @@ use Bookshelf\Utility\ErrorHandler;
 use Bookshelf\Utility\ErrorLevel;
 
 class DatabaseConnection {
+    private static $ALLOWED_BOOK_PROPERTIES = array('file_name', 'uuid', 'cover_image', 'title', 'author', 'description', 'language', 'identifier', 'tags');
+
     private $mysqli;
     private $config;
 
@@ -49,16 +51,31 @@ class DatabaseConnection {
 
     // should not be called directly, only use from LibraryManager::addBook
     // returns int (ID)
-    public function insertBook($data) {
+    public function insertBook($data, $categories) {
         foreach($data as $property => $value) {
-            $data[$property] = $this->purify($value);
+            $value = $this->purify($value);
             $data[$property] = $this->escape($value);
         }
 
-        $query = "INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier, tags)
-VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}', '{$data['tags']}')";
-        if($this->mysqli->query($query)) {
-            return $this->mysqli->insert_id;
+        $query = "BEGIN;
+        INSERT INTO library (file_name, uuid, cover_image, title, author, description, language, identifier, tags)
+VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$data['title']}', '{$data['author']}', '{$data['description']}', '{$data['language']}', '{$data['identifier']}', '{$data['tags']}');
+        SELECT LAST_INSERT_ID() INTO @book_id;";
+
+        foreach($categories as $category) {
+            $category = $this->escape($this->purify($category));
+            $query .= "INSERT INTO categories (name) SELECT * FROM  (SELECT '{$category}') AS tmp WHERE NOT EXISTS (SELECT name FROM categories WHERE name = '{$category}') LIMIT 1;
+INSERT INTO category_relationships (book, category) SELECT @book_id, categories.id FROM categories WHERE categories.name = '{$category}';";
+        }
+        $query .= "COMMIT;
+        SELECT @book_id;";
+
+        if($this->mysqli->multi_query($query)) {
+            while($this->mysqli->more_results()) {
+                $this->mysqli->next_result();
+                $result = $this->mysqli->store_result();
+            }
+            return $result->fetch_row()[0];
         }
         else {
             ErrorHandler::throwError('Inserting book ' . $data['file_name'] . ' failed.', ErrorLevel::DEBUG);
@@ -68,8 +85,11 @@ VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$
 
     // void
     public function deleteBook($id) {
-        $query = "DELETE FROM library WHERE id={$id}";
-        $this->mysqli->query($query);
+        $query = "BEGIN;
+DELETE FROM library WHERE id={$id};
+DELETE FROM category_relationships WHERE book = {$id};
+COMMIT;";
+        $this->mysqli->multi_query($query);
     }
 
     // void
@@ -77,22 +97,49 @@ VALUES ('{$data['file_name']}', '{$data['uuid']}', '{$data['cover_image']}', '{$
         $query = 'UPDATE library SET';
 
         foreach($to_update as $property => $value) {
-            $value = $this->purify($value);
-            $value = $this->escape($value);
+            if(in_array($property, DatabaseConnection::$ALLOWED_BOOK_PROPERTIES, true)) {
+                $value = $this->purify($value);
+                $value = $this->escape($value);
 
-            // First item does not need a comma
-            if($value === reset($to_update)) {
-                $query .= " {$property} = '{$value}'";
-            }
-            else {
-                $query .= ", {$property} = '{$value}'";
+                // First item does not need a comma
+                if ($value === reset($to_update)) {
+                    $query .= " {$property} = '{$value}'";
+                } else {
+                    $query .= ", {$property} = '{$value}'";
+                }
+            } else {
+                unset($to_update[$property]);
             }
         }
 
-        $query .= " WHERE id = {$id}";
+        $query .= " WHERE id = {$id};";
+
 
         if(!$this->mysqli->query($query)) {
             ErrorHandler::throwError('Updating book ' . $id . ' failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
+        }
+    }
+
+    //void
+    public function updateBookCategories($id, $categories) {
+        $query = "BEGIN;
+        DELETE FROM category_relationships WHERE book = {$id};";
+
+        foreach($categories as $category) {
+            $category = $this->escape($this->purify($category));
+            $query .= "INSERT INTO categories (name) SELECT * FROM  (SELECT '{$category}') AS tmp WHERE NOT EXISTS (SELECT name FROM categories WHERE name = '{$category}') LIMIT 1;
+INSERT INTO category_relationships (book, category) SELECT {$id}, categories.id FROM categories WHERE categories.name = '{$category}';";
+        }
+
+        $query .= 'COMMIT;';
+
+        if(!$this->mysqli->multi_query($query)) {
+            ErrorHandler::throwError('Updating categories for book ' . $id . ' failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
+        }
+
+        while($this->mysqli->more_results()) {
+            $this->mysqli->next_result();
+            $this->mysqli->store_result();
         }
     }
 
