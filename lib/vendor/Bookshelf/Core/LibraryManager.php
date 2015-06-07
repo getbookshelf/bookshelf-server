@@ -91,4 +91,13 @@ class LibraryManager {
         }
         return $result;
     }
+
+    // $query: either 'homemade german plätzchen' or 'author:gabriele altpeter desc:plätzchen'
+    // returns array[Book]
+    public function search($query) {
+        $query = preg_replace('/(author|desc|isbn|lang|tags):/i', '&$1=', $query);
+        parse_str($query, $search);
+
+
+    }
 }

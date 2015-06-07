@@ -109,6 +109,7 @@ WHERE library.id = {$id}";
         else {
             ErrorHandler::throwError('Getting book with ID ' . $id . ' failed.', ErrorLevel::DEBUG);
         }
+
         return -1;
     }
 
@@ -122,6 +123,10 @@ WHERE library.id = {$id}";
 
         }
         return -1;
+    }
+
+    public function search($query_array) {
+
     }
 
     // returns array(array('property' => 'value'))
