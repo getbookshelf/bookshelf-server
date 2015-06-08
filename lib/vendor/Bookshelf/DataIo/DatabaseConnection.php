@@ -222,6 +222,29 @@ GROUP BY library.id';
         if($result = $this->mysqli->query($query)) return $this->fetch_all($result);
     }
 
+    // return array<string>
+    public function dumpDistinctLibraryData($property) {
+        if(in_array($property, DatabaseConnection::$ALLOWED_BOOK_PROPERTIES, true)) {
+            $query = "SELECT DISTINCT {$property} FROM library";
+
+            if(!$result = $this->mysqli->query($query)) {
+                ErrorHandler::throwError('Fetchting distinct properties failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
+            }
+            else {
+                $sql_result = $this->fetch_all($result);
+
+                $return = array();
+                foreach($sql_result as $key => $value) {
+                    array_push($return, $value[$property]);
+                }
+                return $return;
+            }
+        }
+        else {
+            ErrorHandler::throwError('Invalid book property.', ErrorLevel::DEBUG);
+        }
+    }
+
     // returns string
     public function escape($string) {
         return $this->mysqli->real_escape_string($string);

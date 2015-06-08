@@ -21,9 +21,9 @@ function insertHeader($title = '', $additional_head_content = '') {
                 <span id="logo"><a href="<?php echo $base_url; ?>/index.php">Bookshelf</a></span>
                 <nav>
                     <span class="nav-item"><a href="<?php echo $base_url; ?>/index.php">All</a></span>
-                    <span class="nav-item"><a href="#">Authors</a></span>
-                    <span class="nav-item"><a href="#">Languages</a></span>
-                    <span class="nav-item"><a href="#">Something Else</a></span>
+                    <span class="nav-item"><a href="<?php echo $base_url; ?>/search.php?filter=author">Authors</a></span>
+                    <span class="nav-item"><a href="<?php echo $base_url; ?>/search.php?filter=lang">Languages</a></span>
+                    <span class="nav-item"><a href="<?php echo $base_url; ?>/search.php?filter=categories">Categories</a></span>
                     <form id="search-form" method="get" action="<?php echo $base_url; ?>/search.php"><input id="search-bar" name="query" type="text" placeholder="Search..."></form>
                 </nav>
             </div>

@@ -73,6 +73,11 @@ class LibraryManager {
         return $this->database_connection->getBook($field, $query, $exact);
     }
 
+    // return array<string>
+    public function dumpDistinctLibraryData($property) {
+        return $this->database_connection->dumpDistinctLibraryData($property);
+    }
+
     // returns: array<Book>
     public function listBooks() {
         $data_array = $this->database_connection->dumpLibraryData();
@@ -100,7 +105,10 @@ class LibraryManager {
     // $query: either 'homemade german plätzchen' or 'author:gabriele altpeter desc:plätzchen'
     // returns array<Book]>
     public function search($query) {
-        $query = preg_replace('/(author|desc|isbn|lang|tags):/i', '&$1=', $query, -1, $count);
+        $courtesy_renames = array('tag' => 'tags', 'description' => 'desc');
+        $query = str_replace(array_keys($courtesy_renames), $courtesy_renames, $query);
+
+        $query = preg_replace('/(author|desc|isbn|lang|tags|title):\ ?/i', '&$1=', $query, -1, $count);
         if($count > 0) {
             parse_str($query, $query_array);
 
