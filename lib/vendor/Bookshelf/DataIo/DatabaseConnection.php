@@ -191,11 +191,11 @@ WHERE library.id = {$id}";
                     $value = $this->purify($value);
                     $value = $this->escape($value);
 
-                    // First item does not need an OR
+                    // First item does not need an AND
                     if ($value === reset($query_array)) {
                         $query .= " {$property} LIKE '%{$value}%'";
                     } else {
-                        $query .= " OR {$property} LIKE '%{$value}%'";
+                        $query .= " AND {$property} LIKE '%{$value}%'";
                     }
                 }
                 else {
