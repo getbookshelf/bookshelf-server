@@ -7,7 +7,7 @@ use Bookshelf\DataIo\DatabaseConnection;
 
 class User {
 
-    // TODO: Implement proper OO User class, currently I am just using the old functions as statics
+    // TODO: Implement proper OOP User class, currently I am just using the old functions as statics
     public static function isAuthenticated($name, $password) {
         $db_con = new DatabaseConnection();
         return $db_con->validateUser($name, $password);

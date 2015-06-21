@@ -10,7 +10,8 @@ $api_reply = array(
 http_response_code(200);
 $result = array();
 
-if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password'])) {
+session_start();
+if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']) || isset($_SESSION['name'])) {
     $request = new \Bookshelf\DataIo\ApiRequest($_POST);
     $lib_man = new \Bookshelf\Core\LibraryManager();
     $file_man = new \Bookshelf\DataIo\FileManager();

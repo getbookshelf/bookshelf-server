@@ -1,8 +1,4 @@
 function apiRequest(base_url, action, parameters, success_delegate, error_delegate) {
-    // TODO: For debugging purposes only, to be removed later
-    if(typeof success_delegate == 'undefined') { success_delegate = function(data){console.log("Success."); console.log(data);}; }
-    if(typeof error_delegate == 'undefined') { error_delegate = function(data){console.log("Error: " + data["responseJSON"]["error_code"] + " (" + data["responseJSON"]["error"] + ")");}; }
-
     var data = { action: action };
     $.extend(data, parameters);
 
