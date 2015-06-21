@@ -228,7 +228,7 @@ GROUP BY library.id';
             $query = "SELECT DISTINCT {$property} FROM library";
 
             if(!$result = $this->mysqli->query($query)) {
-                ErrorHandler::throwError('Fetchting distinct properties failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
+                ErrorHandler::throwError('Fetching distinct properties failed.<br>Query: ' . $query . '<br>MySQL error: '. $this->mysqli->error, ErrorLevel::DEBUG);
             }
             else {
                 $sql_result = $this->fetch_all($result);

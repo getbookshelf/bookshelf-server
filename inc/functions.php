@@ -35,7 +35,7 @@ function insertHeader($title = '', $additional_head_content = '') {
 
                     <p>
                         <a href="<?php echo $base_url; ?>/upload.php">Add new book</a><br>
-                        <a href="#">Settings</a><br>
+                        <a href="<?php echo $base_url; ?>/settings.php">Settings</a><br>
                         <a href="<?php echo $base_url; ?>/logout.php">Logout</a>
                     </p>
                 </div>
