@@ -194,7 +194,8 @@ WHERE library.id = {$id}";
                     // First item does not need an AND
                     if ($value === reset($query_array)) {
                         $query .= " {$property} LIKE '%{$value}%'";
-                    } else {
+                    }
+                    else {
                         $query .= " AND {$property} LIKE '%{$value}%'";
                     }
                 }

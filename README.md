@@ -1,3 +1,3 @@
-# Willkommen
+# bookshelf-server
 
-Awesome school project!
+Open Source eBook Management Software

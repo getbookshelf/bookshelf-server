@@ -105,7 +105,7 @@ class LibraryManager {
     // $query: either 'homemade german plätzchen' or 'author:gabriele altpeter desc:plätzchen'
     // returns array<Book]>
     public function search($query) {
-        $courtesy_renames = array('tag' => 'tags', 'description' => 'desc');
+        $courtesy_renames = array('tag' => 'tags', 'description' => 'desc', 'language' => 'lang', 'identifier' => 'isbn');
         $query = str_replace(array_keys($courtesy_renames), $courtesy_renames, $query);
 
         $query = preg_replace('/(author|desc|isbn|lang|tags|title):\ ?/i', '&$1=', $query, -1, $count);
