@@ -31,6 +31,18 @@ class Configuration {
         return rtrim($base_url, '/');
     }
 
+    public function setLibraryDir($library_dir) {
+        return $this->setDatabaseValue('library_dir', $library_dir);
+    }
+
+    public function setDebuggingEnabled($debugging_enabled) {
+        return $this->setDatabaseValue('enable_debugging', (int)$debugging_enabled);
+    }
+
+    public function setBaseUrl($base_url) {
+        return $this->setDatabaseValue('base_url', rtrim($base_url, '/'));
+    }
+
     public function getDatabaseHost() {
         return $this->ini_data['db_host'];
     }
@@ -57,5 +69,13 @@ class Configuration {
         }
 
         return $this->db_connection->readConfigValue($property);
+    }
+
+    private function setDatabaseValue($property, $value) {
+        if($this->db_connection === null) {
+            ErrorHandler::throwError('Trying to write configuration to database with uninitialized DatabaseConnection.', ErrorLevel::DEBUG);
+        }
+
+        return $this->db_connection->writeConfigValue($property, $value);
     }
 }

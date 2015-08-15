@@ -9,6 +9,7 @@ use Bookshelf\Utility\ErrorLevel;
 
 class DatabaseConnection {
     private static $ALLOWED_BOOK_PROPERTIES = array('file_name', 'uuid', 'cover_image', 'title', 'author', 'description', 'language', 'identifier', 'tags');
+    private static $ALLOWED_CONFIG_PROPERTIES = array('library_dir', 'enable_debugging', 'base_url');
 
     private $mysqli;
     private $config;
@@ -28,19 +29,38 @@ class DatabaseConnection {
 
     // returns string
     public function readConfigValue($property) {
-        if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
-            return $result->fetch_array(MYSQL_ASSOC)['value'];
+        if(in_array($property, DatabaseConnection::$ALLOWED_CONFIG_PROPERTIES)) {
+            if($result = $this->mysqli->query('SELECT value FROM config WHERE property LIKE \'' . $property .'\'')) {
+                return $result->fetch_array(MYSQLI_ASSOC)['value'];
+            }
+            else {
+                ErrorHandler::throwError('Reading config value for property "' . $property . '" failed.', ErrorLevel::DEBUG);
+            }
         }
         else {
-            ErrorHandler::throwError('Reading config value for property ' . $property . ' failed.', ErrorLevel::DEBUG);
+            ErrorHandler::throwError('Invalid config property.', ErrorLevel::DEBUG);
         }
+
+        return false;
+    }
+
+    // returns bool
+    public function writeConfigValue($property, $value) {
+        if(in_array($property, DatabaseConnection::$ALLOWED_CONFIG_PROPERTIES)) {
+            $value = $this->escape($value);
+            return $result = $this->mysqli->query('UPDATE config SET value = \'' . $value . '\' WHERE property LIKE \'' . $property . '\'');
+        }
+        else {
+            ErrorHandler::throwError('Invalid config property.', ErrorLevel::DEBUG);
+        }
+
         return false;
     }
 
     // returns bool
     public function validateUser($username, $password) {
         if($result = $this->mysqli->query("SELECT passwd_hash FROM users WHERE username='$username'")) {
-           $row = $result->fetch_array();
+            $row = $result->fetch_array();
             return hash('sha256', $password . $this->config->getSalt()) == $row['passwd_hash'];
         }
         else {
