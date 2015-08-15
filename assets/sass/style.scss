@@ -93,7 +93,7 @@ footer {
   padding-top: 15px;
 
   h1 {
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 }
 
@@ -110,4 +110,14 @@ footer {
 
 .author {
   font-style: italic;
+}
+
+#settingsTable {
+  width: 65%;
+}
+td.settingsLabel {
+  width: 30%;
+}
+td.settingsInput input {
+  width: 100%;
 }

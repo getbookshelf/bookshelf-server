@@ -305,7 +305,7 @@ footer a {
 }
 /* line 95, ../sass/style.scss */
 #book-info h1 {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 
 /* line 100, ../sass/style.scss */
@@ -323,4 +323,19 @@ footer a {
 /* line 111, ../sass/style.scss */
 .author {
   font-style: italic;
+}
+
+/* line 115, ../sass/style.scss */
+#settingsTable {
+  width: 65%;
+}
+
+/* line 118, ../sass/style.scss */
+td.settingsLabel {
+  width: 30%;
+}
+
+/* line 121, ../sass/style.scss */
+td.settingsInput input {
+  width: 100%;
 }
