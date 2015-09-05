@@ -2,3 +2,9 @@
 RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Disallow access to the config file
+<Files "config.ini">
+     Order allow,deny
+     Deny from all
+</Files>
