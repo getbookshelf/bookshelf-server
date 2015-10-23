@@ -324,3 +324,26 @@ footer a {
 .author {
   font-style: italic;
 }
+
+/* line 115, ../sass/style.scss */
+.message, .error {
+  padding: 15px;
+  background-color: #eee;
+  margin-bottom: 20px;
+  margin-right: 15px;
+}
+
+/* line 122, ../sass/style.scss */
+.error {
+  background-color: #f2dede;
+  color: #a94442;
+}
+/* line 127, ../sass/style.scss */
+.error a, .error a:hover, .error a:visited {
+  color: #843534;
+  font-weight: bold;
+}
+/* line 132, ../sass/style.scss */
+.error a:hover {
+  text-decoration: underline;
+}

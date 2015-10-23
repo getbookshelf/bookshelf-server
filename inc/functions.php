@@ -2,6 +2,7 @@
 
 function insertHeader($title = '', $additional_head_content = '') {
     $config = new \Bookshelf\Core\Configuration(true);
+    $updater = new \Bookshelf\Utility\Updater();
 
     $title = $title == '' ? '' : $title . ' - ';
     $base_url = $config->getBaseUrl();
@@ -41,6 +42,15 @@ function insertHeader($title = '', $additional_head_content = '') {
                 </div>
     <?php
     \Bookshelf\Utility\ErrorHandler::displayErrors();
+
+    if($updater->update_necessary) {
+        if($updater->update_possible) {
+            echo '<div class="message">An update is available. Click <a href="' . $base_url . '/update.php">here</a> to install it.</div>';
+        }
+        else {
+            echo '<div class="message">An update is available but it cannot be installed automatically. Click <a href="' . $base_url . '/update.php">here</a> to find out more.</div>';
+        }
+    }
 }
 
 function insertFooter($additional_scripts = '') {

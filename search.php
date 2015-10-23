@@ -17,6 +17,9 @@ if(!empty($query)) {
     foreach($books as $book) {
         echo '<a href="book.php?id=' . $lib_man->getBook('uuid', $book->uuid, true) . '"><img class="book" src="' . $book->metadata->cover_image . '"></a>';
     }
+    if(count($books) == 0) {
+        echo 'No books that match your query were found.';
+    }
 }
 elseif(!empty($filter)) {
     if($filter == 'author') {

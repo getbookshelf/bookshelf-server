@@ -111,3 +111,25 @@ footer {
 .author {
   font-style: italic;
 }
+
+.message {
+  padding: 15px;
+  background-color: #eee;
+  margin-bottom: 20px;
+  margin-right: 15px;
+}
+
+.error {
+  @extend .message;
+  background-color: #f2dede;
+  color: #a94442;
+
+  a, a:hover, a:visited {
+    color: #843534;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
