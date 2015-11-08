@@ -6,13 +6,15 @@ namespace Bookshelf\DataType;
 use Bookshelf\Core\Configuration;
 
 class Book {
+    public $id;
     public $metadata;
     public $uuid = '';
     public $original_name = '';
     public $original_extension = '';
 
     // every instance of Book MUST have UUID, original name and extension set
-    public function __construct($uuid, $original_name, $original_extension, $metadata = null) {
+    public function __construct($id, $uuid, $original_name, $original_extension, $metadata = null) {
+        $this->id = $id;
         $this->uuid = $uuid;
         $this->original_name = $original_name;
         $this->original_extension = $original_extension;

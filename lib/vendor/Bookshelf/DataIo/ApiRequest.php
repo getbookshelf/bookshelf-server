@@ -25,5 +25,6 @@ class ApiRequest {
         $this->book_meta->identifier = $post['meta_identifier'];
         $this->book_meta->language = $post['meta_language'];
         $this->book_meta->title = $post['meta_title'];
+        $this->book_meta->tags = $post['tags'];
     }
 }

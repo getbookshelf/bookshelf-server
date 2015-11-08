@@ -10,11 +10,11 @@ $api_reply = array(
 http_response_code(200);
 $result = array();
 
-if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password'])) {
+session_start();
+if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']) || isset($_SESSION['name'])) {
     $request = new \Bookshelf\DataIo\ApiRequest($_POST);
     $lib_man = new \Bookshelf\Core\LibraryManager();
     $file_man = new \Bookshelf\DataIo\FileManager();
-    $db_con = new \Bookshelf\DataIo\DatabaseConnection();
 
     switch($request->action) {
         case 'addbook':
@@ -77,8 +77,9 @@ if(\Bookshelf\Utility\User::isAuthenticated($_POST['user'], $_POST['password']))
                 if(!empty($request->book_meta->identifier)) $to_update['identifier'] = $request->book_meta->identifier;
                 if(!empty($request->book_meta->language)) $to_update['language'] = $request->book_meta->language;
                 if(!empty($request->book_meta->title)) $to_update['title'] = $request->book_meta->title;
+                if(!empty($request->book_meta->tags)) $to_update['tags'] = $request->book_meta->tags;
 
-                $db_con->updateBook($request->id, $to_update);
+                $lib_man->updateBook($request->id, $to_update);
             }
             else {
                 http_response_code(400);

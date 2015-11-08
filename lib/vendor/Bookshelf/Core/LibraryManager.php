@@ -25,7 +25,20 @@ class LibraryManager {
         $data['description'] = $book->metadata->description;
         $data['language'] = $book->metadata->language;
         $data['identifier'] = $book->metadata->identifier;
-        return $this->database_connection->insertBook($data);
+        $data['tags'] = implode(',', $book->metadata->tags);
+
+        return $this->database_connection->insertBook($data, $book->categories);
+    }
+
+    // $to_update = array('property' => 'value');
+    // e.g.: $to_update = array('title' => 'Some Book Title', 'author' => 'Some Author');
+    public function updateBook($id, $to_update) {
+        if($to_update['categories']) {
+            $categories = preg_split('/,/', $to_update['categories']);
+            unset($to_update['categories']);
+            $this->database_connection->updateBookCategories($id, $categories);
+        }
+        $this->database_connection->updateBook($id, $to_update);
     }
 
     public function deleteBook($id) {
@@ -33,6 +46,7 @@ class LibraryManager {
         DataIo\FileManager::deleteBook($id);
     }
 
+    // returns Book
     public function getBookById($id){
         $data = $this->database_connection->getBookById($id);
         $original_name = pathinfo($data['file_name'], PATHINFO_FILENAME);
@@ -45,15 +59,26 @@ class LibraryManager {
         $metadata->description = $data['description'];
         $metadata->language = $data['language'];
         $metadata->identifier = $data['identifier'];
+        $metadata->categories = $data['categories'] == '' ? array() : explode(',', $data['categories']);
 
-        return new Book($data['uuid'], $original_name, $original_extension, $metadata);
+        $tags = str_replace(', ', ',', $data['tags']);
+        $metadata->tags = $tags == '' ? array() : explode(',', $tags);
+
+        return new Book($id, $data['uuid'], $original_name, $original_extension, $metadata);
     }
 
 
+    // returns "int" (book ID)
     public function getBook($field, $query, $exact = false) {
         return $this->database_connection->getBook($field, $query, $exact);
     }
 
+    // return array<string>
+    public function dumpDistinctLibraryData($property) {
+        return $this->database_connection->dumpDistinctLibraryData($property);
+    }
+
+    // returns: array<Book>
     public function listBooks() {
         $data_array = $this->database_connection->dumpLibraryData();
         foreach($data_array as $data) {
@@ -67,8 +92,48 @@ class LibraryManager {
             $metadata->description = $data['description'];
             $metadata->language = $data['language'];
             $metadata->identifier = $data['identifier'];
-            $result[] = new Book($data['uuid'], $original_name, $original_extension, $metadata);
+            $metadata->categories = $data['categories'] == '' ? array() : explode(',', $data['categories']);
+
+            $tags = str_replace(', ', ',', $data['tags']);
+            $metadata->tags = $tags == '' ? array() : explode(',', $tags);
+
+            $result[] = new Book($data['id'], $data['uuid'], $original_name, $original_extension, $metadata);
         }
+        return $result;
+    }
+
+    // $query: either 'homemade german plätzchen' or 'author:gabriele altpeter desc:plätzchen'
+    // returns array<Book]>
+    public function search($query) {
+        $courtesy_renames = array('tag' => 'tags', 'description' => 'desc', 'language' => 'lang', 'identifier' => 'isbn');
+        $query = str_replace(array_keys($courtesy_renames), $courtesy_renames, $query);
+
+        $query = preg_replace('/(author|desc|isbn|lang|tags|title):\ ?/i', '&$1=', $query, -1, $count);
+        if($count > 0) {
+            parse_str($query, $query_array);
+
+            $renames = array('desc' => 'description', 'isbn' => 'identifier', 'lang' => 'language');
+            foreach($query_array as $key => $value) {
+                $query_array[$key] = trim($value);
+
+                if(array_key_exists($key, $renames)) {
+                    $query_array[$renames[$key]] = $value;
+                    unset($query_array[$key]);
+                }
+            }
+
+            $result_ids = $this->database_connection->search($query_array);
+        }
+        else {
+            $result_ids = $this->database_connection->search(array('*' => $query));
+        }
+
+        $result = array();
+        foreach($result_ids as $info) {
+            $book = $this->getBookById($info['id']);
+            array_push($result, $book);
+        }
+
         return $result;
     }
 }

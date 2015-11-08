@@ -1,35 +1,58 @@
 <?php
-// NOTE: This file only contains a demo implementation, it will likely not be included in the actual software!
-require __DIR__ . '/lib/vendor/autoload.php';
-session_start();
-include(__DIR__ . '/inc/auth.php');
+require_once __DIR__ . '/inc/base.php';
+insertHeader();
 
-include( __DIR__ . '/inc/header.php');
+$query = $_GET['query'];
+$filter = $_GET['filter'];
 
-if(!isset($_POST['id'])) {
-    \Bookshelf\Utility\ErrorHandler::throwError('No request.', \Bookshelf\Utility\ErrorLevel::WARNING);
+$lib_man = new \Bookshelf\Core\LibraryManager();
+$db_con = new \Bookshelf\DataIo\DatabaseConnection();
+$config = new \Bookshelf\Core\Configuration(true, $db_con);
+$base_url = $config->getBaseUrl();
+
+if(!empty($query)) {
+    echo '<h1>Results for "' . $db_con->purify($query) . '"</h1>';
+
+    $books = $lib_man->search($query);
+    foreach($books as $book) {
+        echo '<a href="book.php?id=' . $lib_man->getBook('uuid', $book->uuid, true) . '"><img class="book" src="' . $book->metadata->cover_image . '"></a>';
+    }
+    if(count($books) == 0) {
+        echo 'No books that match your query were found.';
+    }
+}
+elseif(!empty($filter)) {
+    if($filter == 'author') {
+        echo '<h1>Filtering by author</h1>';
+    }
+    elseif($filter == 'lang') {
+        echo '<h1>Filtering by language</h1>';
+    }
+    elseif($filter == 'categories') {
+        echo 'Filtering by category is currently not implemented. Please check back soon.';
+        insertFooter();
+        exit;
+    }
+
+    $renames = array('desc' => 'description', 'isbn' => 'identifier', 'lang' => 'language');
+    $values = $lib_man->dumpDistinctLibraryData(str_replace(array_keys($renames), $renames, $filter));
+    if(empty($values)) {
+        echo 'No books found.';
+        exit();
+    }
+
+    foreach($values as $value) {
+        echo '<h2>' . $value . '</h2>';
+        $books = $lib_man->search($filter . ': ' . $value);
+        foreach($books as $book) {
+            echo '<a href="book.php?id=' . $lib_man->getBook('uuid', $book->uuid, true) . '"><img class="book" src="' . $book->metadata->cover_image . '"></a>';
+        }
+    }
+}
+else {
+    \Bookshelf\Utility\ErrorHandler::throwError('No query specified.', \Bookshelf\Utility\ErrorLevel::ERROR);
     header('Location: index.php');
     exit();
 }
 
-$id = $_POST['id'];
-$library_mgr = new \Bookshelf\Core\LibraryManager();
-$book = $library_mgr->getBookById($id);
-if($book === null) {
-    \Bookshelf\Utility\ErrorHandler::throwError('Book does not exist.', \Bookshelf\Utility\ErrorLevel::ERROR);
-    header('Location: index.php');
-    exit();
-}
-
-$gb_request = new \Bookshelf\ExternalApi\GoogleBooksApiRequest();
-$gb_request->volumeSearch($book->getQueryString(), 3);
-
-echo '<h1>Results for \'' . htmlspecialchars($gb_request->getRequestString()) . '\'</h1>';
-echo '<a href="index.php">back</a><br>';
-echo '<form method="post" action="update_book.php">';
-echo '<input type="hidden" name="id" value="' . $id . '">';
-echo $gb_request->results()->toHtmlTable('radio');
-echo '<input type="submit" value="Update metadata">';
-echo '</form>';
-
-include( __DIR__ . '/inc/footer.php');
+insertFooter();
