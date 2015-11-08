@@ -12,6 +12,7 @@ Currently, all traffic is redirected to HTTPS. Once we implement an install scri
 The following permissions have to be set in order for Bookshelf to run correctly:
     chmod -R 777 cache          // TODO: cache directory shouldn't be public!
     chmod -R 777 library
+    chmod 770 config.ini
 
 ## HTML Purifier
 For sanitizing HTML user inputs, we use HTML Purifier (http://htmlpurifier.org/). This package currently has to be in the user's path (will later be customizable through a config option). The easiest way of achieving this is by using PEAR:
